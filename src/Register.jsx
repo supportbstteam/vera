@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Swal from "sweetalert2";
 
 export default function Register() {
     const baseUrl = process.env.REACT_APP_API_URL
@@ -22,11 +23,6 @@ export default function Register() {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Invalid email format';
     }
-    // if (!mobile) {
-    //   errors.mobile = 'Mobile number is required';
-    // } else if (!/^[0-9]{10}$/.test(mobile)) {
-    //   errors.mobile = 'Mobile must be 10 digits';
-    // }
     if (!password) {
       errors.password = 'Password is required';
     } else if (password.length < 6) {
@@ -34,14 +30,72 @@ export default function Register() {
     }
     return errors;
   };
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const errors = validate();
+//     setFormErrors(errors);
+//     if (Object.keys(errors).length > 0) {
+//       setFormErrors(errors);
+//       return;
+//     }
+//     try {
+//          Swal.fire({
+//                 title: "Sending...",
+//                 text: "Please wait while we send your mail.",
+//                 allowOutsideClick: false,
+//                 didOpen: () => {
+//                   Swal.showLoading();
+//                 },
+//               });
+//       const response = await fetch(`${baseUrl}/api/register`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           firstName,
+//           lastName,
+//           email,
+//           mobile,
+//           password,
+//         }),
+//       });
+//       const data = await response.json();
+//       if (response.ok) {
+//        Swal.fire({
+//                 icon: "info",
+//                 title: "Your account has been created please visit your email.",
+//                 timer: 2000,
+//                 showConfirmButton: false,
+//               });
+//         navigate('/');
+//       } else if (response.status === 422) {
+//         setServerErrors(data.errors || {});
+//       } else {
+//         setError(data.message || 'Registration failed');
+//       }
+//     } catch (err) {
+//       setError('Network error');
+//     }
+//   };
+const handleSubmit = async (e) => {
     e.preventDefault();
+
     const errors = validate();
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
+    setFormErrors(errors); // reset visible errors
+    if (Object.keys(errors).length > 0) return;
+
     try {
+      // Show loading alert
+      Swal.fire({
+        title: "Registering...",
+        text: "Please wait while we process your registration.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       const response = await fetch(`${baseUrl}/api/register`, {
         method: 'POST',
         headers: {
@@ -55,9 +109,19 @@ export default function Register() {
           password,
         }),
       });
+
       const data = await response.json();
+      Swal.close(); // Always close the loading alert
+
       if (response.ok) {
-        // localStorage.setItem('token', data.token);
+        // ✅ Only run success alert if registration succeeded
+        Swal.fire({
+          icon: "success",
+          title: "Registered successfully!",
+          text: "Please check your email to verify your account.",
+          timer: 2500,
+          showConfirmButton: false,
+        });
         navigate('/');
       } else if (response.status === 422) {
         setServerErrors(data.errors || {});
@@ -65,6 +129,7 @@ export default function Register() {
         setError(data.message || 'Registration failed');
       }
     } catch (err) {
+      Swal.close(); // Close in case of error
       setError('Network error');
     }
   };

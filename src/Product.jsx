@@ -3,30 +3,23 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FaArrowLeft } from "react-icons/fa";
+import Navbar from "./Navbar";
 export default function Product() {
-    const baseUrl = process.env.REACT_APP_API_URL
+  const baseUrl = process.env.REACT_APP_API_URL
   const email = localStorage.getItem("email");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
+  console.log(slug);
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-
   const handleAddToQuote = async (productId) => {
-    console.log(productId);
     try {
-      const token = localStorage.getItem("token");
-      console.log(token);
-      if (!token) {
-        Swal.fire({
-          icon: "warning",
-          title: "Please login first",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        return;
-      }
-
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/");
+      return;
+    }
       const response = await axios.post(
         `${baseUrl}/api/product/${productId}`,
         null,
@@ -36,7 +29,6 @@ export default function Product() {
           },
         }
       );
-
       if (response.data.status) {
         Swal.fire({
           icon: "success",
@@ -69,84 +61,36 @@ export default function Product() {
       });
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          navigate("/");
-          return;
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${baseUrl}/api/category/product/${slug}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
+      );
+      console.log(response.data.data);
 
-        const response = await axios.get(
-          `${baseUrl}/api/category/product/${slug}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setProducts(response.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-        if (error.response?.status === 401) {
-          navigate("/");
-        }
-        setLoading(false);
+      setProducts(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+      if (error.response?.status === 401) {
+        navigate("/");
       }
-    };
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, [slug, navigate]);
   return (
     <>
-      <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        {/* Navbar Brand */}
-        <Link className="navbar-brand ps-3" to="/category">
-          <h1>VERA</h1>
-        </Link>
-
-        {/* Sidebar Toggle */}
-        <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle">
-          <i className="fas fa-bars"></i>
-        </button>
-
-        {/* Navbar Search */}
-        <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-          <div className="input-group"></div>
-        </form>
-
-        {/* Navbar */}
-        <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" id="navbarDropdown" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fas fa-user fa-fw"></i>
-            </a>
-            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li>
-                <Link className="dropdown-item" to="/checkout">{" "}{email}</Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/checkout">
-                  Checkout
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/Logout">
-                  Logout
-                </Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-
+     <Navbar />
       <div id="layoutSidenav">
-        {/* <div id="layoutSidenav_nav">
-        </div> */}
-
         <div id="layoutSidenav_content" className=" px-4 py-4">
           <main>
             <button className="btn btn-primary my-4" onClick={() => navigate(-1)}>
@@ -176,7 +120,6 @@ export default function Product() {
                         Add to Quote
                       </button>
                     </div>
-
                     {/* </Link> */}
                   </div>
                 ))

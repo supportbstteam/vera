@@ -6,8 +6,9 @@ import axios, { Axios } from "axios";
 import BaseComponent from "bootstrap/js/dist/base-component";
 import Swal from "sweetalert2";
 import { FaArrowLeft } from "react-icons/fa";
+import Navbar from "./Navbar";
 export default function ProductDetails() {
-    const baseUrl = process.env.REACT_APP_API_URL
+  const baseUrl = process.env.REACT_APP_API_URL
   const email = localStorage.getItem("email");
   const [productDetails, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +27,6 @@ export default function ProductDetails() {
         });
         return;
       }
-
       const response = await axios.post(
         `${baseUrl}/api/product/${productId}`,
         null,
@@ -36,7 +36,6 @@ export default function ProductDetails() {
           },
         }
       );
-
       if (response.data.status) {
         Swal.fire({
           icon: "success",
@@ -100,39 +99,7 @@ export default function ProductDetails() {
   }, [slug, navigate]);
   return (
     <>
-      <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        {/* Navbar Brand */}
-        <Link className="navbar-brand ps-3" to="/category">
-          <h2>VERA</h2>
-        </Link>
-        {/* Sidebar Toggle */}
-        <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle">
-          <i className="fas fa-bars"></i>
-        </button>
-        {/* Navbar Search */}
-        <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-          <div className="input-group"></div>
-        </form>
-        {/* Navbar */}
-        <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" id="navbarDropdown" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i className="fas fa-user fa-fw"></i>
-            </a>
-            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li>
-                <Link className="dropdown-item" to="/checkout">{" "}{email}</Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/checkout">Checkout</Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="/Logout">Logout</Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+    <Navbar />
       <div id="layoutSidenav">
         {/* <div id="layoutSidenav_nav">
         </div> */}
@@ -149,9 +116,7 @@ export default function ProductDetails() {
               <div className="col-xl-6 col-md-6">
                 <div className="img d-flex justify-content-center">
                   <img src={`${baseUrl}/public/${productDetails.image}`} alt="Product"/>
-
                 </div>
-
                 <div className="d-flex justify-content-center my-3">
                   <button className="btn  btn-primary" onClick={() => handleAddToQuote(productDetails.id)}>
                     Add to Quote

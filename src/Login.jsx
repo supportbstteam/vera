@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
-    const baseUrl = process.env.REACT_APP_API_URL
+  const baseUrl = process.env.REACT_APP_API_URL
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,8 +26,6 @@ export default function Login() {
     return errors;
   };
   const handleSubmit = async (e) => {
-
-
     e.preventDefault();
     setEmailErr('');
     setPasswordErr('');
@@ -48,7 +46,6 @@ export default function Login() {
           password: password,
         }),
       });
-
       const data = await response.json();
       console.log(data.data.status);
       if (data?.data?.status === "0") {
@@ -76,7 +73,6 @@ export default function Login() {
       setError('Network error');
     }
   };
-
   return (
     <div id="layoutAuthentication">
       <div id="layoutAuthentication_content">
@@ -106,7 +102,6 @@ export default function Login() {
                         {passwordErr && <div className="text-danger mt-1">{passwordErr}</div>}
                       </div>
                       {/* {error && ( <div className="text-danger text-center mb-3">{error}</div> )} */}
-
                       <div className="mt-4 mb-0 text-center">
                         <button className="btn btn-primary" type="submit">
                           Login
