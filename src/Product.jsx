@@ -165,7 +165,7 @@ export default function Product() {
               ) : (
                 products.map((item) => (
                   <div className="col-xl-3 col-md-6 mx-5 my-4 hover-affect py-3 px-3" key={item.id}>
-                    <Link to={`${item.id}`} className="text-decoration-none">
+                    <Link to={`${item.slug}`} className="text-decoration-none">
                       <div className="" key={item.id}>
                         <img src={`${baseUrl}/public/${item.image}`} alt="Product" style={{ width: 300, height: 200 }}/>
                         <h4 className="text-center py-3" style={{ color: "black" }}>{item.name}</h4>
