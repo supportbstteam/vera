@@ -86,7 +86,7 @@ export default function Category() {
               ) : (
                 category.map((item) => (
                   <div className="col-xl-3 col-md-3 my-3 mx-5 hover-effect py-3 px-3" key={item.id}>
-                    <Link to={`/category/${item.name}`} className="text-decoration-none" >
+                    <Link to={`/category/${item.slug}`} className="text-decoration-none" >
                        <img src={`${baseUrl}/public/${item.image}`} alt="Product" style={{ width: 300, height: 200 }} />
 
                       <h4 className="text-center py-3" style={{ color: "black" }} >{item.name}</h4>
