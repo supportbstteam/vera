@@ -32,8 +32,39 @@ export default function Checkout() {
       }
     }
   };
+  const handleRemove = async (id) => {
+    console.log(id);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/");
+        return;
+      }
+      const response = await axios.get(`${baseUrl}/api/checkout/remove/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.status) {
+        fetchData();
+      }
+      setCheckout(response.data);
+    } catch (error) {
+      console.error("Error removing product:", error);
+      if (error.response?.status === 401) {
+        navigate("/");
+      }
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    if(checkout.length === 0) {
+       console.log("yes");
+    } else {
+        console.log("no");
+    }
+    console.log("length",checkout.length);
   }, []);
   return (
     <>
@@ -44,7 +75,7 @@ export default function Checkout() {
             <div className="flex justify-end" style={{ float: "right" }}>
               <button href="/category" className="btn btn-primary" onClick={() => navigate(-1)}>Add more to quotes</button>
             </div>
-            <h2 className="text-center">Checkout</h2>
+            <h2 className="text-center text-primary">Checkout</h2>
             <ul className="list-group mb-3">
               {/* Header */}
               <li className="list-group-item d-flex justify-content-between lh-sm">
@@ -55,7 +86,7 @@ export default function Checkout() {
                   <h4 className="my-0">Image</h4>
                 </div>
                 <div style={{ flex: 1, textAlign: "right" }}>
-                  <h4 className="my-0">Price</h4>
+                  <h4 className="my-0">Remove</h4>
                 </div>
               </li>
               {/* Product List */}
@@ -63,15 +94,13 @@ export default function Checkout() {
                 checkout.map((item, index) => (
                   <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                     <div style={{ flex: 1, textAlign: "left" }}>
-                      <h6 className="text-muted">{item.product.name}</h6>
+                      <h6>{item.product.name}</h6>
                     </div>
                     <div style={{ flex: 1, textAlign: "center" }}>
                       <img src={`${baseUrl}/public/${item.product.image}`} alt={item.product.name} style={{ width: 60, height: 60, objectFit: "cover" }}/>
                     </div>
                     <div style={{ flex: 1, textAlign: "right" }}>
-                      <span className="text-muted">
-                        ${item.product.price || 0}
-                      </span>
+                        <button onClick={() => handleRemove(item.id)} className="btn btn-danger">Remove</button>
                     </div>
                   </li>
                 ))
@@ -79,7 +108,7 @@ export default function Checkout() {
                 <li className="list-group-item text-center text-muted">No products in quote</li>
               )}
               {/* Total */}
-              <li className="list-group-item d-flex justify-content-between">
+              {/* <li className="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
                 <strong>
                   $
@@ -87,10 +116,13 @@ export default function Checkout() {
                     .reduce((sum, item) => sum + (item.product.price || 0), 0)
                     .toFixed(2)}
                 </strong>
-              </li>
+              </li> */}
             </ul>
             <div className="flex justify-end" style={{ float: "right" }}>
-              <Link className="btn btn-primary" disabled={checkout.length === 0} to="/sendquote" onClick={() => localStorage.setItem("quote_products", JSON.stringify(checkout))}>Send Quote</Link>
+                {
+                    checkout.length === 0 ?
+                    ( <button className="btn btn-primary" disabled> Send Quote </button> ): ( <Link className="btn btn-primary" to="/sendquote" onClick={() => localStorage.setItem("quote_products", JSON.stringify(checkout)) } > Send Quote </Link>)
+                }
             </div>
           </main>
           <footer className="py-4 bg-light mt-auto">

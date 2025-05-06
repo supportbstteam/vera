@@ -28,7 +28,12 @@ export default function Category() {
     } catch (error) {
       console.error("Error fetching category data:", error);
       if (error.response?.status === 401) {
-        navigate("");
+        // Unauthorized (invalid/expired token)
+        navigate("/");
+      } else if (error.response?.status === 403) {
+        // Forbidden (not allowed based on role)
+        alert("You are not authorized to access this page.");
+        navigate("/");
       }
       setLoading(false);
     }

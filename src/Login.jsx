@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useAuth } from './authContext'; // Adjust path as needed
 export default function Login() {
-  const baseUrl = process.env.REACT_APP_API_URL
+  const baseUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [token, setToken] = useState(null);
   const [serverErrors, setServerErrors] = useState({});
   const [formErrors, setFormErrors] = useState({});
-  const [emailErr, setEmailErr] = useState("");
-  const [passwordErr, setPasswordErr] = useState("");
-  const [active, setActive] = useState("");
+  const [emailErr, setEmailErr] = useState('');
+  const [passwordErr, setPasswordErr] = useState('');
+  const [active, setActive] = useState('');
   const validate = () => {
     const errors = {};
     if (!email) {
@@ -31,9 +32,9 @@ export default function Login() {
     setPasswordErr('');
     const errors = validate();
     if (Object.keys(errors).length > 0) {
-        setFormErrors(errors);
-        return;
-      }
+      setFormErrors(errors);
+      return;
+    }
     setServerErrors({});
     try {
       const response = await fetch(`${baseUrl}/api/login`, {
@@ -41,29 +42,36 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      console.log(data.data.status);
       if (data?.data?.status === "0") {
-        navigate('/');
         setActive(data.data.message);
+        navigate('/');
         return;
       }
       if (data.status_error === 'password') {
         setPasswordErr(data.message);
-      }
-      if(data.data.status === "0") {
-        navigate('/');
+        return;
       }
       if (response.ok) {
+        console.log(data.data.role);
+        const role = data.data.role == "1" ? "customer" : "supplier";
+        const user = { role, token: data.data.token };
+        localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', data.data.token);
         localStorage.setItem('email', data.data.email);
-        setToken(data.token);
-        navigate('/category');
+        localStorage.setItem('id', data.data.id);
+        localStorage.setItem('role', data.data.role);
+        setUser(user);
+        setToken(data.data.token);
+        if (role === "customer") {
+          console.log("mughis");
+          navigate('/category');
+        } else {
+          console.log("raghib");
+          navigate('/supplier/dashboard');
+        }
       } else if (response.status === 422) {
         setServerErrors(data.errors || {});
       } else {

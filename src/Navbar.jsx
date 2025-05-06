@@ -24,6 +24,7 @@ export default function Navbar() {
               <i className="fas fa-user fa-fw"></i>
             </a>
             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" >
+            <li><Link className="dropdown-item" to="/customer/dashboard">Dashboard</Link></li>
               <li><Link className="dropdown-item" to="/checkout">{" "}{email}</Link></li>
               <li><Link className="dropdown-item" to="/checkout">Checkout</Link></li>
               <li><Link className="dropdown-item" to="/Logout">Logout</Link></li>

@@ -18,6 +18,9 @@ export default function Logout() {
           },
         });
         localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('email');
+        localStorage.removeItem('id');
         navigate('/');
       } catch (error) {
         console.error('Error logging out:', error);

@@ -17,14 +17,10 @@ export default function SendQuote() {
   const { slug } = useParams();
   const quoteSent = async () => {
     if (hasSent.current) return;
-    hasSent.current = true; 
+    hasSent.current = true;
     const stored = localStorage.getItem("quote_products");
     const selectedProducts = stored ? JSON.parse(stored) : [];
     const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/");
-      return;
-    }
     if (selectedProducts.length === 0) {
       Swal.fire({
         icon: "warning",
@@ -96,12 +92,7 @@ export default function SendQuote() {
 
     <hr />
     <p className="mb-0"><strong>Success:</strong> {message}</p>
-    <button
-      type="button"
-      className="btn-close position-absolute top-0 end-0 m-3"
-      onClick={() => navigate(-1)}
-      aria-label="Close"
-    ></button>
+    <button type="button" className="btn-close position-absolute top-0 end-0 m-3" onClick={() => navigate(-1)} aria-label="Close" ></button>
   </div>
 )}
 </main>
