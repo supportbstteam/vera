@@ -18,7 +18,7 @@ export default function SupplierQuoteSent() {
         navigate("/");
         return;
       }
-     const response = await axios.get(`baseUrl/api/supplier/quote/sent/price/${id}`, {
+     const response = await axios.get(`${baseUrl}/api/supplier/quote/sent/price/${id}`, {
         headers: {
         Authorization: `Bearer ${token}`
         },
