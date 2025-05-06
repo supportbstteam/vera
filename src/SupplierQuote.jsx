@@ -20,7 +20,7 @@ export default function SupplierQuote() {
         navigate("/");
         return;
       }
-     const response = await axios.get(`http://127.0.0.1:8000/api/supplier/quote/${id}`, {
+     const response = await axios.get(`baseUrl/api/supplier/quote/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`
         },
