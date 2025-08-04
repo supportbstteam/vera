@@ -27,7 +27,8 @@ const Button = ({
       "bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
     secondary:
       "bg-secondary text-white hover:text-gray-800 hover:bg-secondary/50",
-    outline: "border border-stock text-white hover:bg-primary"
+    outline: "border border-stock text-white hover:bg-primary",
+    gray: "bg-gray-200 text-gray-800 hover:bg-gray-300",
   }
 
   const content = (

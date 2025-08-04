@@ -65,17 +65,21 @@ const Header = () => {
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
+            <Link href="/login" className="text-sm text-white cursor-pointer">
+              <span className="hidden md:inline">Login</span>
+            </Link>
             <span 
             className="text-sm text-white cursor-pointer"
             onClick={() => setOpen(true)}
             >Login</span>
-            <Button>Create Account</Button>
+            <Link href="/register" className="text-sm text-white cursor-pointer">
+              <Button >Create Account</Button>
+            </Link>
             <Dialog open={open} onClose={()=>setOpen(true)} className="relative z-10">
               <DialogBackdrop
                 transition
                 className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
               />
-
               <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                   <DialogPanel
@@ -126,7 +130,7 @@ const Header = () => {
         <Search size={20} color="#C61AFF" />
         <p className="text-sm">Shop By Category</p>
         <Tally1 strokeWidth={0.75} size={44} color="#fff" className="ml-4" />
-        {
+        {/* {
           categories.map((item, index) => { 
             return(
               
@@ -159,7 +163,7 @@ const Header = () => {
             )      
 
           })
-        }
+        } */}
       </nav>
     </header>
   )
