@@ -17,6 +17,7 @@ const CTA = () => {
             icon={<ArrowRight size={16} />}
             iconPosition="right"
             href="/join"
+            color="black"
           >
             Send your first quote
           </Button>

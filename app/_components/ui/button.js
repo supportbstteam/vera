@@ -11,7 +11,8 @@ const Button = ({
   fullWidth,
   disabled,
   className,
-  onClick
+  onClick,
+  color
 }) => {
   const baseStyles =
     "inline-flex items-center justify-center rounded-md font-medium transition-colors"
@@ -22,9 +23,17 @@ const Button = ({
     lg: "px-5 py-3 text-lg"
   }
 
+  const colorStyles = {
+    black: "text-black",
+    white: "text-white",
+    gray: "text-gray-400",
+    primary: "text-primary",
+    secondary: "text-secondary"
+  }
+
   const variantStyles = {
     primary:
-      "bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
+      "bg-primary hover:text-gray-800 hover:bg-primary/80 hover:text-white",
     secondary:
       "bg-secondary text-white hover:text-gray-800 hover:bg-secondary/50",
     outline: "border border-stock text-white hover:bg-primary",
@@ -48,6 +57,7 @@ const Button = ({
     baseStyles,
     sizeStyles[size],
     variantStyles[variant],
+    colorStyles[color],
     fullWidth && "w-full",
     disabled && "opacity-50 cursor-not-allowed",
     className
