@@ -58,7 +58,7 @@ const AuthForm = ({ type }) => {
       <div className="flex flex-col items-center ">
         <p>Or</p>
       </div>
-      <Button variant="gray">{type === "register" ? "Register" : "Login"} with Google</Button>
+      <Button variant="gray" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >{type === "register" ? "Register" : "Login"} with Google</Button>
     </div>
   );
 };

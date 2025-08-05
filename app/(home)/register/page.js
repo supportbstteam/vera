@@ -23,8 +23,8 @@ const page = () => {
             </p>
             <TestimonialCard />
           </div>
-          <div className=" p-8 py-12">
-            <div>
+          <div className=" p-8 py-12 flex flex-col items-center justify-center">
+            <div className="mb-8 w-full">
               <h1 className="h2">Create your VERA account</h1>
               <p className="mb-4">Start comparing quotes and getting the best deals today.</p>
               <div className="border-1 border-gray-400 my-4 mb-8 "></div>

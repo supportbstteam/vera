@@ -1,34 +1,36 @@
-"use client"
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import SearchBar from "../ui/searchBar"
-import { ChevronDown, Search, Tally1 } from "lucide-react"
-import Link from 'next/link'
-import Image from "next/image"
-import Button from "../ui/button"
+"use client";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import SearchBar from "../ui/searchBar";
+import { ChevronDown, Search, Tally1 } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import Button from "../ui/button";
 
-import Api from '@/_library/Api';
+import Api from "@/_library/Api";
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
 
 const Header = () => {
+  const [categories, set_categories] = useState([]);
+  const [openIndex, setOpenIndex] = useState(null);
+  const [open, setOpen] = useState(false);
 
-  const [categories, set_categories] = useState([])
-  const [openIndex, setOpenIndex] = useState(null)
-  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    fetchCategoryData();
+  }, []);
 
-  useEffect(() => {       
-      fetchCategoryData()  
-  },[]);  
+  const fetchCategoryData = async () => {
+    const res = await Api.categories({});
+    const resData = res.data;
+    set_categories(resData.data);
+  };
 
-  const fetchCategoryData = async () => {     
-    const res = await Api.categories({       
-    }); 
-    const resData = res.data     
-    set_categories(resData.data) 
-  }
-
-  const options = []
+  const options = [];
 
   // const options = [
   //   { name: 'option1', link: '#' },
@@ -37,45 +39,54 @@ const Header = () => {
   //   { name: 'option4', link: '#' },
   //   { name: 'option5', link: '#' },
   // ]
-  
-  const dropdownRef = useRef(null)
+
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setOpenIndex(null)
+        setOpenIndex(null);
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="hidden md:block  border-b bg-black">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 justify-between w-full">
           <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={162}
-            height={86}
-            className="w-auto h-12"
-          />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={162}
+              height={86}
+              className="w-auto h-12"
+            />
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
             <Link href="/login" className="text-sm text-white cursor-pointer">
               <span className="hidden md:inline">Login</span>
             </Link>
-            <span 
-            className="text-sm text-white cursor-pointer"
-            onClick={() => setOpen(true)}
-            >Login</span>
-            <Link href="/register" className="text-sm text-white cursor-pointer">
-              <Button >Create Account</Button>
+            {/* <span
+              className="text-sm text-white cursor-pointer"
+              onClick={() => setOpen(true)}
+            >
+              Login
+            </span> */}
+            <Link
+              href="/register"
+              className="text-sm text-white cursor-pointer"
+            >
+              <Button>Create Account</Button>
             </Link>
-            <Dialog open={open} onClose={()=>setOpen(true)} className="relative z-10">
+            <Dialog
+              open={open}
+              onClose={() => setOpen(true)}
+              className="relative z-10"
+            >
               <DialogBackdrop
                 transition
                 className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
@@ -88,15 +99,18 @@ const Header = () => {
                   >
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                       <div className="sm:flex sm:items-start">
-                        
                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                          <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
+                          <DialogTitle
+                            as="h3"
+                            className="text-base font-semibold text-gray-900"
+                          >
                             Deactivate account
                           </DialogTitle>
                           <div className="mt-2">
                             <p className="text-sm text-gray-500">
-                              Are you sure you want to deactivate your account? All of your data will be permanently removed.
-                              This action cannot be undone.
+                              Are you sure you want to deactivate your account?
+                              All of your data will be permanently removed. This
+                              action cannot be undone.
                             </p>
                           </div>
                         </div>
@@ -166,6 +180,6 @@ const Header = () => {
         } */}
       </nav>
     </header>
-  )
-}
-export default Header
+  );
+};
+export default Header;
