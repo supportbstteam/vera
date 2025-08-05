@@ -6,19 +6,19 @@ const TextMedia = () => {
   const features = [
     {
       icon: <CircleCheckBig size={20} />,
-      title: "Give you the lowest possible prices on every purchase."
+      title: "Choose a product category."
     },
     {
       icon: <CircleCheckBig size={20} />,
-      title: "Receive quotes within hours, to make decisions quickly."
+      title: "Verified suppliers are then notified instantly."
     },
     {
       icon: <CircleCheckBig size={20} />,
-      title: "No hidden charges or platform fees for buyers."
+      title: "Receive multiple quotes - including from Flashy Cactus"
     },
     {
       icon: <CircleCheckBig size={20} />,
-      title: "No hidden charges or platform fees for buyers."
+      title: "Compare & choose - all in under 24 hours"
     }
   ]
   return (
@@ -26,18 +26,14 @@ const TextMedia = () => {
       <div className=" grid grid-cols-1 md:grid-cols-[6fr_4fr] gap-8 items-center ">
         <div className="flex flex-col items-start justify-center gap-4 ">
           <h2 className=" mb-0 h2  uppercase">
-            Why Choose Why Choose <br />{" "}
-            <span className="text-primary">VERA Why Choose?</span>
+            SMARTER PRODUCT SOURCING <br />{" "}
+            <span className="text-primary">STARTS WITH VERA</span>
           </h2>
           <p>
-            We believe buying should be simple, transparent, and empowering.
-            Instead of spending hours comparing prices across websites. One
-            quote request and let vendors compete for your business. This means
-            you save time and always know you’re getting the best deal
-            available.
+            Vera is your central platform for fast, automated product quotes. Forget emailing suppliers one by one. Just tell Vera what you need and it instantly notifies verified suppliers, gathers and compares their offers alongside Flashy Cactus pricing.
           </p>
-          <p>transparent, and empowering. </p>
-          <p className="font-bold text-xl">transparent, and empowering. </p>
+          <p>One platform. Zero hassle.</p>
+          <p className="font-bold text-xl">Get the best deal in just 4 simple steps.</p>
           <ul className="space-y-3">
             {features.map((item, index) => (
               <li
@@ -73,5 +69,4 @@ const TextMedia = () => {
     </div>
   )
 }
-
 export default TextMedia

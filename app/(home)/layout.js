@@ -11,7 +11,7 @@ export const metadata = {
 export default function HomeLayout({ children }) {
   return (
     <>    
-    <HeaderMobile />
+    {/* <HeaderMobile /> */}
     <Header />
     {children}
     <Footer />

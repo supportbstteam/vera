@@ -21,7 +21,7 @@ export async function middleware(request){
       
       //== redirect to login === 
       if(!token){   
-        return NextResponse.redirect(new URL('/login', request.url));
+        //return NextResponse.redirect(new URL('/login', request.url));
       }
   }    
 

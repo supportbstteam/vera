@@ -9,49 +9,6 @@ import Link from 'next/link'
 import Image from "next/image"
 import Api from '@/_library/Api';
 
-const testimonials1 = [
-  {
-    name: "SSG Maria T.",
-    designation: "Buyer",
-    star: 5,
-    image: "/images/maria.jpg",
-    description:
-      "I love that I don't have to wonder if I'm overpaying. VERA brings the vendors to me, and I choose the price that works for my budget."
-  },
-  {
-    name: "SSG Maria T.",
-    designation: "Buyer",
-    star: 5,
-    image: "/images/maria.jpg",
-    description:
-      "I love that I don't have to wonder if I'm overpaying. VERA brings the vendors to me, and I choose the price that works for my budget."
-  },
-  {
-    name: "SSG Maria T.",
-    designation: "Buyer",
-    star: 5,
-    image: "/images/maria.jpg",
-    description:
-      "I love that I don't have to wonder if I'm overpaying. VERA brings the vendors to me, and I choose the price that works for my budget."
-  },
-  {
-    name: "SSG Maria T.",
-    designation: "Buyer",
-    star: 5,
-    image: "/images/maria.jpg",
-    description:
-      "I love that I don't have to wonder if I'm overpaying. VERA brings the vendors to me, and I choose the price that works for my budget."
-  },
-  {
-    name: "SSG Maria T.",
-    designation: "Buyer",
-    star: 5,
-    image: "/images/maria.jpg",
-    description:
-      "I love that I don't have to wonder if I'm overpaying. VERA brings the vendors to me, and I choose the price that works for my budget."
-  }
-]
-
 const Testimonial = () => {
 
   const [testimonials, set_testimonials] = useState([])

@@ -6,39 +6,38 @@ export default function Why() {
   const steps = [
     {
       number: "01",
-      title: "Select Product",
+      title: "Save Time",
       desc:
-        "Browse our categories or search directly — find exactly what you need in seconds."
+        "No more back and forth emails"
     },
     {
       number: "02",
-      title: "Send a Quote Request",
+      title: "Fully Automated",
       desc:
-        "With one click, your request goes to multiple verified vendors across the platform."
+        "From request to quote"
     },
     {
       number: "03",
       title: "Choose the Best Price",
-      desc:
-        "Compare vendor offers, pick the best deal, and complete your purchase — all in one place."
+      desc:"Suppliers blind bid on your requests"
     },
     {
       number: "04",
-      title: "Select Product",
+      title: "Wide Supplier Reach",
       desc:
-        "Browse our categories or search directly — find exactly what you need in seconds."
+        "Connect to 100s of pre-vetted vendors"
     },
     {
       number: "05",
-      title: "Send a Quote Request",
+      title: "All-in-OneDashboard",
       desc:
-        "With one click, your request goes to multiple verified vendors across the platform."
+        "Search, compare and choose all in one place"
     },
     {
       number: "06",
-      title: "Choose the Best Price",
+      title: "No Hidden Fees",
       desc:
-        "Compare vendor offers, pick the best deal, and complete your purchase — all in one place."
+        "No buyer charges, no surprises"
     }
   ]
   return (
@@ -57,7 +56,7 @@ export default function Why() {
 
       <div className="max-w-7xl relative z-10 px-4 py-8 md:py-16 mx-auto text-center flex flex-col items-center">
         {/* Headings */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-2 uppercase">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-12 uppercase">
           Why Choose <span className="text-primary">Vera?</span>
         </h2>
 

@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(function (config) {
   //config.headers["Content-Type"] = "application/json";   
-  let access_token = localStorage.getItem(process.env.APP_PREFIX + 'access_token') ?? '';
+  let access_token = localStorage.getItem(process.env.APP_PREFIX + 'token') ?? ''; 
   config.headers["Authorization"] = "Bearer " + access_token;
   return config;
 });
@@ -18,8 +18,8 @@ axiosInstance.interceptors.response.use(
       try {
           const { response } = error; 
           if(typeof response !== "undefined" && response.status === 401){  
-            localStorage.removeItem(process.env.APP_PREFIX + 'access_token');	            
-            localStorage.removeItem(process.env.APP_PREFIX + 'customer_id');            
+            localStorage.removeItem(process.env.APP_PREFIX + 'token');	            
+            localStorage.removeItem(process.env.APP_PREFIX + 'token_id');            
           }
           return response
       } catch (err) {
@@ -47,23 +47,13 @@ let form_header = {
 export default {
 
   //=== authentication apis ===
-  login: async (obj) => {     
-      return await axiosInstance.post(
-        "/auth/login",
-        {
-          'email':obj.email,
-          'password':obj.password,
-        },
-        {headers:json_header}                
-      )
-      .catch((err) => { console.log('err', err); });    
-  },  
   register: async (obj) => { 
       return await axiosInstance.post(
-        "/auth/register",
+        "/register",
         {
-          'role_id':obj.role_id,
-          'name':obj.name,
+          'role':obj.role,
+          'first_name':obj.first_name,
+          'last_name':obj.last_name,
           'email':obj.email,
           'password':obj.password,
         },
@@ -71,9 +61,20 @@ export default {
       )
       .catch((err) => { console.log('err', err); });    
   }, 
+  login: async (obj) => {     
+      return await axiosInstance.post(
+        "/login",
+        {
+          'email':obj.email,
+          'password':obj.password,
+        },
+        {headers:json_header}                
+      )
+      .catch((err) => { console.log('err', err); });    
+  },    
   verifyemail: async (obj) => { 
       return await axiosInstance.post(
-        "/auth/verifyemail",
+        "/verifyemail",
         {
           'token':obj.token,          
         },
@@ -83,7 +84,7 @@ export default {
   }, 
   forgot_password: async (obj) => { 
     return await axiosInstance.post(
-      "/auth/forgot-password",
+      "/forgot-password",
       {
         'email':obj.email,        
       },  
@@ -93,7 +94,7 @@ export default {
   }, 
   reset_password: async (obj) => { 
     return await axiosInstance.post(
-      "/auth/reset-password",
+      "/reset-password",
       {        
         'token':obj.token,        
         'password':obj.password       
