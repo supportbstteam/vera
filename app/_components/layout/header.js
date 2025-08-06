@@ -14,6 +14,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import ProfileButton from "../dashboard/ProfileButton";
 
 const Header = () => {
   const [categories, set_categories] = useState([]);
@@ -67,6 +68,7 @@ const Header = () => {
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
+            <ProfileButton/>
             <Link href="/login" className="text-sm text-white cursor-pointer">
               <span className="hidden md:inline">Login</span>
             </Link>
