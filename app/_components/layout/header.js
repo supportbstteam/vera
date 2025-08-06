@@ -68,16 +68,13 @@ const Header = () => {
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
-            <ProfileButton/>
+            <ProfileButton />
             <Link href="/login" className="text-sm text-white cursor-pointer">
               <span className="hidden md:inline">Login</span>
             </Link>
-            {/* <span
-              className="text-sm text-white cursor-pointer"
-              onClick={() => setOpen(true)}
-            >
-              Login
-            </span> */}
+            <Link href="/testing" className="text-sm text-white cursor-pointer">
+              <span className="text-sm text-white cursor-pointer">testing</span>
+            </Link>
             <Link
               href="/register"
               className="text-sm text-white cursor-pointer"

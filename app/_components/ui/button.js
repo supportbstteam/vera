@@ -20,7 +20,8 @@ const Button = ({
   const sizeStyles = {
     sm: "px-3 py-1 text-sm",
     md: "px-4 py-2 text-base",
-    lg: "px-5 py-3 text-lg"
+    lg: "px-5 py-3 text-lg",
+    full: "w-full px-4 py-2 text-base"
   }
 
   const colorStyles = {
@@ -35,8 +36,8 @@ const Button = ({
     primary:
       "bg-primary hover:text-gray-800 hover:bg-primary/80 hover:text-white",
     secondary:
-      "bg-secondary text-white hover:text-gray-800 hover:bg-secondary/50",
-    outline: "border border-stock text-white hover:bg-primary",
+      "bg-black text-primary hover:text-gray-800 hover:bg-secondary/50",
+    outline: "border border-stock text-black hover:bg-primary",
     gray: "bg-gray-200 text-gray-800 hover:bg-gray-300",
   }
 
