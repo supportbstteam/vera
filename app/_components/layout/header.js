@@ -1,13 +1,11 @@
 "use client"
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback  } from 'react';
 import SearchBar from "../ui/searchBar"
 import { ChevronDown, Search, Tally1 } from "lucide-react"
 import Link from 'next/link'
 import Image from "next/image"
-import Button from "../ui/button"
-
+import ProfileButton from "./ProfileButton";
 import Api from '@/_library/Api';
-
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser } from '@/_library/redux/slice/userReducer'
 
@@ -36,7 +34,6 @@ const Header = () => {
   }
 
   const options = []
-
   // const options = [
   //   { name: 'option1', link: '#' },
   //   { name: 'option2', link: '#' },
@@ -45,17 +42,16 @@ const Header = () => {
   //   { name: 'option5', link: '#' },
   // ]
   
-  const dropdownRef = useRef(null)
-
+  const dropdownRef = useRef(null);
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setOpenIndex(null)
+        setOpenIndex(null);
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="hidden md:block  border-b bg-black">
@@ -72,12 +68,7 @@ const Header = () => {
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
-            <Link href="/login" className="text-sm text-white cursor-pointer">
-              <span className="hidden md:inline">Login</span>
-            </Link>
-            <Link href="/register" className="text-sm text-white cursor-pointer">
-              <Button className="cursor-pointer">Create Account</Button>
-            </Link>
+           <ProfileButton/> 
           </div>
         </div>
       </div>

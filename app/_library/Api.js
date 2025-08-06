@@ -111,9 +111,12 @@ export default {
     )
     .catch((err) => { console.log('err', err); });   
   },   
-  logout: async () => { 
-      return await axiosInstance.get(
+  logout: async (obj) => { 
+      return await axiosInstance.post(
         "/private/logout", 
+        {        
+        'token_id':obj.token_id,  
+        },
         {headers:json_header}               
       )
       .catch((err) => { console.log('err', err); });    

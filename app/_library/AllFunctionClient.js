@@ -45,16 +45,16 @@ const AllFunctionClient = {
       keyValuePairs.push(`${encodeURIComponent(Object.keys(obj)[i])}=${encodeURIComponent(Object.values(obj)[i])}`);
     }
     return keyValuePairs.join('&');
-  },
-  getFormattedDate: (myDateTime)=> {    
-    return dayjs(myDateTime).format('D MMM, YYYY h:mm A'); // D MMM, YYYY h:mm A // MM-DD-YYYY, hh:mm A
-  },
+  },  
   getHourMinute: (myDateTime)=> {    
     return dayjs(myDateTime).format('hh:mm');
   },
-  getDateTime: (myDateTime)=> {    
-    return dayjs(myDateTime).format('YYYY-MM-DD hh:mm:ss');
+  getDate: (myDateTime)=> {    
+    return dayjs(myDateTime).format('MMMM D, YYYY');
   },
+  getDateTime: (myDateTime)=> {    
+    return dayjs(myDateTime).format('MMMM D, YYYY h:mm A');
+  },  
   currency: (amount)=>{
     return '$'+amount;
   },

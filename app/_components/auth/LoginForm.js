@@ -10,6 +10,8 @@ import SbButton from "@/_components/ui/SbButton";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser } from '@/_library/redux/slice/userReducer'
 
+import { saveTokenInCookie } from '@/actions'
+
 const LoginForm = () => {
 
   const __data = {	
@@ -86,7 +88,7 @@ const LoginForm = () => {
     }
 
     const handleSubmit = async(e)=>{
-          e.preventDefault();   
+      e.preventDefault();   
     
       if(validateForm()){	
         set_disablebutton(true)
@@ -101,11 +103,17 @@ const LoginForm = () => {
 
             const resData = res.data;           
             const token = resData.token;  
-            const token_id = resData.token_id;  
+            const token_id = resData.token_id; 
+            const role = resData.data.role;   
+
+            await saveTokenInCookie(token)
+
             localStorage.setItem(process.env.APP_PREFIX + 'token', token);
             localStorage.setItem(process.env.APP_PREFIX + 'token_id', token_id);
+            localStorage.setItem(process.env.APP_PREFIX + 'role', role);
+
             dispatch(fetchUser()) 
-            router.push("/dashboard");  
+            router.push("/dashboard/profile");  
 
             set_data(__data)           
             set_disablebutton(false)
@@ -127,8 +135,7 @@ const LoginForm = () => {
   }	
 
   return (
-    <div className="grid gap-6">
-      
+    <div className="grid gap-6">      
 
       {common_error &&            
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">              
@@ -194,7 +201,7 @@ const LoginForm = () => {
       </div>
 
       <div className={`grid grid-cols-1 mb-3`}>      
-      <Button variant="gray" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Login with Google</Button>
+      <Button variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Login with Google</Button>
       </div>
     </form>
     </div>

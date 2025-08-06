@@ -1,28 +1,55 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
+import axios from "axios";
+
 export async function middleware(request){  
 
   const cookieStore = await cookies()
-  let token = cookieStore.get('token') ?? '' 
-      token = token['value'] ?? ''
+  let tokenObj = cookieStore.get('token') ?? '' 
+  let token = tokenObj['value'] ?? ''   
 
-  const path = request.nextUrl.pathname  
+  const baseURL = process.env.API_URL;
+  const axiosInstance = axios.create({
+    baseURL: baseURL, 
+  });
+  axiosInstance.interceptors.request.use(function (config){     
+    config.headers["Authorization"] = "Bearer " + token;
+    return config;
+  });
 
-  let header_token = request.headers.get("authorization") ?? ''
-      header_token = header_token.replace("Bearer", "");   
-      header_token = header_token.trim()   
+  let json_header = {
+    "Content-Type":"application/json",
+  }  
 
 
   //#########
   //  logic for user dashboard middleware
   //#########
-  if(request.nextUrl.pathname.startsWith('/dashboard')){
-      
-      //== redirect to login === 
-      if(!token){   
-        //return NextResponse.redirect(new URL('/login', request.url));
+  if(request.nextUrl.pathname.startsWith('/dashboard')){     
+    
+      if(!token){
+        return NextResponse.redirect(new URL('/login', request.url));
       }
+
+      try {
+          const response = await axiosInstance.get(
+            "/private/me/",
+            {headers:json_header}        
+          )         
+          if(response.status === 200){     
+            console.log('response:',response)         
+              return NextResponse.next();
+          }
+          else{
+              return NextResponse.redirect(new URL('/login', request.url));
+          }
+      } catch (error) {
+          // Token is invalid or expired, redirect to login
+          console.error('Token verification failed:', error);
+          return NextResponse.redirect(new URL('/login', request.url));
+      }
+     
   }    
 
 }

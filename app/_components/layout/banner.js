@@ -12,7 +12,7 @@ const Banner = ({ bgImage }) => {
       style={{
         backgroundImage: ` url('/assets/bg.jpg'), linear-gradient(135deg, #000, #000)`,
       }}
-      className="relative bg-top bg-no-repeat bg-cover                                                                                                                           md:bg-cover bg-[#282828] "
+      className="relative bg-top bg-no-repeat bg-cover md:bg-cover bg-[#282828] "
     >
       <img
         src="/assets/bg.png"
@@ -20,7 +20,7 @@ const Banner = ({ bgImage }) => {
         className="absolute inset-0 w-full h-full object-cover z-[-1]"
       />
       <div className="absolute inset-0 bg-[#000000] opacity-50 z-0"></div>
-      <div className="relative z-10 max-w-[1420px] mx-auto flex items-center">
+      <div className="relative z-1 max-w-[1420px] mx-auto flex items-center">
         <div className="max-w-7xl min-h-[60vh] mx-auto py-4 px-4 flex flex-col items-center justify-center text-center">
           {/* <h1 className='text-4xl text-white font-bold mb-8'>One product. Multiple prices.</h1> */}
           <h1 className="h1 mt-52 sm:mt-0 sm:mb-8 text-white">
