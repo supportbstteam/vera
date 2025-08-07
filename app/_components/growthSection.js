@@ -32,7 +32,7 @@ const GrowthSection = () => {
             icon={<ArrowRight size={16} />}
             iconPosition="right"
             href="/join"
-            color="black"
+           
           >
             Partner with Us
           </Button>
@@ -52,7 +52,7 @@ const GrowthSection = () => {
             icon={<ArrowRight size={16} />}
             iconPosition="right"
             href="/join"
-            color="black"
+            
           >
             Join as a Seller
           </Button>

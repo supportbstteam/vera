@@ -49,6 +49,12 @@ p{
   .h3{
     @apply text-2xl font-semibold mb-4
   }
+  .Active{
+    @apply bg-green-100 text-green-700;
+  }
+  .Closed {
+    @apply bg-red-100 text-red-600;
+  }
 }
 
 /* error */

@@ -82,7 +82,7 @@ export default function Why() {
 
         {/* CTA Button */}
 
-        <Button icon={<ArrowRight />} color="black">Send Your First Quote</Button>
+        <Button icon={<ArrowRight />} >Send Your First Quote</Button>
       </div>
     </section>
   )
