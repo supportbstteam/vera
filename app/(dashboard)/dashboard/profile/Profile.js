@@ -4,10 +4,13 @@ import Link from 'next/link'
 import Button from "@/_components/ui/button"  
 import Image from "next/image"
 import Profile_card from "./Profile_card"
+import DashboardNavigation from "@/_components/layout/DashboardNavigation"
 
 const Profile = () => {
 
   return (
+    <div className="max-w-7xl m-auto py-16 flex flex-col gap-6">
+        <DashboardNavigation />
     <div className="border border-stock rounded-md divide-y divide-stock p-6">
 
       <div className="flex justify-between items-center pb-6">
@@ -48,6 +51,7 @@ const Profile = () => {
 
           </div>
       </div>
+    </div>
     </div>
   )
 }

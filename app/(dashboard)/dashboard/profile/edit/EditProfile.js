@@ -6,7 +6,7 @@ import { MoveLeft } from "lucide-react"
 import Input from "@/_components/ui/Input" 
 import Textarea from "@/_components/ui/Textarea"  
 import Button from "@/_components/ui/button"  
-
+import DashboardNavigation from "@/_components/layout/DashboardNavigation"
 
 import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
@@ -25,10 +25,8 @@ const EditProfile = () => {
   const MySwal = withReactContent(Swal)  
   const formRef = useRef(null);
 
-  // const dispatch     = useDispatch()
-  // const userState    = useSelector( (state)=> state.user )  
-  // const user         = (userState.data) ? userState.data : {};  
-
+  const dispatch  = useDispatch()
+  
   const __data = {	 
     id: '',      
     first_name: '',   
@@ -63,10 +61,10 @@ const EditProfile = () => {
           set_data({
             ...data, 
             id: resData.id,   
-            first_name: resData.first_name,   
-            last_name: resData.last_name,     
-            email: resData.email,   
-            mobile: resData.mobile,   
+            first_name: (resData.first_name === null) ? '' : resData.first_name,  
+            last_name: (resData.last_name === null) ? '' : resData.last_name,  
+            email: (resData.email === null) ? '' : resData.email,  
+            mobile: (resData.mobile === null) ? '' : resData.mobile,  
             address: (resData.address === null) ? '' : resData.address,   
           })
           
@@ -179,17 +177,15 @@ const EditProfile = () => {
 
           const formData = new FormData(formRef.current); 
           formData.append("profile_image","");  
-          formData.append("id",data.id);  
+          //formData.append("id",data.id);  
           console.log('data:',data)    
 
-          const res = await Api.update_customer_profile({  
+          const res = await Api.update_profile({  
               id: data.id,      
-              first_name: data.first_name,      
-              last_name: data.last_name,      
-              email:data.email,       
-              mobile: data.mobile,      
-              address: data.address,      
+              formData: formData, 
           }); 
+
+          console.log('res:',res) 
           
           if( res && (res.status === 200) ){ 
             const resData = res.data; 
@@ -214,7 +210,7 @@ const EditProfile = () => {
           
         } 
         catch (error) {
-          set_common_error('Register failed:', error)
+          set_common_error(error)
           set_disablebutton(false)
         }
 
@@ -223,9 +219,9 @@ const EditProfile = () => {
 
 
   return(
-
+    <div className="max-w-7xl m-auto py-16 flex flex-col gap-6">
+    <DashboardNavigation />
     <div className="border border-stock rounded-md  divide-stock p-6">
-
       <div className="flex justify-between items-center pb-6">
         <div>
           <p className="text-xl font-bold">My Profile</p>
@@ -237,9 +233,7 @@ const EditProfile = () => {
         </Link>
       </div>
 
-        <form encType="multipart/form-data" 
-        onSubmit={handleSubmit}
-        ref={formRef}>   
+        <form method='post' encType="mmultipart/form-data" ref={formRef}  onSubmit={handleSubmit}>   
         <div>
 
         <div className={`grid grid-cols-1 sm:grid-cols-2 gap-6`}>
@@ -338,7 +332,7 @@ const EditProfile = () => {
         </div>
         </div>
         </form>
-
+        </div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 // components/QuotationList.tsx
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
+import DashboardNavigation from "@/_components/layout/DashboardNavigation"
 
 const orders = [
   {
@@ -61,6 +62,8 @@ const statusColors = {
 
 export default function QuotationList() {
   return (
+    <div className="max-w-7xl m-auto py-16 flex flex-col gap-6">
+        <DashboardNavigation />
     <div className="divide-y divide-stock">
       {orders.map((item, i) => (
         <div key={i}>
@@ -109,6 +112,7 @@ export default function QuotationList() {
           {/* {i !== orders.length - 1 && <hr className="my-4 border-[0.75px] border-stock" />} */}
         </div>
       ))}
+    </div>
     </div>
   )
 }

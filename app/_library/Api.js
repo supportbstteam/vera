@@ -121,18 +121,11 @@ export default {
       )
       .catch((err) => { console.log('err', err); });    
   },
-  update_customer_profile: async (obj) => {    
-    return await axiosInstance.patch(
-      "/private/update-profile/",
-      {
-          id: obj.id,      
-          first_name: obj.first_name,      
-          last_name: obj.last_name,      
-          email:obj.email,       
-          mobile: obj.mobile,      
-          address: obj.address,      
-      }, 
-      {headers:json_header}           
+  update_profile: async (obj) => {    
+    return await axiosInstance.post(
+      "/private/update-profile/"+obj.id,
+      obj.formData,       
+      {headers:form_header}   
     )
     .catch((err) => { console.log('err', err); });    
   },  
