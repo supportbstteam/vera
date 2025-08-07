@@ -18,7 +18,7 @@ export default function Why() {
     },
     {
       number: "03",
-      title: "Choose the Best Price",
+      title: "Competitive Pricing",
       desc:"Suppliers blind bid on your requests"
     },
     {
@@ -29,7 +29,7 @@ export default function Why() {
     },
     {
       number: "05",
-      title: "All-in-OneDashboard",
+      title: "All-in-One Dashboard",
       desc:
         "Search, compare and choose all in one place"
     },
@@ -65,24 +65,24 @@ export default function Why() {
           {steps.map((step, i) => (
             <div key={i} className="flex flex-col items-center text-center">
               {/* Circle number */}
-              <div className="w-28 h-28 rounded-full  text-black bg-white font-semibold text-lg flex flex-col justify-center items-center mb-4">
-                <div className="border-8 border-[#C61AFF] rounded-full w-26 h-26 flex flex-col justify-center items-center ">
-                  <span className="text-2xl">{step.number}</span>
-                  <span className="text-base font-normal">Step</span>
+              <div className="w-32 h-32 p-1 rounded-full border-3 border-[#DF9CEB] bg-white flex items-center justify-center mb-4">
+                <div className="w-28 h-28 border-10 border-[#DF9CEB] rounded-full bg-white flex items-center justify-center">
+                  <span className="text-4xl font-semibold text-black">{step.number}</span>
                 </div>
               </div>
+
               {/* Title + Desc */}
-              <h3 className="text-base font-semibold text-white mb-1">
+              <h3 className="text-lg font-semibold text-white mb-1">
                 {step.title}
               </h3>
-              <p className="text-xs text-gray-300">{step.desc}</p>
+              <p className="text-sm text-gray-300">{step.desc}</p>
             </div>
           ))}
         </div>
 
         {/* CTA Button */}
 
-        <Button icon={<ArrowRight />}>Send Your First Quote</Button>
+        <Button icon={<ArrowRight />} >Send Your First Quote</Button>
       </div>
     </section>
   )

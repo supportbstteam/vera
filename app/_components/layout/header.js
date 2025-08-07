@@ -68,7 +68,7 @@ const Header = () => {
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
-           <ProfileButton/> 
+           <ProfileButton /> 
           </div>
         </div>
       </div>

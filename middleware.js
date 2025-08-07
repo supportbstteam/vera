@@ -37,16 +37,13 @@ export async function middleware(request){
             "/private/me/",
             {headers:json_header}        
           )         
-          if(response.status === 200){     
-            console.log('response:',response)         
+          if(response.status === 200){  
               return NextResponse.next();
           }
           else{
               return NextResponse.redirect(new URL('/login', request.url));
           }
-      } catch (error) {
-          // Token is invalid or expired, redirect to login
-          console.error('Token verification failed:', error);
+      } catch (error) {        
           return NextResponse.redirect(new URL('/login', request.url));
       }
      

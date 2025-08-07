@@ -15,10 +15,10 @@ const Button = ({
   color
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-md font-medium transition-colors"
+    "inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer"
 
   const sizeStyles = {
-    sm: "px-3 py-1 text-sm",
+    sm: "px-3 py-2 text-sm",
     md: "px-4 py-2 text-base",
     lg: "px-5 py-3 text-lg",
     full: "w-full px-4 py-2 text-base"
@@ -33,12 +33,11 @@ const Button = ({
   }
 
   const variantStyles = {
-    primary:
-      "bg-primary hover:text-gray-800 hover:bg-primary/80 hover:text-white",
-    secondary:
-      "bg-black text-primary hover:text-gray-800 hover:bg-secondary/50",
+    primary:"border border-primary text-white bg-primary hover:bg-primary/80 hover:text-white",
+    secondary:"border border-stock text-black bg-black text-primary hover:bg-secondary/50",
     outline: "border border-stock text-black hover:bg-primary",
     gray: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+    icon: "bg-transparent text-gray-500 hover:bg-gray-100"    
   }
 
   const content = (

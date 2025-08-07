@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback} from "react";
+import React, { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { BaggageClaim, ChevronDown, LogOut, SettingsIcon, ShoppingBag, Tag, TreePalmIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -112,16 +112,17 @@ const ProfileButton = () => {
             </div>
         </button>
         :
-        <>
+        <>        
         <Link href="/login" className="text-sm text-white cursor-pointer">
             <span className="hidden md:inline">Login</span>
         </Link>
+        
         <Link href="/register" className="text-sm text-white cursor-pointer">
             <Button className="cursor-pointer">Create Account</Button>
-        </Link>
+        </Link>  
         </>
         
-    }    
+    }     
     </>
     
   );

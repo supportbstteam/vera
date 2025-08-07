@@ -121,11 +121,18 @@ export default {
       )
       .catch((err) => { console.log('err', err); });    
   },
-  update_profile: async (obj) => { 
+  update_customer_profile: async (obj) => {    
     return await axiosInstance.patch(
-      "/private/profile/"+obj._id,
-      obj.formData,     
-      {headers:form_header}           
+      "/private/update-profile/",
+      {
+          id: obj.id,      
+          first_name: obj.first_name,      
+          last_name: obj.last_name,      
+          email:obj.email,       
+          mobile: obj.mobile,      
+          address: obj.address,      
+      }, 
+      {headers:json_header}           
     )
     .catch((err) => { console.log('err', err); });    
   },  
@@ -180,11 +187,8 @@ export default {
       {headers:json_header}    
     )
     .catch((err) => { console.log('err', err); });    
-  },  
-  
-  //=== company-user ===
-  
-  
+  },    
+  //=== company-user === 
 
 };
 
