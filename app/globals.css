@@ -6,7 +6,8 @@
   --foreground: #010101;
   --primary: #C61AFF;
   --secondary: #1a1a1a;
-  --stock: #959595;
+  --stock: #e2dede;
+  --gray: #959595;
   --font-Manrope-sans: 'Manrope', sans-serif;
   --font-Manrope-mono: 'Manrope', monospace;
 }
@@ -17,6 +18,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-stock: var(--stock);
+  --color-gray: var(--gray);
 }
 
 /* @media (prefers-color-scheme: dark) {

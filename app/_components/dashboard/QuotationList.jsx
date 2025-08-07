@@ -1,6 +1,6 @@
 // components/QuotationList.tsx
 import Image from 'next/image'
-import Button from './button'
+import Button from '../ui/button'
 
 const orders = [
   {

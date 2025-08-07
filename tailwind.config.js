@@ -10,6 +10,7 @@ module.exports = {
         primary: "var(--primary)",
         secondary: "var(--secondary)",
         stock: "var(--stock)",
+        gray: "var(--gray)",
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "sans-serif"],
