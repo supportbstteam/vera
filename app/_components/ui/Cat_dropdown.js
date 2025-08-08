@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { useState } from "react"
 
-const Dropdown = function Dropdown({
+const Cat_dropdown = function Cat_dropdown({
   options = [],
   placeholder = "Select...",
   onChange
@@ -53,4 +53,4 @@ const Dropdown = function Dropdown({
     </div>
   )
 }
-export default Dropdown
+export default Cat_dropdown

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
-import Dropdown from "./Dropdown"
+import Cat_dropdown from "./Cat_dropdown"
 import Api from '@/_library/Api';
 
 // const Categories = [
@@ -48,7 +48,7 @@ const SearchBar = () => {
 
   return (
     <div className="relative w-full md:w-3/6 border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_10fr] items-center justify-start ">
-      <Dropdown options={categories} placeholder="All Categories" ref={dropdownRef} />
+      <Cat_dropdown options={categories} placeholder="All Categories" ref={dropdownRef} />
       <input
         type="text"
         placeholder="What  are you looking for ?"
