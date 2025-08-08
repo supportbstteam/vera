@@ -113,7 +113,7 @@ const LoginForm = () => {
             localStorage.setItem(process.env.APP_PREFIX + 'role', role);
 
             dispatch(fetchUser()) 
-            router.push("/dashboard/profile");  
+            router.push("/dashboard");  
 
             set_data(__data)           
             set_disablebutton(false)

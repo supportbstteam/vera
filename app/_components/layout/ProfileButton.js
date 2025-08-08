@@ -20,6 +20,14 @@ const ProfileButton = () => {
   const user         = (userState.data) ? userState.data : {};
 
   const [isOpen, setIsOpen] = useState(false);
+  const [role, setRole]  = useState("") 
+    
+  useEffect(() => {    
+    const roleId = localStorage.getItem(process.env.APP_PREFIX + 'role') ?? ''; 
+    if (roleId) {
+      setRole(roleId);
+    }   
+  }, []);
 
   useEffect(() => {
     dispatch(fetchUser())        
@@ -58,9 +66,16 @@ const ProfileButton = () => {
     
   }   
 
-  const items = [
+  const buyer_items = [
     { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
     { image: "/icons/quotaion.png", label: "My Quotaion", href: "/dashboard/quotaion" },
+    { image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
+    { image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
+  ];
+
+  const seller_items = [
+    { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
+    { image: "/icons/quotaion.png", label: "My Leads", href: "/dashboard/lead" },
     { image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
     { image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
   ];
@@ -87,17 +102,42 @@ const ProfileButton = () => {
             </div>
             <div className={`absolute z-3 right-0 mt-2 w-full bg-white rounded-md shadow-lg ${isOpen ? "block" : "hidden"}`}>
                 <ul className="py-1 divide-y divide-gray-200">
-                {items.map((item) => (
-                    <li key={item.label} >
-                    <Link
-                        href={item.href}
-                        className="flex items-center gap-2 px-4 py-2 text-black hover:bg-gray-100"
-                    >
-                        <Image src={item.image} alt={item.label} width={24} height={16} className="inline-block" />
-                        <span className="text-base">{item.label}</span>
-                    </Link>
-                    </li>
-                ))}
+
+                {
+                    role && role == 1 ?
+                    <>
+                    {buyer_items.map((item) => (
+                      <li key={item.label} >
+                      <Link
+                      href={item.href}
+                      className="flex items-center gap-2 px-4 py-2 text-black hover:bg-gray-100"
+                      >
+                      <Image src={item.image} alt={item.label} width={24} height={16} className="inline-block" />
+                      <span className="text-base">{item.label}</span>
+                      </Link>
+                      </li>
+                    ))}
+                    </>
+                    :
+                    role && role == 2 ?
+                    <>
+                    {seller_items.map((item) => (
+                      <li key={item.label} >
+                      <Link
+                      href={item.href}
+                      className="flex items-center gap-2 px-4 py-2 text-black hover:bg-gray-100"
+                      >
+                      <Image src={item.image} alt={item.label} width={24} height={16} className="inline-block" />
+                      <span className="text-base">{item.label}</span>
+                      </Link>
+                      </li>
+                    ))}
+                    </>
+                    :
+                    ''
+                }      
+
+                
                 
                 <li 
                 className="flex items-center justify-center gap-2 px-4 py-2 text-base text-black hover:bg-gray-100 cursor-pointer"

@@ -50,7 +50,7 @@ const EditProfile = () => {
   const [errors,set_errors]     						  = useState(__errors)  
 
   useEffect(()=>{
-    fetch_data()
+    fetch_data()    
   },[])   
 
   const fetch_data = async () => {
@@ -177,16 +177,12 @@ const EditProfile = () => {
 
           const formData = new FormData(formRef.current); 
           formData.append("profile_image","");  
-          //formData.append("id",data.id);  
-          console.log('data:',data)    
-
+          //formData.append("id",data.id);           
           const res = await Api.update_profile({  
               id: data.id,      
               formData: formData, 
           }); 
-
-          console.log('res:',res) 
-          
+        
           if( res && (res.status === 200) ){ 
             const resData = res.data; 
             dispatch(fetchUser())        
@@ -198,7 +194,8 @@ const EditProfile = () => {
               confirmButtonText: 'Close',          
               text: "Profile updated successfully!",
             })		
-            router.push("/dashboard/profile");  
+            router.push("/dashboard/profile");             
+
           } 
           else {          
             const { status, message, error } = res.data;   
@@ -331,6 +328,7 @@ const EditProfile = () => {
         }} />  
         </div>
         </div>
+
         </form>
         </div>
     </div>

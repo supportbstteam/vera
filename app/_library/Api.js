@@ -19,7 +19,8 @@ axiosInstance.interceptors.response.use(
           const { response } = error; 
           if(typeof response !== "undefined" && response.status === 401){  
             localStorage.removeItem(process.env.APP_PREFIX + 'token');	            
-            localStorage.removeItem(process.env.APP_PREFIX + 'token_id');            
+            localStorage.removeItem(process.env.APP_PREFIX + 'token_id');       
+            localStorage.removeItem(process.env.APP_PREFIX + 'role');                 
           }
           return response
       } catch (err) {
@@ -181,6 +182,14 @@ export default {
     )
     .catch((err) => { console.log('err', err); });    
   },    
+  seller_categories: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/seller-categories/`+obj.id,      
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  },  
+  
   //=== company-user === 
 
 };

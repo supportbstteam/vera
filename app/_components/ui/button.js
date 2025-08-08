@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import Link from "next/link"
 import React from "react"
 
 const Button = ({
@@ -15,7 +16,7 @@ const Button = ({
   color
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer"
+    "inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer h-fit"
 
   const sizeStyles = {
     sm: "px-3 py-2 text-sm",
@@ -33,11 +34,13 @@ const Button = ({
   }
 
   const variantStyles = {
-    primary:"border border-primary text-white bg-primary hover:bg-primary/80 hover:text-white",
-    secondary:"border border-stock text-black bg-black text-primary hover:bg-secondary/50",
-    outline: "border border-stock text-black hover:bg-primary",
+    primary:
+      "border border-primary text-white bg-primary hover:bg-primary hover:text-white",
+    secondary:
+      "border border-stock text-black bg-black text-primary hover:bg-secondary/50 hover",
+    outline: "border border-stock text-black hover:bg-primary hover:text-white",
     gray: "bg-gray-200 text-gray-800 hover:bg-gray-300",
-    icon: "bg-transparent text-gray-500 hover:bg-gray-100"    
+    icon: "bg-transparent text-gray-500 hover:bg-gray-100"
   }
 
   const content = (
@@ -65,9 +68,9 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} className={classes}>
+      <Link href={href} className={classes}>
         {content}
-      </a>
+      </Link>
     )
   }
 

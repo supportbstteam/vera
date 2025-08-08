@@ -6,8 +6,7 @@
   --foreground: #010101;
   --primary: #C61AFF;
   --secondary: #1a1a1a;
-  --stock: #494848;
-  --gray: #959595;
+  --stock: #959595;
   --font-Manrope-sans: 'Manrope', sans-serif;
   --font-Manrope-mono: 'Manrope', monospace;
 }
@@ -18,7 +17,6 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-stock: var(--stock);
-  --color-gray: var(--gray);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -50,12 +48,6 @@ p{
   }
   .h3{
     @apply text-2xl font-semibold mb-4
-  }
-  .Active{
-    @apply bg-green-100 text-green-700;
-  }
-  .Closed {
-    @apply bg-red-100 text-red-600;
   }
 }
 

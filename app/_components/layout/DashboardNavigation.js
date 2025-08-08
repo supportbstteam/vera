@@ -10,9 +10,21 @@ const DashboardNavigation = () => {
   let ccp2  = pathname.split('/')
   let current_path  = (ccp2[2]) ? ccp2[2] : ''	
   console.log(current_path)
-  //======
-  const profile_menu     = ['profile'];
+  //====== 
+  
+  const [role, setRole]  = useState("") 
+
+  useEffect(() => {    
+    const roleId = localStorage.getItem(process.env.APP_PREFIX + 'role') ?? ''; 
+    if (roleId) {
+      setRole(roleId);
+    }   
+  }, []);
+
+  const dashboard_menu   = [''];  
   const quotation_menu   = ['quotaion'];
+  const lead_menu        = ['lead'];
+  const profile_menu     = ['profile'];
 
   const active_class = 'inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer px-4 py-2 text-base border border-primary text-white bg-primary hover:bg-primary/80 hover:text-white'
 
@@ -20,16 +32,30 @@ const DashboardNavigation = () => {
 
   return (   
     <>    
-    <div className="flex items-center gap-4">       
+    <div className="flex items-center gap-4">      
+
+        <Link className={`${dashboard_menu.includes(current_path) ? active_class : inactive_class}`} 
+        href="/dashboard"
+        ><span className="flex items-center gap-2">Dashboard</span></Link>
 
         <Link className={`${profile_menu.includes(current_path) ? active_class : inactive_class}`} 
         href="/dashboard/profile"
         ><span className="flex items-center gap-2">My Profile</span></Link>
 
-        <Link className={`${quotation_menu.includes(current_path) ? active_class : inactive_class}`} 
-        href="/dashboard/quotaion"
-        ><span className="flex items-center gap-2">My Quotation</span></Link>
-
+        {
+          role && role == 1 ?
+          <Link className={`${quotation_menu.includes(current_path) ? active_class : inactive_class}`} 
+          href="/dashboard/quotaion"
+          ><span className="flex items-center gap-2">My Quotation</span></Link>
+          :
+          role && role == 2 ?
+          <Link className={`${lead_menu.includes(current_path) ? active_class : inactive_class}`} 
+          href="/dashboard/lead"
+          ><span className="flex items-center gap-2">My Leads</span></Link>
+          :
+          ''
+        }
+        
     </div>
     </>    
   );

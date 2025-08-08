@@ -1,40 +1,54 @@
-import React from "react"
-import clsx from "clsx"
+import { ChevronDown, ChevronUp } from "lucide-react"
+import { useState } from "react"
 
-const Dropdown = ({
-  label,
-  options,
-  value,
-  onChange,
-  error,
-  name,
-  className
-}) => {
+export default function Dropdown({
+  options = [],
+  placeholder = "Select...",
+  onChange
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [selected, setSelected] = useState(null)
+
+  const handleSelect = option => {
+    setSelected(option)
+    setIsOpen(false)
+    if (onChange) onChange(option)
+  }
+
   return (
-    <div className="space-y-1">
-      {label && <label className="block text-sm font-medium">{label}</label>}
-      <select
-        name={name}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className={clsx(
-          "w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500",
-          error ? "border-red-500" : "border-gray-300",
-          className
-        )}
+    <div className="relative inline-block">
+      {/* Dropdown Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-48 rounded-md  bg-transparent text-white px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
       >
-        <option value="" disabled>
-          Select an option
-        </option>
-        {options.map(opt => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+        <p className="truncate">{selected ? selected.label : placeholder}</p>
+        <span className="float-right">
+          {" "}
+          {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}{" "}
+        </span>
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <ul className="absolute mt-3 w-full grid rounded-md border border-gray-200 bg-white shadow-lg z-3 divide-y divide-gray">
+          <li
+            onClick={() => handleSelect("")}
+            className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer text-black"
+          >
+            Select an option
+          </li>
+          {options.map((option, index) => (
+            <li
+              key={index}
+              onClick={() => handleSelect(option)}
+              className=" text-sm px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+            >
+              {option.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
-
-export default Dropdown
