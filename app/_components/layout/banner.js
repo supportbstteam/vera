@@ -24,7 +24,7 @@ const Banner = ({ bgImage }) => {
         priority
       /> */}
       {/* <div className="absolute inset-0 bg-[#000000] opacity-50 z-0"></div> */}
-      <div className="relative z-10 max-w-[1420px] h-[55vh  ] mx-auto flex items-center">
+      <div className=" z-10 max-w-[1420px] h-[55vh  ] mx-auto flex items-center">
         <div className="max-w-7xl min-h-[55vh] mx-auto py-4 px-4 flex flex-col items-center justify-center text-center">
           <Image
             src="/icons/hello.gif"

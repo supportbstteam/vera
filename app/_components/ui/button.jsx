@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import Link from "next/link"
 import React from "react"
 
 const Button = ({
@@ -66,9 +67,9 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} className={classes}>
+      <Link href={href} className={classes}>
         {content}
-      </a>
+      </Link>
     )
   }
 

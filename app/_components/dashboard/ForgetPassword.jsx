@@ -28,7 +28,7 @@ const ForgetPassword = () => {
           icon={isOpen ? (
             <ChevronUp/>
           ) : (     
-            <ChevronDown/>
+            <Image src="/icons/edit.png" alt="Edit" width={16} height={16} />
 
           )}
         />

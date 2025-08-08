@@ -1,6 +1,7 @@
 // components/QuotationList.tsx
 import Image from 'next/image'
 import Button from '../ui/button'
+import VendorQuotationCard from '../ui/VendorQuotationCard'
 
 const orders = [
   {
@@ -93,6 +94,7 @@ export default function QuotationList() {
               </Button>
             </div>
           </div>
+          {/* <VendorQuotationCard/> */}
 
           {/* Divider */}
           {/* {i !== orders.length - 1 && <hr className="my-4 border border-stock" />} */}
