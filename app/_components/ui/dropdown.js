@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { useState } from "react"
 
-export default function Dropdown({
+const Dropdown = function Dropdown({
   options = [],
   placeholder = "Select...",
   onChange
@@ -53,3 +53,4 @@ export default function Dropdown({
     </div>
   )
 }
+export default Dropdown
