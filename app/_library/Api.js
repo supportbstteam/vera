@@ -131,8 +131,8 @@ export default {
     .catch((err) => { console.log('err', err); });    
   },  
   update_password: async (obj) => {     
-    return await axiosInstance.patch(
-      "/private/profile-password/"+obj._id+"/",
+    return await axiosInstance.post(
+      "/private/update-password/"+obj.id,
       obj.formData,       
       {headers:form_header}           
     )

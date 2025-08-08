@@ -23,8 +23,8 @@ const SbButton = (props)=>{
             {
                 disabled === true &&
                 <>
-                &nbsp;&nbsp;
-                <div className="animate-spin rounded-full h-4 w-4 border-t-4 border-gray-500 inline-block mt-3"></div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div className="animate-spin rounded-full h-4 w-4 border-t-3 border-white-500 inline-block mt-1.5"></div>
                 </>
             }     
             </div>       

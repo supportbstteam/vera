@@ -1,5 +1,6 @@
+import React, { useState, useEffect, useRef } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
-import { useState } from "react"
+
 
 const Cat_dropdown = function Cat_dropdown({
   options = [],
@@ -16,8 +17,20 @@ const Cat_dropdown = function Cat_dropdown({
   }
 
 
+  const dropdownRef = useRef(null)
+    useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" ref={dropdownRef} >
       {/* Dropdown Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}

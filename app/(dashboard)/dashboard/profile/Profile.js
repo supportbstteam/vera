@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import Button from "@/_components/ui/button" 
 import Image from "next/image"
 import EditProfile from "./EditProfile"
-import ForgetPassword from "./ForgetPassword"
+import EditPassword from "./EditPassword"
 import Profile_card from "./Profile_card"
 import DashboardNavigation from "@/_components/layout/DashboardNavigation"
 
@@ -88,7 +88,7 @@ const Profile = () => {
           </>
         )}
       </div>
-      <ForgetPassword />
+      <EditPassword />
       </div>
     </>
   )

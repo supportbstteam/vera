@@ -16,6 +16,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser } from '@/_library/redux/slice/userReducer'
 import Api from '@/_library/Api';
+import { off } from 'process';
 
 const EditProfile = ({call_activeTab}) => {
 
@@ -31,7 +32,8 @@ const EditProfile = ({call_activeTab}) => {
     last_name: '',   
     email: '',   
     mobile: '',   
-    address: '',    
+    address: '',  
+    contact_person:''  
   }
   const __errors = {	
     first_name:"",   
@@ -64,6 +66,7 @@ const EditProfile = ({call_activeTab}) => {
             email: (resData.email === null) ? '' : resData.email,  
             mobile: (resData.mobile === null) ? '' : resData.mobile,  
             address: (resData.address === null) ? '' : resData.address,   
+            contact_person: (resData.contact_person === null) ? '' : resData.contact_person,   
           })
           
       } catch (error) {
@@ -217,7 +220,7 @@ const EditProfile = ({call_activeTab}) => {
   }	 
 
   return (
-    <form method='post' encType="mmultipart/form-data" ref={formRef}  onSubmit={handleSubmit}>   
+    <form method='post' encType="mmultipart/form-data" ref={formRef} onSubmit={handleSubmit}>   
     <div className="max-w-7xl m-auto flex flex-col gap-4 py-6 ">
 
       <div>
@@ -298,7 +301,7 @@ const EditProfile = ({call_activeTab}) => {
         <Textarea
           label="Address"
           type="address"
-          rows="4"
+          rows="2"
           placeholder="123 Main St, City, Country"
           name="address" 
           value={data.address} 
@@ -309,7 +312,24 @@ const EditProfile = ({call_activeTab}) => {
           {errors.address && 
             <div className="error-msg">{errors.address}</div>    
           }  	
-        </div>      
+        </div>    
+
+        <div className={`grid grid-cols-1 sm:grid-cols-2 mb-3`}>
+        <Input
+            label="Contact person phone"
+            autoComplete="off"
+            type="text"
+            placeholder="9876-54-3210"
+            name="contact_person" 
+            value={data.contact_person} 
+            onChange={(e)=>{
+              handleChange(e)              
+            }}
+          />
+          {errors.contact_person && 
+            <div className="error-msg">{errors.contact_person}</div>    
+          }
+        </div>        
 
         <div className={`flex justify-end mt-4`}>
         <SbButton data={{
