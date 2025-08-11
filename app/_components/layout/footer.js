@@ -20,25 +20,27 @@ const Footer = () => {
             />
           </div>
           <>
-            <div className="text-gray-400 space-y-6">
+            <div className="text-gray-400 space-y-2">
               <div className="flex gap-2 items-start">
                 <MapPin strokeWidth={1} size="24" />
                 <p>
-                  45 Innovation Street,
+                  Flashy Cactus
                   <br />
-                  Berlin Tech Park,
+                  Radley House, Suite 42
                   <br />
-                  10115 Berlin, Germany
+                  Richardshaw Road, Pudsey
+                  <br />
+                  LS28 6LE
                 </p>
               </div>
               <div className="flex gap-2 items-start">
                 <Mail strokeWidth={1} size="24" />
                 <p>
-                  <a href="mailto:info@example.com">info@example.com</a>
+                  <a href="mailto:info@example.com">sales@flashycactus.com</a>
                 </p>
               </div>
-              <p className="text-2xl text-white font-bold">
-                <a href="tel:(+92) 3942 7879">(+49) 3942 7879</a>
+              <p className="text-2xl text-white font-bold mt-4">
+                <a href="tel:(+92) 3942 7879">01132 464 950</a>
               </p>
             </div>
           </>
