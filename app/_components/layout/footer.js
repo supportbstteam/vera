@@ -8,7 +8,7 @@ import Newsletter from "@/_components/Newsletter";
 const Footer = () => {
   return (
     <footer className="bg-[#111111] text-white pb-6 text-sm py-8 md:py-16">
-      {/* <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-[3fr_2fr_2fr_2fr_3fr] gap-8">  */}
+      {/* <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-[3fr_2fr_2fr_2fr_3fr] gap-8">        */}
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 items-start md:grid-cols-[4fr_2fr_4fr] gap-8">
         <div className="grid grid-cols-2 space-y-8">
           <div className="flex items-start gap-2 text-[#C61AFF] text-xl font-bold">
@@ -20,32 +20,34 @@ const Footer = () => {
             />
           </div>
           <>
-            <div className="text-gray-400 space-y-6">
+            <div className="text-gray-400 space-y-2">
               <div className="flex gap-2 items-start">
                 <MapPin strokeWidth={1} size="24" />
                 <p>
-                  45 Innovation Street,
+                  Flashy Cactus
                   <br />
-                  Berlin Tech Park,
+                  Radley House, Suite 42
                   <br />
-                  10115 Berlin, Germany
+                  Richardshaw Road, Pudsey
+                  <br />
+                  LS28 6LE
                 </p>
               </div>
               <div className="flex gap-2 items-start">
                 <Mail strokeWidth={1} size="24" />
                 <p>
-                  <a href="mailto:info@example.com">info@example.com</a>
+                  <a href="mailto:sales@flashycactus.com">sales@flashycactus.com</a>
                 </p>
               </div>
-              <p className="text-2xl text-white font-bold">
-                <a href="tel:(+92) 3942 7879">(+49) 3942 7879</a>
+              <p className="text-2xl text-white font-bold mt-4">
+                <a href="tel:01132 464 950">01132 464 950</a>
               </p>
             </div>
           </>
         </div>
 
         <div>
-          <h3 className="font-semibold mb-4">SHOPPING</h3>
+          <h3 className="font-semibold mb-4">View More</h3>
           <ul className="space-y-4 text-white text-sm">
             <li>
               <Link href="/categories">Browse Categories</Link>
@@ -54,7 +56,7 @@ const Footer = () => {
               <Link href="/request-a-quote">Request a Quote</Link>
             </li>
             <li>
-              <Link href="/offers">Offers</Link>
+              <Link href="/offers">Contact Us</Link>
             </li>
             {/* <li>
               <Link href="/track-order">Track order</Link>

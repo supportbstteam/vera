@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from "../ui/button";
 import Input from "../ui/Input";
 
@@ -8,6 +8,7 @@ import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
 
 import {useRouter} from "next/navigation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const RegisterForm = () => {
 
@@ -29,18 +30,26 @@ const RegisterForm = () => {
   }
 
   const router = useRouter();
+  const recaptchaRef = useRef(null);
 
   const [data,set_data]   	  						    = useState(__data) 
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
   const [errors,set_errors]     						  = useState(__errors)   
+  const [recaptchaToken, setRecaptchaToken]   = useState("");
 
   const handleChange = (e)=>{	
     const field_name  = e.target.name;
     const field_value = e.target.value;
     set_data({...data, [field_name]: field_value})
   }	 
+
+  const handleCaptchaChange = (token) => {
+      //console.log(token)
+      setRecaptchaToken(token)
+  };
+
 
   const validate_first_name = (value)=>{	
     let err     = '';  
@@ -165,7 +174,8 @@ const RegisterForm = () => {
             first_name:data.first_name, 
             last_name:data.last_name, 
             email:data.email, 
-            password:data.password
+            password:data.password,
+            recaptchaToken:recaptchaToken,           
           });
           
           if( res && (res.status === 200) ){
@@ -192,7 +202,22 @@ const RegisterForm = () => {
 
 
   return (
-    <div className="grid gap-6">     
+    <div className="grid gap-6">   
+
+      {common_error &&            
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">              
+            <span className="block sm:inline">{common_error}</span>
+            <span className="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onClick={()=>{
+              set_common_error('')
+            }}>
+              <svg className="fill-current h-6 w-6 text-white-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15L6.252 6.849a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+              </svg>
+            </span>               
+          </div> 
+      }  
+
       <form method="post" onSubmit={handleSubmit}>  
 
       <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2`}>
@@ -279,6 +304,15 @@ const RegisterForm = () => {
       {errors.confirm_password &&
         <div className="error-msg">{errors.confirm_password}</div>    
       }  
+      </div>
+
+      <div className={`grid grid-cols-1 text-end mb-3`}>
+      <ReCAPTCHA
+        sitekey={process.env.RECAPTCHAV2_SITEKEY}
+        ref={recaptchaRef}
+        onChange={handleCaptchaChange}
+        size="normal"        
+      />
       </div>
       
       <div className={`grid grid-cols-1 mb-3`}>

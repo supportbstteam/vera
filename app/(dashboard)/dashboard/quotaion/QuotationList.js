@@ -1,7 +1,10 @@
-// components/QuotationList.tsx
+"use client"
+import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
 import DashboardNavigation from "@/_components/layout/DashboardNavigation"
+import VendorQuotationCard from "@/_components/ui/VendorQuotationCard" 
+import ModalDialog from "@/_components/ui/ModalDialog" 
 
 const orders = [
   {
@@ -61,6 +64,9 @@ const statusColors = {
 }
 
 export default function QuotationList() {
+  
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="max-w-7xl m-auto py-16 flex flex-col gap-6">
         <DashboardNavigation />
@@ -101,9 +107,12 @@ export default function QuotationList() {
                 {item.status} Order
               </span>
 
-              <Button variant="outline" size="sm" color="primary">
+              <Button variant="outline" size="sm" color="primary" onClick={()=> setModalOpen(true)}>
                 View Detail
               </Button>
+              <ModalDialog isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+                <VendorQuotationCard/>
+              </ModalDialog>
             </div>
           </div>
 

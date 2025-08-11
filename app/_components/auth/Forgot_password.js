@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, useRef  } from 'react';
+import React, { useState, useEffect, useCallback  } from 'react';
 import Button from "../ui/button";
 import Input from "../ui/Input";
 import {useRouter} from "next/navigation";
@@ -7,45 +7,34 @@ import Api from '@/_library/Api';
 import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
 import Link from "next/link"
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchUser } from '@/_library/redux/slice/userReducer'
-import { saveTokenInCookie } from '@/actions'
+import { MoveLeft } from "lucide-react"
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-import ReCAPTCHA from "react-google-recaptcha";
-
-const LoginForm = () => {
+const Forgot_password = () => {
 
   const __data = {	
-    email: '',
-    password: '',
+    email: '',   
   }
   const __errors = {	
-    email: '',
-    password: '',
+    email: '',    
   }
 
   const router = useRouter();
-  const dispatch = useDispatch()
-  const recaptchaRef = useRef(null);
+  const MySwal = withReactContent(Swal)  
   
   const [data,set_data]   	  						    = useState(__data) 
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
   const [errors,set_errors]     						  = useState(__errors)   
-  const [recaptchaToken, setRecaptchaToken]   = useState("");
 
   const handleChange = (e)=>{	
     const field_name  = e.target.name;
     const field_value = e.target.value;
     set_data({...data, [field_name]: field_value})
   }	 
-
-  const handleCaptchaChange = (token) => {
-      //console.log(token)
-      setRecaptchaToken(token)
-  };
-
+ 
   const validate_email = (value)=>{	
     let err      = '';  
     let email = value ?? data.email
@@ -61,20 +50,7 @@ const LoginForm = () => {
     });	 
     return err;	
   }
-
-  const validate_password = (value)=>{	
-    let err     = '';  
-    let password  = value ?? data.password
-    if(!password){        
-      err  = 'Password is required';         
-    }	 
-    set_errors({
-      ...errors,
-      password:err
-    });	 
-    return err;	
-  } 
-
+  
     const validateForm = ()=>{		
       let errors          = {};  
       let isValid         = true;      
@@ -83,13 +59,7 @@ const LoginForm = () => {
       if( email !==''){
         errors.email  = email;
         isValid = false;
-      }
-
-      let password = validate_password()
-      if( password !==''){
-        errors.password  = password;
-        isValid = false;
-      }     
+      }      
 
       set_errors(errors);	
       return isValid;	
@@ -102,34 +72,27 @@ const LoginForm = () => {
         set_disablebutton(true)
 
         try {
-          const res = await Api.login({               
-            email:data?.email, 
-            password:data?.password,
-            recaptchaToken:recaptchaToken,           
+          const res = await Api.forgot_password({               
+            email:data?.email,            
           });
           
           if( res && (res.status === 200) ){
 
-            const resData = res.data;           
-            const token = resData.token;  
-            const token_id = resData.token_id; 
-            const role = resData.data.role;   
-
-            await saveTokenInCookie(token)
-
-            localStorage.setItem(process.env.APP_PREFIX + 'token', token);
-            localStorage.setItem(process.env.APP_PREFIX + 'token_id', token_id);
-            localStorage.setItem(process.env.APP_PREFIX + 'role', role);
-            dispatch(fetchUser())  
-            
-            router.push("/dashboard");
-            set_data(__data)           
-            //set_disablebutton(false)
+            MySwal.fire({
+              //icon: 'success',
+              width: '350px',
+              animation: true,
+              title: '',  
+              confirmButtonText: 'Close',          
+              text: res.data.message,
+            })	
+            set_data(__data)         
+            set_disablebutton(false)
 
           } 
           else {          
             const { status, message, error } = res.data;   
-           
+            set_errors(error);	
             set_common_error(message)
             set_disablebutton(false)
           }
@@ -159,7 +122,7 @@ const LoginForm = () => {
           </div> 
       }  
 
-      <form method="post" onSubmit={handleSubmit}>       
+      <form method="post" onSubmit={handleSubmit}>   
 
       <div className={`grid grid-cols-1 mb-3`}>
       <Input
@@ -176,58 +139,24 @@ const LoginForm = () => {
       {errors.email && 
         <div className="error-msg">{errors.email}</div>    
       }  	
-      </div>
-
-      <div className={`grid grid-cols-1 mb-3`}>
-      <Input
-        label="Password"
-        type="password"
-        placeholder=""
-        id="password"
-        name="password" 
-        value={data.password} 
-        onChange={(e)=>{
-          handleChange(e)
-          validate_password(e.target.value)
-        }}
-      />
-      {errors.password &&
-        <div className="error-msg">{errors.password}</div>    
-      }  
-      </div>     
-
-      <div className={`grid grid-cols-1 text-end mb-3`}>
-      <Link href="/forgot-password">Forgot password ?</Link>
-      </div>
-
-      <div className={`grid grid-cols-1 text-end mb-3`}>
-      <ReCAPTCHA
-        sitekey={process.env.RECAPTCHAV2_SITEKEY}
-        ref={recaptchaRef}
-        onChange={handleCaptchaChange}
-        size="normal"        
-      />
-      </div>
+      </div>          
 
       <div className={`grid grid-cols-1 mb-3`}>
       <SbButton data={{
           type:"submit",
-          text:"Login",
+          text:"Submit",
           class:"inline-flex items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
           disabled:disablebutton,
        }} />  
-       </div>
+       </div> 
 
-      <div className="flex flex-col items-center">
-        <p>Or</p>
-      </div>
+       <div className={`grid grid-cols-1 text-end mb-3`}>
+      <Link href="/login"><MoveLeft size={20} className="inline-block" />&nbsp; Back to login</Link>
+      </div>  
 
-      <div className={`grid grid-cols-1 mb-3`}>      
-      <Button variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Login with Google</Button>
-      </div>
     </form>
     </div>
   );
 };
 
-export default LoginForm;
+export default Forgot_password;

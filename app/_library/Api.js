@@ -57,6 +57,7 @@ export default {
           'last_name':obj.last_name,
           'email':obj.email,
           'password':obj.password,
+          'recaptchaToken':obj.recaptchaToken,
         },
         {headers:json_header}                
       )
@@ -68,6 +69,7 @@ export default {
         {
           'email':obj.email,
           'password':obj.password,
+          'recaptchaToken':obj.recaptchaToken,
         },
         {headers:json_header}                
       )
@@ -98,7 +100,7 @@ export default {
       "/reset-password",
       {        
         'token':obj.token,        
-        'password':obj.password       
+        'new_password':obj.new_password       
       },
       {headers:json_header}                
     )

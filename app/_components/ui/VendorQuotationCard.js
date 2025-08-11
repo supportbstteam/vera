@@ -1,8 +1,4 @@
-// import { Card, CardContent } from "@/components/ui/card"
-// import { Switch } from "@/components/ui/switch"
-// import { Separator } from "@/components/ui/separator"
-import { X } from "lucide-react"
-import { Button } from "@/_components/ui/button"
+import Button from "@/_components/ui/button" 
 
 const vendors = [
   {
@@ -50,9 +46,9 @@ export default function VendorQuotationCard() {
             <p className="text-sm text-gray-500">Posted on : July 25, 2025</p>
           </div>
         </div>
-        <Button variant="ghost" size="icon">
-          <X size={24} />
-        </Button>
+        {/* <Button variant="ghost" size="icon">
+          <X  size={24} />
+        </Button> */}
       </div>
 
       {/* Vendor List */}

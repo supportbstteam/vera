@@ -15,8 +15,8 @@ const nextConfig = {
     API_URL: process.env.API_URL,  
     FILE_UPLOAD_PATH: process.env.FILE_UPLOAD_PATH,
     FILE_UPLOAD_URL: process.env.FILE_UPLOAD_URL,    
-    RECAPTCHAV3_SITEKEY: process.env.RECAPTCHAV3_SITEKEY,
-    RECAPTCHAV3_SECRET: process.env.RECAPTCHAV3_SECRET,
+    RECAPTCHAV2_SITEKEY: process.env.RECAPTCHAV2_SITEKEY,
+    RECAPTCHAV2_SECRET: process.env.RECAPTCHAV2_SECRET,
   },
   devIndicators: false && {
     position  :  'bottom-left',  // 'bottom-right', 'bottom-left', 'top-right', 'top-left'

@@ -79,7 +79,7 @@ const SearchBar = () => {
           placeholder="What  are you looking for ?"
           className=" w-full text-white placeholder-gray-100 focus:outline-none focus:ring-0 transition"
         />
-        <Search size={20} color="#fff" />
+        <Search size={20} color="#fff" className="cursor-pointer" />
       </div>      
     </div>
   )
