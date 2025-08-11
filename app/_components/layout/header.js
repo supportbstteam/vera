@@ -15,11 +15,17 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import ProfileButton from "../dashboard/ProfileButton";
+import ModalDialog from "../ui/ModalDialog";
+import Register from "../dashboard/Register";
+import Login from "../dashboard/Login";
+import RegisterForm from "../auth/RegisterForm";
 
 const Header = () => {
   const [categories, set_categories] = useState([]);
   const [openIndex, setOpenIndex] = useState(null);
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(null)
 
   useEffect(() => {
     fetchCategoryData();
@@ -78,15 +84,20 @@ const Header = () => {
             <Link
               href="/register"
               className="text-sm text-white cursor-pointer"
-            >
-              <Button>Create Account</Button>
-            </Link>
+            ></Link>
+            <Button onClick={() => setModalType("login")}>Login</Button>
+            <ModalDialog isOpen={modalType === "login"} onClose={() => setModalType(false)}>
+              <Login />
+            </ModalDialog>
+            <Button onClick={() => setModalType("register")}>Create Account</Button>
+            <ModalDialog isOpen={modalType === "register"} onClose={() => setModalType(false)}>
+              <Register />
+              {/* <RegisterForm /> */}
+            </ModalDialog>
             
-              
           </div>
         </div>
       </div>
-                                                                  
     </header>
   );
 };

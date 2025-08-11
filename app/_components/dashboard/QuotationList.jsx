@@ -1,7 +1,10 @@
+"use client"
 // components/QuotationList.tsx
 import Image from 'next/image'
 import Button from '../ui/button'
 import VendorQuotationCard from '../ui/VendorQuotationCard'
+import ModalDialog from '../ui/ModalDialog'
+import { useState } from 'react'
 
 const orders = [
   {
@@ -64,6 +67,7 @@ const statusColors = {
 }
 
 export default function QuotationList() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <div className="divide-y divide-stock">
       {orders.map((item, i) => (
@@ -89,12 +93,14 @@ export default function QuotationList() {
                 {item.status} Order
               </span>
 
-              <Button variant="outline" size="sm" color="primary">
+              <Button variant="outline" size="sm" color="primary" onClick={()=> setModalOpen(true)}>
                 View Detail
               </Button>
+              <ModalDialog isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+                <VendorQuotationCard/>
+              </ModalDialog>
             </div>
           </div>
-          {/* <VendorQuotationCard/> */}
 
           {/* Divider */}
           {/* {i !== orders.length - 1 && <hr className="my-4 border border-stock" />} */}

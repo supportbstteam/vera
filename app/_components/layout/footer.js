@@ -38,14 +38,14 @@ const Footer = () => {
                 </p>
               </div>
               <p className="text-2xl text-white font-bold">
-                <a href="tel:(+92) 3942 7879">(+92) 3942 7879</a>
+                <a href="tel:(+92) 3942 7879">(+49) 3942 7879</a>
               </p>
             </div>
           </>
         </div>
 
         <div>
-          <h3 className="font-semibold mb-4">SHOPPING</h3>
+          <h3 className="font-semibold mb-4">View More</h3>
           <ul className="space-y-4 text-white text-sm">
             <li>
               <Link href="/categories">Browse Categories</Link>
@@ -54,7 +54,7 @@ const Footer = () => {
               <Link href="/request-a-quote">Request a Quote</Link>
             </li>
             <li>
-              <Link href="/offers">Offers</Link>
+              <Link href="/offers">Contact Us</Link>
             </li>
             {/* <li>
               <Link href="/track-order">Track order</Link>
