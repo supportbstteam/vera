@@ -192,7 +192,7 @@ const Reset_password = ({__filterData}) => {
       <div className={`grid grid-cols-1 mb-3`}>
       <SbButton data={{
           type:"submit",
-          text:"Login",
+          text:"Reset Password",
           class:"inline-flex items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
           disabled:disablebutton,
        }} />  
