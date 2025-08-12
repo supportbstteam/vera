@@ -33,7 +33,7 @@ const WelcomeModal = () => {
             </p>
             <Image
               src="/icons/success.gif"
-              alt="Logo"
+              alt=""
               width={500}
               height={70}
               className=""

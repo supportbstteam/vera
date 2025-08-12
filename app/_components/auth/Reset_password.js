@@ -116,7 +116,7 @@ const Reset_password = ({__filterData}) => {
             })	
             set_data(__data)         
             set_disablebutton(false)                     
-            router.push("/login");  
+            router.push("/");  
           } 
           else {          
             const { status, message, error } = res.data;   
