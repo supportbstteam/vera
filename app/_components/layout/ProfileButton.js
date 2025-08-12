@@ -9,6 +9,7 @@ import { fetchUser } from '@/_library/redux/slice/userReducer'
 import Api from '@/_library/Api';
 import {useRouter} from "next/navigation";
 import { deleteTokenFromCookie } from '@/actions'
+import Loader from '@/_components/ui/Loader';
 
 const ProfileButton = () => {
 
@@ -45,20 +46,18 @@ const ProfileButton = () => {
 
   const logout = async () => {
     try {
-        const res = await Api.logout({
-            token_id:localStorage.getItem(process.env.APP_PREFIX + 'token_id') ?? ''
-        }); 
+        // const res = await Api.logout({
+        //     token_id:localStorage.getItem(process.env.APP_PREFIX + 'token_id') ?? ''
+        // }); 
 
         await deleteTokenFromCookie('token')
-
         localStorage.removeItem(process.env.APP_PREFIX + 'token');
         localStorage.removeItem(process.env.APP_PREFIX + 'token_id');
-        localStorage.removeItem(process.env.APP_PREFIX + 'role');        
+        localStorage.removeItem(process.env.APP_PREFIX + 'role');       
 
-        dispatch(fetchUser())     
-
-        router.push('/login')
-        router.refresh()
+        dispatch(fetchUser())  
+        router.push('/')
+        //router.refresh()
 
     } catch (error) {
         console.log(error.message)            
@@ -81,9 +80,9 @@ const ProfileButton = () => {
   ];
 
   return (   
-    <>
+    <>   
     {
-        user && user.email ?
+        user && user?.email ?
         <button className="relative" onClick={() => setIsOpen(!isOpen)} ref={dropdownRef}>
             <div className="flex items-center gap-2 px-2 py-1.5 rounded-full bg-[#1e1e1e] text-white border border-gray-700 hover:bg-[#2a2a2a]">
                 <Image
@@ -102,7 +101,6 @@ const ProfileButton = () => {
             </div>
             <div className={`absolute z-3 right-0 mt-2 w-full bg-white rounded-md shadow-lg ${isOpen ? "block" : "hidden"}`}>
                 <ul className="py-1 divide-y divide-gray-200">
-
                 {
                     role && role == 1 ?
                     <>
@@ -135,10 +133,7 @@ const ProfileButton = () => {
                     </>
                     :
                     ''
-                }      
-
-                
-                
+                } 
                 <li 
                 className="flex items-center justify-center gap-2 px-4 py-2 text-base text-black hover:bg-gray-100 cursor-pointer"
                 style={{cursor:"pointer"}}
@@ -150,21 +145,17 @@ const ProfileButton = () => {
                 </li>
                 </ul>
             </div>
-        </button>
+        </button> 
         :
-        <>        
-        <Link href="/login" className="text-sm text-white cursor-pointer">
-            <span className="hidden md:inline">Login</span>
-        </Link>
-        
-        <Link href="/register" className="text-sm text-white cursor-pointer">
-            <Button className="cursor-pointer">Create Account</Button>
-        </Link>  
-        </>
-        
-    }     
-    </>
-    
+        <div className="relative">
+            <div className="flex items-center gap-2 px-2 py-1.5 rounded-full bg-[#1e1e1e] text-white border border-gray-700 hover:bg-[#2a2a2a]">
+            <Loader />
+            </div>
+        </div>
+
+    } 
+           
+    </>    
   );
 };
 export default ProfileButton;

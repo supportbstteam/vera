@@ -29,23 +29,23 @@ export async function middleware(request){
   if(request.nextUrl.pathname.startsWith('/dashboard')){     
     
       if(!token){
-        return NextResponse.redirect(new URL('/login', request.url));
+        return NextResponse.redirect(new URL('/', request.url));
       }
 
-      try {
-          const response = await axiosInstance.get(
-            "/private/me/",
-            {headers:json_header}        
-          )         
-          if(response.status === 200){  
-              return NextResponse.next();
-          }
-          else{
-              return NextResponse.redirect(new URL('/login', request.url));
-          }
-      } catch (error) {        
-          return NextResponse.redirect(new URL('/login', request.url));
-      }
+      // try {
+      //     const response = await axiosInstance.get(
+      //       "/private/me/",
+      //       {headers:json_header}        
+      //     )         
+      //     if(response.status === 200){  
+      //         return NextResponse.next();
+      //     }
+      //     else{
+      //         return NextResponse.redirect(new URL('/', request.url));
+      //     }
+      // } catch (error) {        
+      //     return NextResponse.redirect(new URL('/', request.url));
+      // }
      
   }    
 

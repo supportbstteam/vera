@@ -10,7 +10,7 @@ import SbButton from "@/_components/ui/SbButton";
 import {useRouter} from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const RegisterForm = () => {
+const RegisterForm = ({handleModalType}) => {
 
   const __data = {		
     role: '',
@@ -180,7 +180,8 @@ const RegisterForm = () => {
           
           if( res && (res.status === 200) ){
             const resData = res.data; 
-            router.push("/welcome");  
+            //router.push("/welcome");  
+            handleModalType('welcome')
             set_data(__data)           
             set_disablebutton(false)
 
@@ -271,39 +272,41 @@ const RegisterForm = () => {
       }  	
       </div>
 
-      <div className={`grid grid-cols-1 mb-3`}>
-      <Input
-        label="Password"
-        type="password"
-        placeholder=""
-        id="password"
-        name="password" 
-        value={data.password} 
-        onChange={(e)=>{
-          handleChange(e)
-          validate_password(e.target.value)
-        }}
-      />
-      {errors.password &&
-        <div className="error-msg">{errors.password}</div>    
-      }  
-      </div>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2`}>
+        <div className={`grid grid-cols-1 mb-3`}>
+        <Input
+          label="Password"
+          type="password"
+          placeholder=""
+          id="password"
+          name="password" 
+          value={data.password} 
+          onChange={(e)=>{
+            handleChange(e)
+            validate_password(e.target.value)
+          }}
+        />
+        {errors.password &&
+          <div className="error-msg">{errors.password}</div>    
+        }  
+        </div>
       
-      <div className={`grid grid-cols-1 mb-3`}>
-      <Input
-        label="Confirm Password"
-        type="password"
-        placeholder=""
-        name="confirm_password" 
-        value={data.confirm_password} 
-        onChange={(e)=>{
-          handleChange(e)
-          validate_confirm_password(e.target.value)
-        }}
-      />
-      {errors.confirm_password &&
-        <div className="error-msg">{errors.confirm_password}</div>    
-      }  
+        <div className={`grid grid-cols-1 mb-3`}>
+        <Input
+          label="Confirm Password"
+          type="password"
+          placeholder=""
+          name="confirm_password" 
+          value={data.confirm_password} 
+          onChange={(e)=>{
+            handleChange(e)
+            validate_confirm_password(e.target.value)
+          }}
+        />
+        {errors.confirm_password &&
+          <div className="error-msg">{errors.confirm_password}</div>    
+        }  
+        </div>
       </div>
 
       <div className={`grid grid-cols-1 text-end mb-3`}>

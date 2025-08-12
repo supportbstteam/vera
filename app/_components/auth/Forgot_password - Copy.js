@@ -11,7 +11,7 @@ import { MoveLeft } from "lucide-react"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const Forgot_password = ({handleModalType}) => {
+const Forgot_password = () => {
 
   const __data = {	
     email: '',   
@@ -150,10 +150,8 @@ const Forgot_password = ({handleModalType}) => {
        }} />  
        </div> 
 
-      <div className={`grid grid-cols-1 mb-3`}>
-       <button type="button" className="cursor-pointer text-end" onClick={() => handleModalType("login")}>
-       <MoveLeft size={20} className="inline-block" />&nbsp; Back to login
-       </button>       
+       <div className={`grid grid-cols-1 text-end mb-3`}>
+      <Link href="/login"><MoveLeft size={20} className="inline-block" />&nbsp; Back to login</Link>
       </div>  
 
     </form>

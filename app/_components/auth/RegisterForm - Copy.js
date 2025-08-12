@@ -1,33 +1,37 @@
 "use client";
-import React, { useState, useEffect, useCallback, useRef  } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from "../ui/button";
 import Input from "../ui/Input";
-import {useRouter} from "next/navigation";
+
 import Api from '@/_library/Api';
 import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
-import Link from "next/link"
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchUser } from '@/_library/redux/slice/userReducer'
-import { saveTokenInCookie } from '@/actions'
 
+import {useRouter} from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const LoginForm = ({handleModalType}) => {
+const RegisterForm = () => {
 
-  const __data = {	
+  const __data = {		
+    role: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
+    confirm_password: ''          
   }
   const __errors = {	
+    role: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
+    confirm_password: ''          
   }
 
   const router = useRouter();
-  const dispatch = useDispatch()
   const recaptchaRef = useRef(null);
-  
+
   const [data,set_data]   	  						    = useState(__data) 
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
@@ -45,6 +49,33 @@ const LoginForm = ({handleModalType}) => {
       //console.log(token)
       setRecaptchaToken(token)
   };
+
+
+  const validate_first_name = (value)=>{	
+    let err     = '';  
+    let first_name  = value ?? data.first_name
+    if(!first_name){        
+      err  = 'First Name is required';         
+    }	 
+    set_errors({
+      ...errors,
+      first_name:err
+    });	 
+    return err;	
+  } 
+
+  const validate_last_name = (value)=>{	
+    let err     = '';  
+    let last_name  = value ?? data.last_name
+    if(!last_name){        
+      err  = 'Last Name is required';         
+    }	 
+    set_errors({
+      ...errors,
+      last_name:err
+    });	 
+    return err;	
+  } 
 
   const validate_email = (value)=>{	
     let err      = '';  
@@ -75,9 +106,39 @@ const LoginForm = ({handleModalType}) => {
     return err;	
   } 
 
-    const validateForm = ()=>{		
+  const validate_confirm_password = (value)=>{	
+    let err     = '';  
+    let password  = data.password ?? ''
+    let confirm_password  = value ?? data.confirm_password
+    if(!confirm_password){        
+      err  = 'Confirm password is required';         
+    }	 
+    else if(password != confirm_password){        
+      err  = 'Password mismatch';         
+    }	 
+    set_errors({
+      ...errors,
+      confirm_password:err
+    });	 
+    return err;	
+  } 
+
+
+  const validateForm = ()=>{		
       let errors          = {};  
-      let isValid         = true;      
+      let isValid         = true;   
+      
+      let first_name = validate_first_name()
+      if( first_name !==''){
+        errors.first_name  = first_name;
+        isValid = false;
+      }
+
+      let last_name = validate_last_name()
+      if( last_name !==''){
+        errors.last_name  = last_name;
+        isValid = false;
+      }      
       
       let email = validate_email()
       if( email !==''){
@@ -89,7 +150,13 @@ const LoginForm = ({handleModalType}) => {
       if( password !==''){
         errors.password  = password;
         isValid = false;
-      }     
+      }
+
+      let confirm_password = validate_confirm_password()
+      if( confirm_password !==''){
+        errors.confirm_password  = confirm_password;
+        isValid = false;
+      }      
 
       set_errors(errors);	
       return isValid;	
@@ -97,38 +164,30 @@ const LoginForm = ({handleModalType}) => {
 
     const handleSubmit = async(e)=>{
       e.preventDefault();   
-    
+
       if(validateForm()){	
         set_disablebutton(true)
 
         try {
-          const res = await Api.login({               
-            email:data?.email, 
-            password:data?.password,
+          const res = await Api.register({
+            role:(data.role=='') ? 1 : data.role, 
+            first_name:data.first_name, 
+            last_name:data.last_name, 
+            email:data.email, 
+            password:data.password,
             recaptchaToken:recaptchaToken,           
           });
           
           if( res && (res.status === 200) ){
-
-            const resData = res.data;           
-            const token = resData.token;  
-            const token_id = resData.token_id; 
-            const role = resData.data.role;   
-
-            await saveTokenInCookie(token)
-            localStorage.setItem(process.env.APP_PREFIX + 'token', token);
-            localStorage.setItem(process.env.APP_PREFIX + 'token_id', token_id);
-            localStorage.setItem(process.env.APP_PREFIX + 'role', role);
-            //dispatch(fetchUser())  
-            
-            router.push("/dashboard");
-            //set_data(__data)           
-            //set_disablebutton(false)
+            const resData = res.data; 
+            router.push("/welcome");  
+            set_data(__data)           
+            set_disablebutton(false)
 
           } 
           else {          
             const { status, message, error } = res.data;   
-           
+            set_errors(error);	        
             set_common_error(message)
             set_disablebutton(false)
           }
@@ -139,10 +198,11 @@ const LoginForm = ({handleModalType}) => {
         }
 
       }			
-  }	
+    }	
+
 
   return (
-    <div className="grid gap-6">      
+    <div className="grid gap-6">   
 
       {common_error &&            
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">              
@@ -158,8 +218,42 @@ const LoginForm = ({handleModalType}) => {
           </div> 
       }  
 
-    <form method="post" onSubmit={handleSubmit}>       
+      <form method="post" onSubmit={handleSubmit}>  
 
+      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2`}>
+          <div className={`grid grid-cols-1 mb-3`}>
+          <Input
+          label="First Name"
+          placeholder="First Name"
+          name="first_name" 
+          value={data.first_name} 
+          onChange={(e)=>{
+            handleChange(e)
+            validate_first_name(e.target.value)
+          }}
+          />
+          {errors.first_name && 
+            <div className="error-msg">{errors.first_name}</div>    
+          }  	
+          </div>  
+
+          <div className={`grid grid-cols-1 mb-3`}>
+          <Input
+          label="Last Name"
+          placeholder="Last Name"
+          name="last_name" 
+          value={data.last_name} 
+          onChange={(e)=>{
+            handleChange(e)
+            validate_last_name(e.target.value)
+          }}
+          />
+          {errors.last_name && 
+            <div className="error-msg">{errors.last_name}</div>    
+          }
+          </div>  	
+      </div>
+        
       <div className={`grid grid-cols-1 mb-3`}>
       <Input
         label="Email"
@@ -193,12 +287,23 @@ const LoginForm = ({handleModalType}) => {
       {errors.password &&
         <div className="error-msg">{errors.password}</div>    
       }  
-      </div>     
-
-      <div className={`grid grid-cols-1 text-end mb-3`}> 
-      <button type="button" className="cursor-pointer text-end" onClick={() => handleModalType("forgot_password")}>
-          <span className="text-primary">Forgot password ?</span>
-      </button> 
+      </div>
+      
+      <div className={`grid grid-cols-1 mb-3`}>
+      <Input
+        label="Confirm Password"
+        type="password"
+        placeholder=""
+        name="confirm_password" 
+        value={data.confirm_password} 
+        onChange={(e)=>{
+          handleChange(e)
+          validate_confirm_password(e.target.value)
+        }}
+      />
+      {errors.confirm_password &&
+        <div className="error-msg">{errors.confirm_password}</div>    
+      }  
       </div>
 
       <div className={`grid grid-cols-1 text-end mb-3`}>
@@ -209,11 +314,11 @@ const LoginForm = ({handleModalType}) => {
         size="normal"        
       />
       </div>
-
+      
       <div className={`grid grid-cols-1 mb-3`}>
       <SbButton data={{
           type:"submit",
-          text:"Login",
+          text:"Sign Up",
           class:"inline-flex items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
           disabled:disablebutton,
        }} />  
@@ -224,11 +329,13 @@ const LoginForm = ({handleModalType}) => {
       </div>
 
       <div className={`grid grid-cols-1 mb-3`}>      
-      <Button type="button" variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Login with Google</Button>
+       <Button variant="gray" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Register with Google</Button>
       </div>
-    </form>
+
+      </form>
+
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

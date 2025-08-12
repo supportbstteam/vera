@@ -1,20 +1,22 @@
-
 import Header from "@/_components/layout/header"
 import HeaderMobile from "@/_components/layout/headerMobile"
 import Footer from "@/_components/layout/footer"
+import { getToken } from '@/actions'
 
 export const metadata = {
   title: "Vera",
   description: ""
 }
 
-export default function HomeLayout({ children }) {
+const HomeLayout = async ({ children }) => {
+  const loggedIn = await getToken() 
   return (
     <>    
     {/* <HeaderMobile /> */}
-    <Header />
+    <Header loggedIn={loggedIn} />
     {children}
     <Footer />
     </>      
   )
 }
+export default HomeLayout

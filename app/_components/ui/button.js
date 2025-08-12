@@ -34,10 +34,8 @@ const Button = ({
   }
 
   const variantStyles = {
-    primary:
-      "border border-primary text-white bg-primary hover:bg-primary hover:text-white",
-    secondary:
-      "border border-stock text-black bg-black text-primary hover:bg-secondary/50 hover",
+    primary:"border border-primary text-white bg-primary hover:bg-primary hover:text-white",
+    secondary:"border border-stock text-black bg-black text-primary hover:bg-secondary/50 hover",
     outline: "border border-stock text-black hover:bg-primary hover:text-white",
     gray: "bg-gray-200 text-gray-800 hover:bg-gray-300",
     icon: "bg-transparent text-gray-500 hover:bg-gray-100"

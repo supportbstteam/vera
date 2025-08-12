@@ -1,37 +1,38 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
-import SearchBar from '@/_components/ui/searchBar'
 import Link from "next/link"
 import Image from "next/image"
-import Button from '@/_components/ui/button'
+
 import Api from "@/_library/Api"
-import ProfileButton from "./ProfileButton";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser } from '@/_library/redux/slice/userReducer'
 
-const Header = () => {
+import Button from '@/_components/ui/button'
+import ProfileButton from "./ProfileButton";
+import SearchBar from '@/_components/ui/searchBar'
+import LoginModal from '@/_components/auth/LoginModal'
+import RegisterModal from '@/_components/auth/RegisterModal'
+import ForgotPasswordModal from '@/_components/auth/ForgotPasswordModal'
+import WelcomeModal from '@/_components/auth/WelcomeModal'
+import ModalDialog from '@/_components/ui/ModalDialog'
+
+const Header = ({loggedIn}) => {
 
   const dispatch     = useDispatch()
   const userState    = useSelector( (state)=> state.user )  
-  const user         = (userState.data) ? userState.data : {};
+  const user         = (userState.data) ? userState.data : {};  
 
-  const [categories, set_categories] = useState([])
   const [openIndex, setOpenIndex] = useState(null)
+  const [modalType, setModalType] = useState(null)
 
   useEffect(() => {
     dispatch(fetchUser())        
-  },[]);    
-
-  useEffect(() => {       
-      fetchCategoryData()  
   },[]);  
-
-  const fetchCategoryData = async () => {     
-    const res = await Api.categories({       
-    }); 
-    const resData = res.data     
-    set_categories(resData.data) 
+  
+  const handleModalType = (type) => {
+    setModalType(type)
   }
+  
 
   const options = []
   // const options = [
@@ -44,7 +45,8 @@ const Header = () => {
 
   
   return (
-    <header className="hidden md:block bg-black ">
+    <>
+    <header className="hidden md:block bg-black">
       <div className="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between gap-4 border-b border-stock">
         <div className="flex items-center gap-4 justify-between w-full">
           <Link href="/">
@@ -58,22 +60,55 @@ const Header = () => {
           </Link>
           <SearchBar />
           <div className="flex items-center gap-6">
-            <ProfileButton /> 
-
-            {/* <Link href="/testing" className="text-sm text-white cursor-pointer">
-              <span className="text-sm text-white cursor-pointer">testing</span>
-            </Link>
-            <Link
-              href="/register"
-              className="text-sm text-white cursor-pointer"
-            >
-              <Button>Create Account</Button>
-            </Link> */}
-
+             {
+                loggedIn ?
+                <ProfileButton /> 
+                :
+                <>                
+                <Button onClick={() => setModalType("login")} className="py-1">Login</Button>  
+                <Button onClick={() => setModalType("register")}>Create Account</Button>                
+                </>
+            }
           </div>
         </div>
       </div>
     </header>
+    {
+      modalType === "login" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <LoginModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      modalType === "register" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <RegisterModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      modalType === "forgot_password" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <ForgotPasswordModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      modalType === "welcome" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <WelcomeModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      ''
+    }
+    </>
   )
 }
 export default Header
