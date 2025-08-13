@@ -5,20 +5,26 @@
   --background: #ffffff;
   --foreground: #010101;
   --primary: #C61AFF;
+  --primaryLight : #f8eafb;
   --secondary: #1a1a1a;
   --stock: #494848;
   --gray: #959595;
   --font-Manrope-sans: 'Manrope', sans-serif;
   --font-Manrope-mono: 'Manrope', monospace;
+  --radius: 80px;
+  --danger : "#E33629"
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primaryLight : var(--primaryLight);
   --color-secondary: var(--secondary);
   --color-stock: var(--stock);
   --color-gray: var(--gray);
+  --radius: var(--radius);
+  --danger: var(--danger);
 }
 
 /* @media (prefers-color-scheme: dark) {

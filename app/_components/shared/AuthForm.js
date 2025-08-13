@@ -13,13 +13,13 @@ const AuthForm = ({ type }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [captchaValue, setCaptchaValue] = useState(null);
 
-    const handleCaptchaChange = (value) => {
+  const handleCaptchaChange = (value) => {
     console.log("Captcha value:", value);
     setCaptchaValue(value);
   };
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       {type === "register" && (
         <div className={`grid grid-cols-1 sm:grid-cols-2 gap-6`}>
           <Input
@@ -62,26 +62,31 @@ const AuthForm = ({ type }) => {
         )}
       </div>
       <div className="recaptcha-scale">
-
-      <ReCAPTCHA
-        sitekey="YOUR_SITE_KEY" // Replace with your actual key
-        onChange={handleCaptchaChange}
+        <ReCAPTCHA
+          sitekey="YOUR_SITE_KEY" // Replace with your actual key
+          onChange={handleCaptchaChange}
         />
-        </div>
-
-      <Button>{type === "register" ? "Sign Up" : "Login"}</Button>
-      <div className="flex flex-col items-center ">
-        <p>Or</p>
       </div>
-      <Button
-        variant="gray"
-        icon={
-          <Image src="/icons/google.png" alt="Google" width={20} height={20} />
-        }
-        iconPosition="left"
-      >
-        {type === "register" ? "Register" : "Login"} with Google
-      </Button>
+      <div className="grid gap-2">
+        <Button>{type === "register" ? "Sign Up" : "Login"}</Button>
+        <div className="flex flex-col items-center ">
+          <p>Or</p>
+        </div>
+        <Button
+          variant="gray"
+          icon={
+            <Image
+              src="/icons/google.png"
+              alt="Google"
+              width={20}
+              height={20}
+            />
+          }
+          iconPosition="left"
+        >
+          {type === "register" ? "Register" : "Login"} with Google
+        </Button>
+      </div>
     </div>
   );
 };

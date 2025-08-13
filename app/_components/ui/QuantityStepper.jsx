@@ -14,8 +14,8 @@ export default function QuantityStepper() {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm text-gray font-medium">No of Item</label>
-      <div className="flex items-center border border-gray-300 rounded-md px-2 py-[6px] w-fit">
+      <label className="text-sm text-[#181818] font-medium">No of Item</label>
+      <div className="flex items-center border border-gray-300 rounded-[8px] px-2 py-[6px] w-fit">
         <Button
           type="button"
           variant="ghost"
