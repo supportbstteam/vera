@@ -4,6 +4,7 @@
 // import { Separator } from "@/components/ui/separator"
 import { X } from "lucide-react"
 import Button from "./button"
+import Toggle from "./Toggle"
 
 const vendors = [
   {
@@ -35,7 +36,7 @@ const vendors = [
   
 export default function VendorQuotationCard() {
   return (
-    <div className="p-4 rounded-lg shadow-sm">
+    <div className="max-w-5xl p-4 rounded-lg shadow-sm">
       {/* Header */}
       <div className="flex justify-between items-start p-4  rounded-lg mb-4">
         <div className="flex gap-3">
@@ -57,24 +58,24 @@ export default function VendorQuotationCard() {
       </div>
 
       {/* Vendor List */}
-      < >
+      
+      <div  className="divide-y divide-stock  px-6">
         {vendors.map((vendor, index) => (
-          <div key={index} className="divide-y divide-stock">
-            <div className="grid grid-cols-[1fr_1fr_2fr_1fr] items-center justify-between py-4 px-6 ">
+            <div key={index} className="grid grid-cols-[1fr_1fr_2fr_1fr] items-center justify-between py-4 ">
               <div>
-                <p className="font-medium">{vendor.name}</p>
-                <div className="flex items-center text-base text-gray-900">
+                <p className="font-medium text-sm">{vendor.name}</p>
+                <div className="flex items-center text-sm text-gray-900">
                   <span>⭐ {vendor.rating}</span>
                   <span className="ml-1">({vendor.reviews} reviews)</span>
                 </div>
               </div>
 
               <div className="">
-                <p className="text-base text-gray-900">{vendor.price}</p>
-                <p className="text-base text-gray-900">{vendor.warranty}</p>
+                <p className="text-sm text-gray-900">{vendor.price}</p>
+                <p className="text-sm text-gray-900">{vendor.warranty}</p>
               </div>
 
-              <p className="text-base text-gray-900 flex-1 ml-4">
+              <p className="text-sm text-gray-900 flex-1 ml-4">
                 {vendor.description}
               </p>
               <div className="flex items-center justify-end gap-2">
@@ -83,26 +84,27 @@ export default function VendorQuotationCard() {
                 variant="outline"
                 size="sm"
                 className="w-fit"
+                color="primary"
                 >
                 Select Vendor
               </Button>
                 </div>
             </div>
-            {/* {index < vendors.length - 1 && <Separator />} */}
-          </div>
-        ))}
-      </>
+          ))}
+   
 
-      {/* Footer */}
-      <div className="flex items-center justify-between mt-4 p-6">
+      <div className="flex items-center justify-end gap-6  mt-4 py-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">Active Quotation</span>
+          <span className="text-sm ">Active Quotation</span>
+          <Toggle/>
           {/* <Switch defaultChecked /> */}
         </div>
         <Button variant="outline" size="sm" className="w-fit">
           Delete Quotation
         </Button>
       </div>
+          </div>
+
     </div>
   )
 }

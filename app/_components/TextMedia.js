@@ -46,7 +46,7 @@ const TextMedia = () => {
             ))}
           </ul>
         </div>
-        <div className="bg-[#fef6ff] flex items-center justify-center rounded-xl overflow-hidden h-full">
+        <div className="bg-[#fef6ff] flex items-center justify-center rounded-md overflow-hidden h-full">
           <Image
             src="/assets/75e44a29dd5265014dbb4e47e543bc8cc97aaade.jpg"
             alt="Why Choose VERA"

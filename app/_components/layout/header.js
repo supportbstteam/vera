@@ -85,7 +85,7 @@ const Header = () => {
               href="/register"
               className="text-sm text-white cursor-pointer"
             ></Link>
-            <Button onClick={() => setModalType("login")}>Login</Button>
+            <Button variant="outline" color="white" type="submit" onClick={() => setModalType("login")}>Login</Button>
             <ModalDialog isOpen={modalType === "login"} onClose={() => setModalType(false)}>
               <Login />
             </ModalDialog>
@@ -94,7 +94,7 @@ const Header = () => {
               <Register />
               {/* <RegisterForm /> */}
             </ModalDialog>
-            
+              
           </div>
         </div>
       </div>

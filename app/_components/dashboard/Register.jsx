@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Register = () => {
   return (
-    <div className=" bg-gray-100  ">
+    <div className=" bg-gray-100 rounded-md overflow-hidden ">
       <div className="max-w-5xl mx-auto flex items-center justify-center  flex-col ">
         <div className="w-fit bg-white shadow-md rounded-md grid grid-cols-1 sm:grid-cols-2">
           <div className="flex flex-col justify-between text-left bg-[#f8e9fb] p-8 py-12">
@@ -32,7 +32,7 @@ const Register = () => {
               <p className="mb-4">
                 Start comparing quotes and getting the best deals today.
               </p>
-              <div className="border-1 border-gray-400 my-4 mb-8 "></div>
+              <div className="border-1 border-stock my-4 mb-8 "></div>
               <AuthForm type="register" />
               <p className="mt-4 text-center">
                 Already have account?{" "}

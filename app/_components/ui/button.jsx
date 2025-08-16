@@ -13,14 +13,15 @@ const Button = ({
   disabled,
   className,
   onClick,
-  color
+  color,
+  type
 }) => {
   const baseStyles =
     "inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer h-fit"
 
   const sizeStyles = {
     sm: "px-3 py-2 text-sm",
-    md: "px-4 py-2 text-base",
+    md: "px-4 py-2 text-sm",
     lg: "px-5 py-3 text-lg",
     full: "w-full px-4 py-2 text-base"
   }
@@ -74,7 +75,7 @@ const Button = ({
   }
 
   return (
-    <button onClick={onClick} className={classes} disabled={disabled}>
+    <button type={type} onClick={onClick} className={classes} disabled={disabled}>
       {content}
     </button>
   )
