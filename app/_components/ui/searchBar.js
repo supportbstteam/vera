@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
 import { ChevronDown, ChevronUp, Search } from "lucide-react"
-
+import Button from '@/_components/ui/button'
 import Api from '@/_library/Api'
 
 import Swal from 'sweetalert2'
@@ -43,7 +43,8 @@ const SearchBar = ({handleModalType, loggedIn}) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = async ()=>{
+  const handleSubmit = async (e)=>{
+    e.preventDefault();   
     
     if(!selected_category){
         MySwal.fire({
@@ -106,8 +107,10 @@ const SearchBar = ({handleModalType, loggedIn}) => {
           </ul>
         )}
       </div>
-
+      
+      <form method="post" onSubmit={handleSubmit}>   
       <div className="flex justify-around gap-2">
+        
         <input
           type="text"
           placeholder="What are you looking for ?"
@@ -119,12 +122,15 @@ const SearchBar = ({handleModalType, loggedIn}) => {
             set_search_text(e.target.value)
           }}
         />
-        <Search size={20} color="#fff"  className="cursor-pointer" 
+
+        {/* <Search size={20} color="#fff"  className="cursor-pointer" 
         onClick={()=>{
           handleSearch()
         }}
-        /> 
+        />  */}
+        <Button type="submit" variant="none" icon={<Search size={20} color="#fff"  className="cursor-pointer"  />} />        
       </div>     
+      </form>
     </div>
   )
 }
