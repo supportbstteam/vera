@@ -203,7 +203,7 @@ const RegisterForm = ({handleModalType}) => {
 
 
   return (
-    <div className="grid gap-6">   
+    <div className="grid gap-4">   
 
       {common_error &&            
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">              

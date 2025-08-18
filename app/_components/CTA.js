@@ -27,14 +27,14 @@ const CTA = () => {
           alt="Why Choose VERA"
           width={500}
           height={500}
-          className="object-cover h-full w-full rounded"
+          className="object-cover h-full w-full rounded-md"
         />
         <Image
           src="/assets/cta1.png"
           alt="Why Choose VERA"
           width={500}
           height={500}
-          className="object-cover h-full w-full rounded"
+          className="object-cover h-full w-full rounded-md"
         />
         {/* </div> */}
       </div>

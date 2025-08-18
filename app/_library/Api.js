@@ -20,7 +20,12 @@ axiosInstance.interceptors.response.use(
           if(typeof response !== "undefined" && response.status === 401){  
             localStorage.removeItem(process.env.APP_PREFIX + 'token');	            
             localStorage.removeItem(process.env.APP_PREFIX + 'token_id');       
-            localStorage.removeItem(process.env.APP_PREFIX + 'role');                 
+            localStorage.removeItem(process.env.APP_PREFIX + 'role');  
+            localStorage.removeItem(process.env.APP_PREFIX + 'id'); 
+            
+            localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
+            localStorage.removeItem(process.env.APP_PREFIX + 'search_text');                   
+
           }
           return response
       } catch (err) {
@@ -190,9 +195,38 @@ export default {
       {headers:json_header}        
     )
     .catch((err) => { console.log('err', err); });    
+  },    
+  //=== quotation === 
+  submit_quotation: async (obj) => { 
+      return await axiosInstance.post(
+        "/private/submit-quotation",
+        {
+          category_id:obj.category_id,
+          search_text:obj.search_text,
+          customer_id:obj.customer_id,
+          first_name:obj.first_name,
+          email:obj.email,
+          mobile:obj.mobile,
+          special_requirement:obj.special_requirement,
+          quantity:obj.quantity,
+        },
+        {headers:json_header}                
+      )
+      .catch((err) => { console.log('err', err); });    
+  }, 
+  quotations: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/quotations`,
+      {
+        params: {
+          customer_id:obj.customer_id,          
+          page_number: obj.page_number ?? 1,          
+        }
+      },
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
   },  
-  
-  //=== company-user === 
 
 };
 

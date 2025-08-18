@@ -114,14 +114,24 @@ const LoginForm = ({handleModalType}) => {
             const token = resData.token;  
             const token_id = resData.token_id; 
             const role = resData.data.role;   
+            const id = resData.data.id;   
 
             await saveTokenInCookie(token)
             localStorage.setItem(process.env.APP_PREFIX + 'token', token);
             localStorage.setItem(process.env.APP_PREFIX + 'token_id', token_id);
             localStorage.setItem(process.env.APP_PREFIX + 'role', role);
-            //dispatch(fetchUser())  
+            localStorage.setItem(process.env.APP_PREFIX + 'id', id);
+            dispatch(fetchUser()) 
+
+            const selected_category = localStorage.getItem(process.env.APP_PREFIX + 'selected_category') ?? ''
+
+            if(selected_category){
+              handleModalType('quotation_request')
+            }
+            else{
+              router.push("/dashboard");
+            }     
             
-            router.push("/dashboard");
             //set_data(__data)           
             //set_disablebutton(false)
 
@@ -142,7 +152,7 @@ const LoginForm = ({handleModalType}) => {
   }	
 
   return (
-    <div className="grid gap-6">      
+    <div className="grid gap-4">      
 
       {common_error &&            
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">              

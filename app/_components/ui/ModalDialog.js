@@ -8,12 +8,12 @@ const ModalDialog = ({ isOpen, onClose, title, children, className }) => {
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-[#ffffff30] bg-opacity-50 z-50"
+      className="fixed inset-0 flex items-center justify-center bg-[#ffffff30] bg-opacity-80 z-50"
       onClick={onClose}
     >
       <div
         className={clsx(
-          "bg-white rounded-lg shadow-lg w-full max-w-5xl relative",
+          `bg-white rounded-lg shadow-lg w-fit h-fit relative`,
           className
         )}
         // Prevent close on content click

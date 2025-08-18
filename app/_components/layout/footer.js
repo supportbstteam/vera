@@ -142,7 +142,7 @@ const Footer = () => {
           </div>
         </div> */}
 
-        <div className=" px-4 border border-gray-600 py-8 md:py-8 md:px-8 grid gap-4  text-gray-300 rounded text-center">
+        <div className="px-4 border border-gray-600 py-8 md:py-8 md:px-8 grid gap-4  text-gray-300 rounded-md text-center">
           <div className="flex gap-4 items-start">
             <Phone size={32} />
             <div className="flex justify-center flex-col items-start">

@@ -32,7 +32,7 @@ const Lead = () => {
   return (
     <div className="max-w-7xl m-auto py-16 flex flex-col gap-6">
         <DashboardNavigation />
-    <div className="border border-[#dcdcdc] rounded-xl p-4 space-y-4  ">
+    <div className="border border-stock rounded-xl p-4 space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex gap-3 items-center">
@@ -57,7 +57,7 @@ const Lead = () => {
       </div>
       <div className="grid grid-cols-[3fr_2fr] gap-6">
         {/* Body */}
-        <div className="grid grid-cols-2 justify-between items-start flex-wrap border border-gray-200 rounded-lg py-6 divide-x divide-stock">
+        <div className="grid grid-cols-2 justify-between items-start flex-wrap border border-stock rounded-lg py-6 divide-x divide-stock">
           {/* Left Section */}
           <div className=" space-y-4 px-6">
             <h4 className="font-bold text-base">Product Detail</h4>

@@ -10,11 +10,15 @@ import { fetchUser } from '@/_library/redux/slice/userReducer'
 import Button from '@/_components/ui/button'
 import ProfileButton from "./ProfileButton";
 import SearchBar from '@/_components/ui/searchBar'
+
 import LoginModal from '@/_components/auth/LoginModal'
 import RegisterModal from '@/_components/auth/RegisterModal'
 import ForgotPasswordModal from '@/_components/auth/ForgotPasswordModal'
 import WelcomeModal from '@/_components/auth/WelcomeModal'
 import ModalDialog from '@/_components/ui/ModalDialog'
+
+import QuotationRequestModal from '@/_components/QuotationRequestModal'
+import ThankYouModal from '@/_components/ThankYouModal'
 
 const Header = ({loggedIn}) => {
 
@@ -58,14 +62,14 @@ const Header = ({loggedIn}) => {
               className="w-auto h-12"
             />
           </Link>
-          <SearchBar />
+          <SearchBar handleModalType={handleModalType} loggedIn={loggedIn} />
           <div className="flex items-center gap-6">
              {
                 loggedIn ?
                 <ProfileButton /> 
                 :
                 <>                
-                <Button onClick={() => setModalType("login")} className="py-1">Login</Button>  
+                <Button variant="outline" color="white" type="submit" onClick={() => setModalType("login")} className="py-1">Login</Button>  
                 <Button onClick={() => setModalType("register")}>Create Account</Button>                
                 </>
             }
@@ -104,6 +108,22 @@ const Header = ({loggedIn}) => {
         onClose={ () => setModalType(false) }
         >
         <WelcomeModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      modalType === "quotation_request" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <QuotationRequestModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      modalType === "thank_you" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <ThankYouModal handleModalType={handleModalType} />
       </ModalDialog>
       :
       ''

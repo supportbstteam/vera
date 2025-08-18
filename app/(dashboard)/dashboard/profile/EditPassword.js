@@ -176,7 +176,7 @@ const EditPassword = () => {
     }	 
 
   return (
-    <div className="border border-stock p-6 flex flex-col gap-4 py-6 ">
+    <div className="border border-stock p-6 flex flex-col gap-4 py-6 rounded-md">
       <div className="flex justify-between items-center pb-6">
         <div>
           <p className="text-xl font-bold">Password Reset</p>

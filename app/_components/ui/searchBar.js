@@ -1,13 +1,20 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
 import { ChevronDown, ChevronUp, Search } from "lucide-react"
-import Api from '@/_library/Api';
 
-const SearchBar = () => {
+import Api from '@/_library/Api'
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const SearchBar = ({handleModalType, loggedIn}) => {
+
+  const MySwal = withReactContent(Swal)  
 
   const [categories, set_categories] = useState([])
   const [isOpen, setIsOpen] = useState(false)
-  const [selected, setSelected] = useState(null)
+  const [selected_category, set_selected_category] = useState("")
+  const [search_text, set_search_text] = useState("")
 
   useEffect(() => {       
     fetchCategoryData()  
@@ -21,7 +28,7 @@ const SearchBar = () => {
   }  
 
   const handleSelect = option => {
-    setSelected(option)
+    set_selected_category(option)
     setIsOpen(false)    
   }
 
@@ -36,15 +43,43 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleSearch = async ()=>{
+    
+    if(!selected_category){
+        MySwal.fire({
+          //icon: 'success',
+          width: '350px',
+          animation: false,
+          title: '',  
+          confirmButtonText: 'Close',          
+          text: 'Please select category',
+        })	    
+    }
+    else{     
+
+      localStorage.setItem(process.env.APP_PREFIX + 'selected_category', JSON.stringify(selected_category));
+      localStorage.setItem(process.env.APP_PREFIX + 'search_text', search_text);    
+
+      if(loggedIn){
+        handleModalType('quotation_request')
+      }
+      else{
+        handleModalType('login')
+      }
+
+    }
+     
+  }
+
   return (
-    <div className="relative w-full md:w-3/6 border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_10fr] items-center justify-start ">
+    <div className="relative w-full md:w-3/6 border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_10fr] items-center justify-start">
 
       <div className="relative inline-block" ref={dropdownRef} >       
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-48 rounded-md  bg-transparent text-white px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
           >
-          <p className="truncate">{selected ? selected.name : 'All Categories'}</p>
+          <p className="truncate">{selected_category ? selected_category.name : 'All Categories'}</p>
           <span className="float-right">
           {" "}
           { isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}{" "}
@@ -59,9 +94,9 @@ const SearchBar = () => {
             >
             Select an option
             </li>
-            {categories.map((option, index) => (
+            {categories.map((option, i) => (
               <li
-                key={index}
+                key={i}
                 onClick={() => handleSelect(option)}
                 className=" text-sm px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
               >
@@ -72,15 +107,24 @@ const SearchBar = () => {
         )}
       </div>
 
-
       <div className="flex justify-around gap-2">
         <input
           type="text"
-          placeholder="What  are you looking for ?"
-          className=" w-full text-white placeholder-gray-100 focus:outline-none focus:ring-0 transition"
+          placeholder="What are you looking for ?"
+          className="w-full text-white placeholder-gray-100 focus:outline-none focus:ring-0 transition"
+          name="search_text" 
+          value={search_text} 
+          autoComplete="off"
+          onChange={(e)=>{           
+            set_search_text(e.target.value)
+          }}
         />
-        <Search size={20} color="#fff" className="cursor-pointer" />
-      </div>      
+        <Search size={20} color="#fff"  className="cursor-pointer" 
+        onClick={()=>{
+          handleSearch()
+        }}
+        /> 
+      </div>     
     </div>
   )
 }

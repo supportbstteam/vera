@@ -53,7 +53,11 @@ const ProfileButton = () => {
         await deleteTokenFromCookie('token')
         localStorage.removeItem(process.env.APP_PREFIX + 'token');
         localStorage.removeItem(process.env.APP_PREFIX + 'token_id');
-        localStorage.removeItem(process.env.APP_PREFIX + 'role');       
+        localStorage.removeItem(process.env.APP_PREFIX + 'role');   
+        localStorage.removeItem(process.env.APP_PREFIX + 'id');        
+        
+        localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
+        localStorage.removeItem(process.env.APP_PREFIX + 'search_text');   
 
         dispatch(fetchUser())  
         router.push('/')

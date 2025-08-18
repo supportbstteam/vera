@@ -5,7 +5,9 @@ const nextConfig = {
     domains : [
       "images.pexels.com",
       "google.com",
-      "localhost"
+      "localhost",
+      "127.0.0.1",
+      "teamwebdevelopers.com"
     ]
   },
   env:{    
@@ -19,7 +21,7 @@ const nextConfig = {
     RECAPTCHAV2_SECRET: process.env.RECAPTCHAV2_SECRET,
   },
   devIndicators: false && {
-    position  :  'bottom-left',  // 'bottom-right', 'bottom-left', 'top-right', 'top-left'
+    position : 'bottom-left',  // 'bottom-right', 'bottom-left', 'top-right', 'top-left'
   }, 
   eslint: {
     ignoreDuringBuilds: true, // for ignore build error validation

@@ -30,10 +30,15 @@ const TextMedia = () => {
             <span className="text-primary">STARTS WITH VERA</span>
           </h2>
           <p>
-            Vera is your central platform for fast, automated product quotes. Forget emailing suppliers one by one. Just tell Vera what you need and it instantly notifies verified suppliers, gathers and compares their offers alongside Flashy Cactus pricing.
+            Vera is your central platform for fast, automated product quotes.
+            Forget emailing suppliers one by one. Just tell Vera what you need
+            and it instantly notifies verified suppliers, gathers and compares
+            their offers alongside Flashy Cactus pricing.
           </p>
           <p>One platform. Zero hassle.</p>
-          <p className="font-bold text-xl">Get the best deal in just 4 simple steps.</p>
+          <p className="font-bold text-xl">
+            Get the best deal in just 4 simple steps.
+          </p>
           <ul className="space-y-3">
             {features.map((item, index) => (
               <li
@@ -46,7 +51,7 @@ const TextMedia = () => {
             ))}
           </ul>
         </div>
-        <div className="bg-[#fef6ff] flex items-center justify-center rounded-xl overflow-hidden h-full">
+        <div className="bg-[#fef6ff] flex items-center justify-center rounded-md overflow-hidden h-full">
           <Image
             src="/assets/75e44a29dd5265014dbb4e47e543bc8cc97aaade.jpg"
             alt="Why Choose VERA"
@@ -69,4 +74,5 @@ const TextMedia = () => {
     </div>
   )
 }
+
 export default TextMedia

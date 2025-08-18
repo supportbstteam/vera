@@ -5,20 +5,26 @@
   --background: #ffffff;
   --foreground: #010101;
   --primary: #C61AFF;
+  --primaryLight : #f8eafb;
   --secondary: #1a1a1a;
-  --stock: #494848;
+  --stock: #959595;
   --gray: #959595;
   --font-Manrope-sans: 'Manrope', sans-serif;
   --font-Manrope-mono: 'Manrope', monospace;
+  --radius: 80px;
+  --danger : "#E33629"
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primaryLight : var(--primaryLight);
   --color-secondary: var(--secondary);
   --color-stock: var(--stock);
   --color-gray: var(--gray);
+  --radius: var(--radius);
+  --danger: var(--danger);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -60,6 +66,7 @@ p{
 }
 
 /* error */
+
 form .error {
   border: 1px solid #F00 !important;
 }
@@ -76,10 +83,12 @@ form .error-msg {
   font-size: 16px;
   font-weight: bold;  
 }
+
 .hint{
   color: #c7c7c7;
   font-size:14px;  
 }
+
 .imagebox{
   position: relative;  
 }
@@ -103,6 +112,7 @@ div:where(.swal2-container) h2:where(.swal2-title) {
   text-transform: none;
   word-wrap: break-word;
 }
+
 div:where(.swal2-container) .swal2-html-container {
   z-index: 1;
   justify-content: center;
@@ -117,12 +127,13 @@ div:where(.swal2-container) .swal2-html-container {
   word-wrap: break-word;
   word-break: break-word;
 }
+
 .swal2-modal{
   padding: 20px;
   width: 400px !important;
 }
+
 div:where(.swal2-container) div:where(.swal2-popup) {
   width: auto !important;
 }
 /* sweetalert2 [ends] */
-
