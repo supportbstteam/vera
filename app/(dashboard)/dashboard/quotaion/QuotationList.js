@@ -16,7 +16,7 @@ const QuotationList = () =>{
   const [total, set_total] = useState(0)   
   const [data, set_data] = useState(null); 
   const [modalType, setModalType] = useState(null) 
-  const [quote_products_id, set_quote_products_id] = useState("")   
+  const [quote_id, set_quote_id] = useState("")   
 
   const handleModalType = (type) => {
     setModalType(type)
@@ -36,8 +36,7 @@ const QuotationList = () =>{
           });           
           
           if( res && (res.status === 200) ){   
-            const resData = res.data    
-            console.log(resData)
+            const resData = res.data   
             set_total(resData.total)        
             set_data(resData.data) 
           }      
@@ -62,14 +61,14 @@ const QuotationList = () =>{
                   <div key={i} className="flex items-center justify-between gap-4 py-4">  
                     <div className="w-6/12 flex items-center gap-4">
                       <Image
-                        src={`${process.env.FILE_UPLOAD_URL}/${item.product_image}`}
+                        src={`${process.env.FILE_UPLOAD_URL}/${item.category_image}`}
                         alt=""
                         width={80}
                         height={50}
                         className="rounded-md"
                       />
                       <div>
-                        <h3 className="font-medium text-base">{item.product_name}</h3>
+                        <h3 className="font-medium text-base">{item.search_text}</h3>
                         <p className="text-sm text-gray-500">
                         Posted on : {AllFunctionClient.getDate(item.created_at)}
                         </p>
@@ -103,7 +102,7 @@ const QuotationList = () =>{
                       }
                       <Button variant="outline" size="sm" color="primary" 
                       onClick={()=>{ 
-                        set_quote_products_id(item.quote_products_id)
+                        set_quote_id(item.id)
                         setModalType('suppliers_quotation')
                       }}
                       >
@@ -128,7 +127,7 @@ const QuotationList = () =>{
         isOpen={true}
         onClose={ () => setModalType(false) }
         >        
-        <SupplierQuotationCard handleModalType={handleModalType} quote_products_id={quote_products_id} />
+        <SupplierQuotationCard handleModalType={handleModalType} quote_id={quote_id} />
       </ModalDialog>
       :
       ''

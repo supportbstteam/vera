@@ -227,6 +227,42 @@ export default {
     )
     .catch((err) => { console.log('err', err); });    
   },  
+  supplier_quotations: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/supplier-quotations`,
+      {
+        params: {
+          quote_id:obj.quote_id,          
+          page_number: obj.page_number ?? 1,          
+        }
+      },
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  },  
+  quote: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/quote`,
+      {
+        params: {
+          quote_id:obj.quote_id,
+        }
+      },
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  },  
+  select_vendor: async (obj) => { 
+    return await axiosInstance.post(
+      `/private/select_vendor`,
+      {
+          id:obj.id,
+          status:obj.status,          
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },   
 
 };
 
