@@ -23,7 +23,8 @@ const Button = ({
     sm: "px-3 py-2 text-sm",
     md: "px-4 py-2 text-sm",
     lg: "px-5 py-3 text-lg",
-    full: "w-full px-4 py-2 text-base"
+    full: "w-full px-4 py-2 text-base",
+    none:""
   }
 
   const colorStyles = {
@@ -42,7 +43,6 @@ const Button = ({
     outline: "border border-stock text-black hover:bg-primary hover:text-white",
     gray: "bg-gray-200 text-gray-800 hover:bg-gray-300",
     icon: "bg-transparent text-gray-500 hover:bg-gray-100",
-    none: ""
   }
 
   const content = (

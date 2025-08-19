@@ -128,7 +128,7 @@ const SearchBar = ({handleModalType, loggedIn}) => {
           handleSearch()
         }}
         />  */}
-        <Button type="submit" variant="none" icon={<Search size={20} color="#fff"  className="cursor-pointer"  />} />        
+        <Button type="submit" size="none" variant="icon" icon={<Search size={20} color="#fff" />} />        
       </div>     
       </form>
     </div>
