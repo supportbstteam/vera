@@ -7,10 +7,18 @@ import Api from '@/_library/Api'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { searchAction } from '@/_library/redux/actions/click'
+import { event } from "jquery"
+
 const SearchBar = ({handleModalType, loggedIn}) => {
 
   const MySwal = withReactContent(Swal)  
 
+  const dispatch    = useDispatch()  
+  const searchState = useSelector( (state)=> state.search ) 
+  
+  const dropdownRef = useRef(null)
   const [categories, set_categories] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const [selected_category, set_selected_category] = useState("")
@@ -19,6 +27,38 @@ const SearchBar = ({handleModalType, loggedIn}) => {
   useEffect(() => {       
     fetchCategoryData()  
   },[]);  
+
+  const openQuoteModel = async () => { 
+
+    if(!selected_category){
+        MySwal.fire({
+          //icon: 'success',
+          width: '350px',
+          animation: false,
+          title: '',  
+          confirmButtonText: 'Close',          
+          text: 'Please select category',
+        })	    
+    }
+    else{  
+      localStorage.setItem(process.env.APP_PREFIX + 'selected_category', JSON.stringify(selected_category));
+      localStorage.setItem(process.env.APP_PREFIX + 'search_text', search_text);  
+      if(loggedIn){
+        handleModalType('quotation_request')
+      }
+      else{
+        handleModalType('login')
+      }
+
+    }
+    dispatch(searchAction(false))      	
+  }  
+
+  useEffect((e) => {     
+    if(searchState.open===true){     
+      openQuoteModel()      
+    }    
+  },[searchState]);  
 
   const fetchCategoryData = async () => {     
     const res = await Api.categories({       
@@ -32,8 +72,8 @@ const SearchBar = ({handleModalType, loggedIn}) => {
     setIsOpen(false)    
   }
 
-  const dropdownRef = useRef(null)
-    useEffect(() => {
+  
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false)
@@ -41,36 +81,12 @@ const SearchBar = ({handleModalType, loggedIn}) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, []);  
 
   const handleSubmit = async (e)=>{
-    e.preventDefault();   
-    
-    if(!selected_category){
-        MySwal.fire({
-          //icon: 'success',
-          width: '350px',
-          animation: false,
-          title: '',  
-          confirmButtonText: 'Close',          
-          text: 'Please select category',
-        })	    
-    }
-    else{     
-
-      localStorage.setItem(process.env.APP_PREFIX + 'selected_category', JSON.stringify(selected_category));
-      localStorage.setItem(process.env.APP_PREFIX + 'search_text', search_text);    
-
-      if(loggedIn){
-        handleModalType('quotation_request')
-      }
-      else{
-        handleModalType('login')
-      }
-
-    }
-     
-  }
+    e.preventDefault(); 
+    openQuoteModel()
+  }  
 
   return (
     <div className="relative w-full md:w-3/6 border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_10fr] items-center justify-start">
@@ -128,7 +144,7 @@ const SearchBar = ({handleModalType, loggedIn}) => {
           handleSearch()
         }}
         />  */}
-        <Button type="submit" variant="none" icon={<Search size={20} color="#fff"  className="cursor-pointer"  />} />        
+        <Button type="submit" size="none" variant="none" icon={<Search size={20} color="#fff"  className="cursor-pointer" />} />        
       </div>     
       </form>
     </div>

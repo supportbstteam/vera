@@ -332,7 +332,7 @@ const RegisterForm = ({handleModalType}) => {
       </div>
 
       <div className={`grid grid-cols-1 mb-3`}>      
-       <Button variant="gray" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Register with Google</Button>
+       <Button type="button" variant="gray" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Register with Google</Button>
       </div>
 
       </form>

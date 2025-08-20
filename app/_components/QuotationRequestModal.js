@@ -213,7 +213,7 @@ const QuotationRequestModal = ({handleModalType}) => {
           }
   
         }			
-    }	
+  }	
 
 
   return (

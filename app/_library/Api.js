@@ -191,8 +191,13 @@ export default {
   },    
   seller_categories: async (obj) => { 
     return await axiosInstance.get(
-      `/private/seller-categories/`+obj.id,      
-      {headers:json_header}        
+      `/private/seller-categories`,      
+      {
+        params: {
+          supplier_id:obj.supplier_id,  
+        }
+      },
+      {headers:json_header}    
     )
     .catch((err) => { console.log('err', err); });    
   },    
@@ -263,6 +268,64 @@ export default {
     )
     .catch((err) => { console.log('err', err); });    
   },   
+
+  //=== leads === 
+  leads: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/leads`,
+      {
+        params: {
+          supplier_id:obj.supplier_id,          
+          page_number: obj.page_number ?? 1,          
+        }
+      },
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  },  
+  submit_lead_quotation: async (obj) => { 
+      return await axiosInstance.post(
+        "/private/submit-lead-quotation",
+        {
+          quote_suppliers_id:obj.quote_suppliers_id,
+          price:obj.price,
+          quantity:obj.quantity,
+          comments:obj.comments,
+          warranty:obj.warranty,            
+        },
+        {headers:json_header}                
+      )
+      .catch((err) => { console.log('err', err); });    
+  }, 
+
+  //=== customer dashboard === 
+  customer_data_count: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/customer-data-count`,
+      {
+        params: {
+          customer_id:obj.customer_id,   
+        }
+      },
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  }, 
+
+  //=== supplier dashboard === 
+  supplier_data_count: async (obj) => { 
+    return await axiosInstance.get(
+      `/private/supplier-data-count`,
+      {
+        params: {
+          supplier_id:obj.supplier_id,   
+        }
+      },
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  }, 
+  
 
 };
 

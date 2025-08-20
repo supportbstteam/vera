@@ -2,85 +2,68 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import Card from "@/_components/ui/Card"  
 import Badge from "@/_components/ui/Badge" 
-
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser } from '@/_library/redux/slice/userReducer'
-
 import Api from '@/_library/Api';
+import AllFunctionClient from "@/_library/AllFunctionClient" 
+import Loader from "@/_components/ui/Loader" 
 
 const Seller_dashboard = () => {
 
-  // const [categories, set_categories] = useState([])
-  // const dispatch     = useDispatch()
-  // const userState    = useSelector( (state)=> state.user )  
-  // const user         = (userState.data) ? userState.data : {};
-
-  // useEffect(() => { 
-  //   dispatch(fetchUser())  
-  // },[]); 
+  const [categories, set_categories] = useState(null)
+  const [datacount, set_datacount] = useState(null)
   
-  // useEffect(() => { 
-  //  fetchCategoryData() 
-  // },[]); 
+  useEffect(() => { 
+   fetchCategoryData() 
+  },[]); 
+
+  useEffect(() => { 
+    fetch_data_count() 
+  },[]); 
   
-  // const fetchCategoryData = async () => {  
-  //     const res = await Api.seller_categories({   
-  //     id:user?.id    
-  //     }); 
-  //     const resData = res.data.data   
-  //     console.log(resData)
-  //     set_categories(resData) 
-  // }
- 
-  const info = [
-    {
-      title: "Quotations Received",
-      value: "2040",
-      trend: "up",
-      image: "/icons/bagBG.png",
-      time: "yesterday",
-      percent: "5.8"
-    },
-    {
-      title: "Accept Quotation",
-      value: "2040",
-      trend: "down",
-      image: "/icons/checkHand.png",
-      time: "yesterday",
-      percent: "6.3"
-    },
-    {
-      title: "Reject Quotation",
-      value: "2040",
-      trend: "up",
-      image: "/icons/time.png",
-      time: "yesterday",
-      percent: "1.6"
-    }
-  ]
-
-  const Category = [
-    { name: "Laptop", icon: "/icons/laptop.png", type: "primary" },
-    { name: "Mobile", icon: "/icons/mobile.png", type: "primary" },
-    { name: "Tablet", icon: "/icons/tablet.png", type: "primary" },
-    { name: "TV", icon: "/icons/TV.png", type: "primary" },
-    { name: "Catering  & Hospital", icon: "/icons/Catering-Hospital.png",  type: "primary" }
-  ]
-
+  const fetchCategoryData = async () => {  
+      let id = localStorage.getItem(process.env.APP_PREFIX + 'id') ?? ''  
+      const res = await Api.seller_categories({   
+        supplier_id:id    
+      }); 
+      const resData = res.data  
+      set_categories(resData.data) 
+  } 
+    
+  const fetch_data_count = async () => {  
+      let id = localStorage.getItem(process.env.APP_PREFIX + 'id') ?? ''  
+      const res = await Api.supplier_data_count({   
+        supplier_id:id    
+      }); 
+      const resData = res.data  
+      console.log(resData)
+      set_datacount(resData.data) 
+  } 
+  
   return (
     <>
-    <div className="grid grid-cols-3 gap-6 ">
-    {info.map((item, index) => (
-    <Card key={index} className="mb-4" item={item} />
-    ))}
+    <div className="grid grid-cols-3 gap-6">
+    {
+      datacount && datacount?.info ? 
+      datacount.info.map((item, i) => (
+        <Card key={i} className="mb-4" item={item} />
+      ))
+      :
+      <Loader />
+    }
     </div>
 
     <div className="mt-6">
       <p>Category</p>
       <div className="flex flex-wrap gap-2 mt-2">
-        {Category.map((item, index) => (
-          <Badge key={index} title={item.name} type={item.type} />
-        ))}
+        {
+          categories ? 
+          categories.map((item, i) => (
+            <Badge key={i} title={item.name} type="primary" />
+          ))
+          :
+          <Loader />
+        }
       </div>
     </div>
     </>
