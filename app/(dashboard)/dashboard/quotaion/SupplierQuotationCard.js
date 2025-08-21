@@ -155,8 +155,10 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                   </div>
                 </div>
                 )
-              })
+              })    
+
             }
+            { data.length < 1 && 'No vendor posted any price quotation yet.' }
             </>
             :
             ''
@@ -170,7 +172,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
           <Button variant="outline" size="sm" className="w-fit">
           Delete Quotation
           </Button>
-        </div> */}
+        </div>  */}
 
 
       </div>

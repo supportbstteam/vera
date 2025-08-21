@@ -268,7 +268,50 @@ export default {
     )
     .catch((err) => { console.log('err', err); });    
   },   
-
+  shortlist_lead: async (obj) => { 
+    return await axiosInstance.post(
+      `/private/shortlist_lead`,
+      {
+          id:obj.id,
+          shortlist:obj.shortlist,          
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },  
+  remove_shortlist_lead: async (obj) => { 
+    return await axiosInstance.post(
+      `/private/remove_shortlist_lead`,
+      {
+          id:obj.id,
+          shortlist:obj.shortlist,          
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },    
+  delete_lead: async (obj) => { 
+    return await axiosInstance.post(
+      `/private/delete_lead`,
+      {
+          id:obj.id,
+          deleted:obj.deleted,          
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },   
+  reject_lead: async (obj) => { 
+    return await axiosInstance.post(
+      `/private/reject_lead`,
+      {
+          id:obj.id,
+          status:obj.status,          
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },   
   //=== leads === 
   leads: async (obj) => { 
     return await axiosInstance.get(

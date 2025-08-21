@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
 import { useRouter, usePathname } from 'next/navigation'
-import { Clock, MapPinned, Star } from "lucide-react"
+import { Clock, MapPinned, Star, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
 import Input from "@/_components/ui/Input"  
@@ -14,11 +14,16 @@ import Loader from "@/_components/ui/Loader"
 import LeadQuoteForm from "./LeadQuoteForm" 
 import Pagination from '@/_components/ui/pagination/Pagination';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const Lead = ({__filterData}) => {
 
   const router = useRouter()
   const pathname = usePathname() 
   const item_per_page = AllFunctionClient.limit()
+
+  const MySwal = withReactContent(Swal)  
  
   const [total, set_total] = useState(0)   
   const [data, set_data] = useState(null); 
@@ -80,6 +85,104 @@ const Lead = ({__filterData}) => {
 		router.push(pathname + (string) ? '?' + string : '')  		
 	}
 
+  const shortlist_lead = async (id) => {  
+      try {          
+          const res = await Api.shortlist_lead({
+            id:id,
+            shortlist:1,          
+          });           
+          
+          if( res && (res.status === 200) ){   
+            fetch_data(1)      	
+            MySwal.fire({
+              //icon: 'success',
+              width: '350px',
+              animation: true,
+              title: '',  
+              confirmButtonText: 'Close',          
+              text: "Quotation request is shortlisted successfully!",
+            })	
+            
+          }      
+          
+      } catch (error) {
+          console.log(error.message)            
+      }
+  }  
+  const remove_shortlist_lead = async (id) => {  
+      try {          
+          const res = await Api.remove_shortlist_lead({
+            id:id,
+            shortlist:0,          
+          });           
+          
+          if( res && (res.status === 200) ){   
+            fetch_data(1)      	
+            MySwal.fire({
+              //icon: 'success',
+              width: '350px',
+              animation: true,
+              title: '',  
+              confirmButtonText: 'Close',          
+              text: "Quotation request is removed from Shortlist successfully!",
+            })	
+            
+          }      
+          
+      } catch (error) {
+          console.log(error.message)            
+      }
+  }  
+  const delete_lead = async (id) => {  
+      try {          
+          const res = await Api.delete_lead({
+            id:id,
+            deleted:1,          
+          });           
+          
+          if( res && (res.status === 200) ){   
+            fetch_data(1)      	
+            MySwal.fire({
+              //icon: 'success',
+              width: '350px',
+              animation: true,
+              title: '',  
+              confirmButtonText: 'Close',          
+              text: "Quotation request is deleted successfully!",
+            })	
+            
+          }      
+          
+      } catch (error) {
+          console.log(error.message)            
+      }
+  } 
+  
+  const reject_lead = async (id) => {  
+      try {          
+          const res = await Api.reject_lead({
+            id:id,
+            status:2,          
+          });           
+          
+          if( res && (res.status === 200) ){   
+            fetch_data(1)      	
+            MySwal.fire({
+              //icon: 'success',
+              width: '350px',
+              animation: true,
+              title: '',  
+              confirmButtonText: 'Close',          
+              text: "Quotation request is rejected successfully!",
+            })	
+            
+          }      
+          
+      } catch (error) {
+          console.log(error.message)            
+      }
+  }  
+
   let page_number  = __filterData.page 
   let total_page   = Math.ceil(total/item_per_page);   
   let sl_no        = (total) ? ((page_number - 1) * item_per_page) + 0 : 0;
@@ -137,32 +240,56 @@ const Lead = ({__filterData}) => {
                   
                   <div className="flex flex-wrap items-center gap-3">
                     <LeadQuoteForm quote_suppliers_id={item.id} />                    
-                    {/* <div className="flex items-center justify-between gap-4 text-sm text-gray-600  w-full">
+                    <div className="flex items-center justify-between gap-4 text-sm text-gray-600  w-full">
+                      {
+                        item.shortlist == 1 ?
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          icon={<Star size={18} color="#D148FF" />}
+                          iconPosition="left"
+                          onClick={()=>{
+                            remove_shortlist_lead(item.id)
+                          }}
+                        >
+                        Shortlisted
+                        </Button>
+                        :
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          icon={<Star size={16} />}
+                          iconPosition="left"
+                          onClick={()=>{
+                            shortlist_lead(item.id)
+                          }}
+                        >
+                        Shortlist
+                        </Button>
+                      }
+                      
+
                       <Button
                         variant="ghost"
                         size="sm"
-                        icon={<Star size={16} />}
+                        icon={<Trash2 size={16} />}
                         iconPosition="left"
-                      >
-                      Shortlist
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        icon={<Star size={16} />}
-                        iconPosition="left"
+                        onClick={()=>{
+                          delete_lead(item.id)
+                        }}
                       >
                       Not Relevant
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        icon={<Star size={16} />}
-                        iconPosition="left"
+                      </Button>   
+
+                      <span className="flex items-start gap-2 cursor-pointer"
+                        onClick={()=>{
+                          reject_lead(item.id)
+                        }}
                       >
-                      Reject Quotation
-                      </Button>
-                    </div> */}
+                      <Image src="/icons/reject.png" alt="" width={18} height={18} /> Reject Quotation
+                      </span>
+
+                    </div> 
                   </div>
                 </div>
               </div>
