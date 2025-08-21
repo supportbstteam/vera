@@ -4,14 +4,20 @@ import Image from "next/image";
 import Lead from "./Lead";
 
 export const metadata = {
-  title: "Dashboard",
+  title: "My Leads",
   description: "",
 };
 
-const Page = async ({ params, searchParams }) => {  
+const Page = async ({ searchParams }) => {  
+
+  const mySearch = await searchParams 
+
+  const __filterData = {  
+    page: (mySearch.page) ? mySearch.page :  1,	 
+	}
   return (
     <> 
-    <Lead />
+    <Lead __filterData={__filterData}  />
     </>
   );
 }

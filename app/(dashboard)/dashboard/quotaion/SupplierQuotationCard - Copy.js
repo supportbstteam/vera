@@ -81,7 +81,8 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
   
 
   return (
-    <div className="max-w-5xl min-w-3xl p-4 rounded-lg shadow-sm">     
+    <div className="max-w-5xl p-4 rounded-lg shadow-sm">
+     
       <div className="flex justify-between items-start p-4  rounded-lg mb-4">
         <div className="flex gap-3">
           {
@@ -103,7 +104,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
         </div>       
       </div>      
 
-      <div className="divide-y divide-stock px-6 max-h-[70vh] overflow-y-auto">
+      <div className="divide-y divide-stock px-6">
         {
           data ?
           <>

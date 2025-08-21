@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
+import { useRouter, usePathname } from 'next/navigation'
 import { Clock, MapPinned, Star } from "lucide-react"
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
@@ -11,24 +12,41 @@ import Api from '@/_library/Api';
 import AllFunctionClient from "@/_library/AllFunctionClient" 
 import Loader from "@/_components/ui/Loader" 
 import LeadQuoteForm from "./LeadQuoteForm" 
+import Pagination from '@/_components/ui/pagination/Pagination';
 
-const Lead = () => {
+const Lead = ({__filterData}) => {
 
+  const router = useRouter()
+  const pathname = usePathname() 
   const item_per_page = AllFunctionClient.limit()
  
   const [total, set_total] = useState(0)   
   const [data, set_data] = useState(null); 
+  const [filterData, set_filterData] = useState(__filterData)    
+
+  const handlePaginate = (pageNo)=>{
+    set_filterData({
+      ...filterData, 
+      'page':pageNo
+    })
+    fetch_data(pageNo); 
+    updateBrowserUrl(pageNo)		
+  }
+
+  useEffect(() => {       
+    updateBrowserUrl(__filterData.page)  
+  },[]);      
 
   useEffect(()=>{
-      fetch_data()
+      fetch_data(__filterData.page)
   },[])     
-  const fetch_data = async () => {  
+  const fetch_data = async (pageNo) => {  
     try {
 
         let id = localStorage.getItem(process.env.APP_PREFIX + 'id') ?? ''  
         const res = await Api.leads({
           supplier_id:id,
-          page_number:1,          
+          page_number:pageNo,          
         });          
         
         if( res && (res.status === 200) ){   
@@ -36,12 +54,35 @@ const Lead = () => {
           console.log(resData)
           set_total(resData.total)        
           set_data(resData.data) 
+          updateBrowserUrl(pageNo)  
         }      
         
     } catch (error) {
         console.log(error.message)            
     }
   }  
+
+  const updateBrowserUrl = (pageNo)=>{	
+    let string = ''    
+    var count = 0   
+    filterData['page'] = pageNo
+    Object.entries(filterData).forEach(([key, value]) => {      
+      if(value!=''){
+          count++
+          if(count == 1){
+              string += key + '=' +  value    
+          }
+          else{
+              string += '&' + key + '=' +  value
+          }      
+      } 
+    });
+		router.push(pathname + (string) ? '?' + string : '')  		
+	}
+
+  let page_number  = __filterData.page 
+  let total_page   = Math.ceil(total/item_per_page);   
+  let sl_no        = (total) ? ((page_number - 1) * item_per_page) + 0 : 0;
 
   return (
     <div className="max-w-7xl m-auto py-16 flex flex-col gap-6">
@@ -134,6 +175,18 @@ const Lead = () => {
           :
           <Loader />
         }
+
+
+        { total_page > 1 && 
+          <div className="overflow-x-auto">
+            <Pagination data={{
+            'total'			    :total,
+            'item_per_page'	:item_per_page,
+            'page_number'	  :page_number,
+            'handlePaginate':handlePaginate						
+            }} />
+          </div>
+        }	           
         
     
     </div>

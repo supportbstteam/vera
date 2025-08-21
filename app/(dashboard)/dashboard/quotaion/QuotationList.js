@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
+import { useRouter, usePathname } from 'next/navigation'
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
 import DashboardNavigation from "@/_components/layout/DashboardNavigation"
@@ -8,43 +9,83 @@ import ModalDialog from "@/_components/ui/ModalDialog"
 import Api from '@/_library/Api';
 import AllFunctionClient from "@/_library/AllFunctionClient" 
 import Loader from "@/_components/ui/Loader" 
+import Pagination from '@/_components/ui/pagination/Pagination';
 
-const QuotationList = () =>{   
+const QuotationList = ({__filterData}) =>{   
 
+  const router = useRouter()
+  const pathname = usePathname() 
   const item_per_page = AllFunctionClient.limit()
  
   const [total, set_total] = useState(0)   
   const [data, set_data] = useState(null); 
   const [modalType, setModalType] = useState(null) 
   const [quote_id, set_quote_id] = useState("")   
+  const [filterData, set_filterData] = useState(__filterData)    
 
   const handleModalType = (type) => {
     setModalType(type)
   }
+
+  const handlePaginate = (pageNo)=>{
+    set_filterData({
+      ...filterData, 
+      'page':pageNo
+    })
+    fetch_data(pageNo); 
+    updateBrowserUrl(pageNo)		
+  }
+
+  useEffect(() => {       
+      updateBrowserUrl(__filterData.page)  
+  },[]);  
   
   useEffect(()=>{
-    fetch_data()
+    fetch_data(__filterData.page)
   },[])     
-  const fetch_data = async () => {   
+  const fetch_data = async (pageNo) => {   
 
       try {
 
           let id = localStorage.getItem(process.env.APP_PREFIX + 'id') ?? ''  
           const res = await Api.quotations({
             customer_id:id,
-            page_number:1,          
+            page_number:pageNo,          
           });           
           
           if( res && (res.status === 200) ){   
             const resData = res.data   
             set_total(resData.total)        
             set_data(resData.data) 
+            updateBrowserUrl(pageNo)  
           }      
           
       } catch (error) {
           console.log(error.message)            
       }
   }  
+
+  const updateBrowserUrl = (pageNo)=>{	
+    let string = ''    
+    var count = 0   
+    filterData['page'] = pageNo
+    Object.entries(filterData).forEach(([key, value]) => {      
+      if(value!=''){
+          count++
+          if(count == 1){
+              string += key + '=' +  value    
+          }
+          else{
+              string += '&' + key + '=' +  value
+          }      
+      } 
+    });
+		router.push(pathname + (string) ? '?' + string : '')  		
+	}
+
+  let page_number  = __filterData.page 
+  let total_page   = Math.ceil(total/item_per_page);   
+  let sl_no        = (total) ? ((page_number - 1) * item_per_page) + 0 : 0;
 
   return (
     <>
@@ -119,6 +160,18 @@ const QuotationList = () =>{
             <Loader />
           }
         </div>
+        
+        { total_page > 1 && 
+          <div className="overflow-x-auto">
+            <Pagination data={{
+            'total'			    :total,
+            'item_per_page'	:item_per_page,
+            'page_number'	  :page_number,
+            'handlePaginate':handlePaginate						
+            }} />
+          </div>
+        }	           
+
     </div>
 
     {

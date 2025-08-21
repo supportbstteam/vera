@@ -7,11 +7,17 @@ export const metadata = {
   description: "",
 };
 
-const page = () => {
+const page = async ({ searchParams }) => {
+
+  const mySearch = await searchParams 
+
+  const __filterData = {  
+    page: (mySearch.page) ? mySearch.page :  1,	 
+	}
 
   return (
     <>
-      <QuotationList /> 
+      <QuotationList __filterData={__filterData} /> 
     </>
   )
 }
