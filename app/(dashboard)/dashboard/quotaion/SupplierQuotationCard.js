@@ -143,6 +143,16 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                       Selected
                       </Button>
                       :
+                      item.status == 2 ?
+                      <Button
+                        variant="red"
+                        size="sm"
+                        className="w-fit"
+                        color="primary"
+                      >
+                      Rejected by supplier
+                      </Button>
+                      :
                       item.status == 0 && item.supplier_selected > 0 ?
                       '--'
                       :
