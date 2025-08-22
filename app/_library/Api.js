@@ -79,7 +79,29 @@ export default {
         {headers:json_header}                
       )
       .catch((err) => { console.log('err', err); });    
-  },    
+  },  
+  google_auth_url: async () => {     
+      return await axiosInstance.get(
+        "/google-auth-url",        
+        {headers:json_header}                
+      )
+      .catch((err) => { console.log('err', err); });    
+  },  
+  google_callback: async (obj) => {        
+      return await axiosInstance.get(
+        `/google-callback`,    
+        {
+          params: {
+            code:obj.code,
+            scope:obj.scope,
+            authuser:obj.authuser,
+            prompt:obj.prompt,
+          }
+        },    
+        {headers:json_header}                
+      )
+      .catch((err) => { console.log('err', err); });    
+  },          
   verifyemail: async (obj) => { 
       return await axiosInstance.post(
         "/verifyemail",

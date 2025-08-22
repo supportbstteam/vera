@@ -34,6 +34,28 @@ const LoginForm = ({handleModalType}) => {
   const [common_error,set_common_error] 		  = useState("")  
   const [errors,set_errors]     						  = useState(__errors)   
   const [recaptchaToken, setRecaptchaToken]   = useState("");
+  const [google_auth_url, set_google_auth_url] = useState(null);
+
+  useEffect(()=>{
+      get_google_auth_url()
+  },[])     
+
+  const get_google_auth_url = async ()=>{	
+
+    try {
+      const res = await Api.google_auth_url();    
+      console.log(res)      
+      if( res && (res.status === 200) ){
+        const resData = res.data;            
+        set_google_auth_url(resData.url) 
+      } 
+      
+    } 
+    catch (err) {
+      set_common_error(err)         
+    }
+
+  }
 
   const handleChange = (e)=>{	
     const field_name  = e.target.name;
@@ -233,8 +255,11 @@ const LoginForm = ({handleModalType}) => {
         <p>Or</p>
       </div>
 
-      <div className={`grid grid-cols-1 mb-3`}>      
-      <Button type="button" variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Login with Google</Button>
+      <div className={`grid grid-cols-1 mb-3`}>   
+      {
+        google_auth_url &&
+        <Button type="button" href={google_auth_url} variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Login with Google</Button>
+      } 
       </div>
     </form>
     </div>
