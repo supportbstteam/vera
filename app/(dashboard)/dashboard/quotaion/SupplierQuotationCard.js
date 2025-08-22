@@ -16,6 +16,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
   const [quote, set_quote] = useState(null);  
   const [data, set_data] = useState(null);  
   const [total, set_total] = useState(0)   
+  const [selected, set_selected] = useState(0)     
   
   useEffect(()=>{
       fetch_quote_row()
@@ -55,6 +56,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
   }  
   
   const select_vendor = async (id) => {  
+      set_data(null)      	
       try {          
           const res = await Api.select_vendor({
             id:id,
@@ -81,18 +83,20 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
   
 
   return (
-    <div className="max-w-5xl min-w-3xl p-4 rounded-lg shadow-sm">     
+    <div className="max-w-5xl min-w-3xl p-4 rounded-lg shadow-sm"> 
+
+    { data && quote ?
+
+      <>
       <div className="flex justify-between items-start p-4  rounded-lg mb-4">
         <div className="flex gap-3">
           {
-            quote ?
+            quote &&
             <img
               src={`${process.env.FILE_UPLOAD_URL}/${quote.category_image}`}
               alt=""
               className="w-12 h-12 rounded object-cover"
-            />
-            :
-            <Loader />
+            />           
           }          
           <div>
             <p className="font-medium">
@@ -103,7 +107,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
         </div>       
       </div>      
 
-      <div className="divide-y divide-stock px-6 max-h-[70vh] overflow-y-auto">
+      <div className="divide-y divide-stock px-6 max-h-[70vh] overflow-y-auto">        
         {
           data ?
           <>
@@ -120,7 +124,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                   </div>
 
                   <div className="">
-                    <p className="text-sm text-gray-900">{ item.price > 0 ? AllFunctionClient.currency(item.price) : '' }</p>
+                    <p className="text-sm text-gray-900">{ item.price_with_margin > 0 ? AllFunctionClient.currency(item.price_with_margin) : '' }</p>
                     <p className="text-sm text-gray-900">{ item.warranty > 0 ? item.warranty + ' Year Warranty' : ''}</p>
                   </div>
 
@@ -139,6 +143,10 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                       Selected
                       </Button>
                       :
+                      item.status == 0 && item.supplier_selected > 0 ?
+                      '--'
+                      :
+                      item.status == 0 && item.supplier_selected <= 0 ?
                       <Button
                         variant="outline"
                         size="sm"
@@ -150,6 +158,8 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                       >
                       Select Vendor
                       </Button>
+                      :
+                      ''
 
                     }                    
                   </div>
@@ -161,7 +171,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
             { data.length < 1 && 'No vendor posted any price quotation yet.' }
             </>
             :
-            ''
+            ''            
         }
 
         {/* <div className="flex items-center justify-end gap-6  mt-4 py-4">
@@ -172,11 +182,17 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
           <Button variant="outline" size="sm" className="w-fit">
           Delete Quotation
           </Button>
-        </div>  */}
-
-
+        </div>*/}
       </div>
-      
+      </>
+      :
+      <div className="text-center">        
+        <Loader data={{ 
+          width:100, 
+          height:100
+        }} />
+      </div>
+   }      
     </div>
   )
 }

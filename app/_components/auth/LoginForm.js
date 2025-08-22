@@ -43,8 +43,7 @@ const LoginForm = ({handleModalType}) => {
   const get_google_auth_url = async ()=>{	
 
     try {
-      const res = await Api.google_auth_url();    
-      console.log(res)      
+      const res = await Api.google_auth_url(); 
       if( res && (res.status === 200) ){
         const resData = res.data;            
         set_google_auth_url(resData.url) 

@@ -5,6 +5,7 @@ import Api from '@/_library/Api';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser } from '@/_library/redux/slice/userReducer'
 import { saveTokenInCookie } from '@/actions'
+import Loader from "@/_components/ui/Loader" 
 
 const Google_callback = ({searchData}) =>{   
 
@@ -56,6 +57,15 @@ const Google_callback = ({searchData}) =>{
 
   return (
     <>
+    <div style={{padding:"50px"}}> 
+    <div className="text-center">        
+        <Loader data={{ 
+          width:150, 
+          height:150,
+          text:""
+        }} />
+      </div>
+    </div>
     </>
   )
 }

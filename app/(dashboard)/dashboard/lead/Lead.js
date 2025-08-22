@@ -40,7 +40,11 @@ const Lead = ({__filterData}) => {
 
   useEffect(() => {       
     updateBrowserUrl(__filterData.page)  
-  },[]);      
+  },[]);  
+  
+  const handleFetchLeads = ()=>{   
+    fetch_data(1); 
+  }
 
   useEffect(()=>{
       fetch_data(__filterData.page)
@@ -239,7 +243,7 @@ const Lead = ({__filterData}) => {
                   </div>
                   
                   <div className="flex flex-wrap items-center gap-3">
-                    <LeadQuoteForm quote_suppliers_id={item.id} />                    
+                    <LeadQuoteForm quote_suppliers_id={item.id} handleFetchLeads={handleFetchLeads} />                    
                     <div className="flex items-center justify-between gap-4 text-sm text-gray-600  w-full">
                       {
                         item.shortlist == 1 ?
@@ -266,8 +270,7 @@ const Lead = ({__filterData}) => {
                         >
                         Shortlist
                         </Button>
-                      }
-                      
+                      }                     
 
                       <Button
                         variant="ghost"
@@ -291,7 +294,22 @@ const Lead = ({__filterData}) => {
 
                     </div> 
                   </div>
-                </div>
+                </div>                
+                {
+                  item.price > 0 ?
+                  <>
+                  <div className="grid grid-1 p-3 inline-block" style={{background:"#eeeecbff", width:"100%"}}>
+                  <b>My Quotation : </b>
+                  No of Item : <b>{ item.quantity }</b> &nbsp;&nbsp;&nbsp;
+                  Warranty in Year: <b>{ (item.warranty > 0) ? item.warranty + ' Year' : 'None' }</b> &nbsp;&nbsp;&nbsp;
+                  Quoted Price: <b>{ AllFunctionClient.currency(item.price)}</b> &nbsp;&nbsp;&nbsp;
+                  Comments : <b>{ item.comments }</b>
+                  </div>
+                  </>
+                  :
+                  ''
+                }
+                
               </div>
               )
 

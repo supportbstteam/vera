@@ -17,7 +17,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 
-const LeadQuoteForm = ({quote_suppliers_id}) => {
+const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
 
   const __data = {		
     price: '',
@@ -120,14 +120,13 @@ const LeadQuoteForm = ({quote_suppliers_id}) => {
           }    
               
           try {
-            const res = await Api.submit_lead_quotation(obj);
-
-            console.log(res)
+            const res = await Api.submit_lead_quotation(obj);           
             
             if( res && (res.status === 200) ){
               const resData = res.data; 
               set_data(__data)           
               set_disablebutton(false)  
+              handleFetchLeads()
 
               MySwal.fire({
                 //icon: 'success',
