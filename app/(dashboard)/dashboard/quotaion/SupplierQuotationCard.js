@@ -156,7 +156,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                       item.status == 0 && item.supplier_selected > 0 ?
                       '--'
                       :
-                      item.status == 0 && item.supplier_selected <= 0 ?
+                      item.status == 0 && item.supplier_selected <= 0 && item.price_with_margin > 0 ?
                       <Button
                         variant="outline"
                         size="sm"
