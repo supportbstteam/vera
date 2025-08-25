@@ -4,7 +4,7 @@ import React from "react"
 
 const Input = ({ label, error, className, mandatory, ...props }) => {
   return (
-    <div className="space-y-1 w-full ">
+    <div className="space-y-1 w-full">
       <div className="flex">
         {label && (
           <label className="block text-sm font-medium text-[#181818]">

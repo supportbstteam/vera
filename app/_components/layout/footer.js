@@ -49,21 +49,29 @@ const Footer = () => {
         <div>
           <h3 className="font-semibold mb-4">View More</h3>
           <ul className="space-y-4 text-white text-sm">
-            <li>
+            {/* <li>
               <Link href="/categories">Browse Categories</Link>
             </li>
             <li>
               <Link href="/request-a-quote">Request a Quote</Link>
             </li>
             <li>
-              <Link href="/offers">Contact Us</Link>
-            </li>
-            {/* <li>
-              <Link href="/track-order">Track order</Link>
+              <Link href="/contact-us">Contact Us</Link>
+            </li> */}
+
+            <li>
+              <Link href="/contact-us">Contact Us</Link>
             </li>
             <li>
-              <Link href="/size-guide">Size Guide</Link>
-            </li> */}
+              <Link href="/about-us">About Us</Link>
+            </li>
+            <li>
+              <Link href="/terms-and-condition">Terms & Condition</Link>
+            </li>
+            <li>
+              <Link href="/privacy-policy">Privacy Policy</Link>
+            </li>
+           
           </ul>
           <div className="flex gap-4 space-x-2 text-lg text-gray-100 mt-4">
             <Image
@@ -149,7 +157,7 @@ const Footer = () => {
               <p className="text-lg font-bold">
                 Didn't find what you were looking for?
               </p>
-              <p className="underline cursor-pointer">Contact Us</p>
+              <p className="underline cursor-pointer"><Link href="/contact-us">Contact Us</Link></p>
             </div>
           </div>
 
@@ -157,7 +165,7 @@ const Footer = () => {
             <Smile size={32} />
             <div className="flex justify-center flex-col items-start">
               <p className="text-lg font-bold">How can we help you today?</p>
-              <p className="underline cursor-pointer">Help Center</p>
+              <p className="underline cursor-pointer"><Link href="/help">Help Center</Link></p>
             </div>
           </div>
           <div className="flex gap-4 items-center">
@@ -167,7 +175,7 @@ const Footer = () => {
                 {" "}
                 We'd love to hear what you think!
               </p>
-              <p className="underline cursor-pointer">Give Feedback</p>
+              <p className="underline cursor-pointer"><Link href="/feedback">Give Feedback</Link></p>
             </div>
           </div>
         </div>

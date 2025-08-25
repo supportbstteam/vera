@@ -391,6 +391,39 @@ export default {
     .catch((err) => { console.log('err', err); });    
   }, 
   
+  contact: async (obj) => { 
+    return await axiosInstance.post(
+      `/contact`,
+      {
+          name:obj.name,            
+          email:obj.email, 
+          phone:obj.phone,
+          subject:obj.subject,
+          message:obj.message,
+          recaptchaToken:obj.recaptchaToken,                 
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },   
+
+  feedback: async (obj) => { 
+    return await axiosInstance.post(
+      `/feedback`,
+      {
+          name:obj.name,            
+          designation:obj.designation, 
+          rating:obj.rating,
+          description:obj.description,        
+          recaptchaToken:obj.recaptchaToken,                 
+      },
+      {headers:json_header}                
+    )
+    .catch((err) => { console.log('err', err); });    
+  },   
+  
+  
+  
 
 };
 

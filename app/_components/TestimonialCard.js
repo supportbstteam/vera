@@ -58,16 +58,22 @@ const TestimonialCard = () => {
                     <p className="text-black font-semibold">{t?.name}</p>
                     <p className="text-sm text-black">{t?.designation}</p>
                   </div>
-                  <div className="flex mb-6 gap-1 text-yellow-500 text-lg">
-                    {Array(t?.star)
+                  <div className="flex mb-6 gap-1 text-yellow-500 text-lg">                    
+                    {Array(t.rating)
                       .fill(0)
-                      .map((_, i) => (
-                        <Star
+                      .map((_, i) => {
+
+                        let fill = "yellow"
+                        let color = "text-[color:var(--yellow)]"                       
+                        
+                        return(<Star
                           key={i}
-                          fill="yellow"
-                          className="text-[color:var(--yellow)]"
-                        />
-                      ))}
+                          fill={fill}
+                          className={color}
+                        />)
+                        
+                      }
+                    )}
                   </div>
                 </div>
               </div>
