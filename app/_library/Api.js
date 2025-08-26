@@ -173,8 +173,8 @@ export default {
       `/pages/`,
       {
         params: {
-          _id:obj._id,          
-          slug:obj.slug,  
+          page_id:obj.page_id ?? '',          
+          slug:obj.slug ?? '',  
         }
       },
       {headers:json_header}                

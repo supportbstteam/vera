@@ -8,17 +8,11 @@ import Button from "@/_components/ui/button";
 import Api from '@/_library/Api';
 import validation from '@/_library/validation';
 
-const Privacy_policy = () =>{  
+const Privacy_policy = ({pageData}) =>{  
 
   return (
     <>
-    <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
-    <div className="grid grid-cols-1 items-center">
-      <div className="flex flex-col items-start justify-center gap-4">
-      Privacy policy....
-      </div>                      
-    </div>
-    </div>
+    <div dangerouslySetInnerHTML={{ __html: pageData.content }} ></div>    
     </>
   )
 }

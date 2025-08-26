@@ -21,3 +21,17 @@ export async function getToken(){
     return false
   }
 }
+export async function getPage(obj){ 
+   
+  try { 
+    const searchParams = new URLSearchParams(obj);
+    const res = await fetch(`${process.env.API_URL}/pages?${searchParams.toString()}`);
+    const resData = await res.json();
+    //console.log(resData.data)    
+    return resData.data  
+  }
+  catch(err){
+        console.log(err)            
+  }
+    
+}
