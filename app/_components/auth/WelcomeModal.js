@@ -38,10 +38,10 @@ const WelcomeModal = () => {
               height={70}
               className=""
             />
-            {/* <CircleCheckBig color="#77B43F" size={140} /> */}
-            <Button variant="primary" className="mt-4" sizeStyles="lg" href="/searchs">
+            
+            {/* <Button variant="primary" className="mt-4" sizeStyles="lg" href="/searchs">
               Find Best Deals
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

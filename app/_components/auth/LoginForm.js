@@ -62,9 +62,12 @@ const LoginForm = ({handleModalType}) => {
     set_data({...data, [field_name]: field_value})
   }	 
 
-  const handleCaptchaChange = (token) => {
-      //console.log(token)
+  const handleCaptchaChange = (token) => {      
       setRecaptchaToken(token)
+  };  
+  const resetCaptcha = () => {
+    recaptchaRef.current?.reset();
+    setRecaptchaToken(null); 
   };
 
   const validate_email = (value)=>{	
@@ -158,10 +161,10 @@ const LoginForm = ({handleModalType}) => {
 
           } 
           else {          
-            const { status, message, error } = res.data;   
-           
+            const { status, message, error } = res.data;  
             set_common_error(message)
             set_disablebutton(false)
+            resetCaptcha()
           }
         } 
         catch (error) {
@@ -238,7 +241,7 @@ const LoginForm = ({handleModalType}) => {
       <ReCAPTCHA
         sitekey={process.env.RECAPTCHAV2_SITEKEY}
         ref={recaptchaRef}
-        onChange={handleCaptchaChange}
+        onChange={handleCaptchaChange}        
         size="normal"        
       />
       </div>

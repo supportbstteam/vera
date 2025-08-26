@@ -62,6 +62,10 @@ const Contact_us = () =>{
   const handleCaptchaChange = (token) => {
       setRecaptchaToken(token)
   };
+  const resetCaptcha = () => {
+    recaptchaRef.current?.reset();
+    setRecaptchaToken(null); 
+  };
 
   const validate_name = (value)=>{	
     let err     = '';  
@@ -186,6 +190,7 @@ const Contact_us = () =>{
             set_errors(error);	        
             set_common_error(message)
             set_disablebutton(false)
+            resetCaptcha()
           }
         } 
         catch (error) {

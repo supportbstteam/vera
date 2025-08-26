@@ -70,6 +70,10 @@ const RegisterForm = ({handleModalType}) => {
   const handleCaptchaChange = (token) => {
       setRecaptchaToken(token)
   };
+  const resetCaptcha = () => {
+    recaptchaRef.current?.reset();
+    setRecaptchaToken(null); 
+  };
 
   const validate_first_name = (value)=>{	
     let err     = '';  
@@ -211,6 +215,7 @@ const RegisterForm = ({handleModalType}) => {
             set_errors(error);	        
             set_common_error(message)
             set_disablebutton(false)
+            resetCaptcha()
           }
         } 
         catch (error) {
