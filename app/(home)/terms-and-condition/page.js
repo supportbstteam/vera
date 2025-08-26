@@ -15,7 +15,7 @@ export async function generateMetadata(){
 const page = async ({ searchParams }) => {
   const pageData = await getPage({slug:'terms-and-condition'})      
   return (
-    <Terms pageData={pageData} />
+    <Terms pageData={pageData}/>
   );
 };
 export default page;

@@ -25,7 +25,8 @@ export async function getPage(obj){
    
   try { 
     const searchParams = new URLSearchParams(obj);
-    const res = await fetch(`${process.env.API_URL}/pages?${searchParams.toString()}`);
+    //const res = await fetch(`${process.env.API_URL}/pages?${searchParams.toString()}`, { cache: 'force-cache' }); 
+    const res = await fetch(`${process.env.API_URL}/pages?${searchParams.toString()}`, { next: { revalidate: 60*5 } }); // cache for 5 minutes
     const resData = await res.json();
     //console.log(resData.data)    
     return resData.data  

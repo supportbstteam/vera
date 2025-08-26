@@ -18,11 +18,9 @@ export async function generateMetadata(){
 }
 
 const page = async ({ searchParams }) => {
-
-  const pageData = await getPage({slug:'about-us'})      
-
+  const pageData = await getPage({slug:'about-us'})  
   return (
-    <About_us pageData={pageData} />
+    <About_us pageData={pageData}  />
   );
 };
 export default page;
