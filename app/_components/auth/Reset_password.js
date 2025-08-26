@@ -157,6 +157,7 @@ const Reset_password = ({__filterData}) => {
       <Input
         label="New Password"
         type="password"
+        mandatory={true}
         placeholder=""
         id="new_password"
         name="new_password" 
@@ -175,6 +176,7 @@ const Reset_password = ({__filterData}) => {
       <Input
         label="Confirm Password"
         type="password"
+        mandatory={true}
         placeholder=""
         id="confirm_password"
         name="confirm_password" 

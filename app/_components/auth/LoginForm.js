@@ -195,6 +195,7 @@ const LoginForm = ({handleModalType}) => {
       <Input
         label="Email"
         type="text"
+        mandatory={true}
         placeholder="you@example.com"
         name="email" 
         value={data.email} 
@@ -212,6 +213,7 @@ const LoginForm = ({handleModalType}) => {
       <Input
         label="Password"
         type="password"
+        mandatory={true}
         placeholder=""
         id="password"
         name="password" 

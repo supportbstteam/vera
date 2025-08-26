@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
-import { LifeBuoy, Mail, MapPin, MoveRight, Phone, Smile } from "lucide-react";
+import { LifeBuoy, Mail, MapPin, MoveRight, Phone, Smile, Asterisk } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Loader from "@/_components/ui/Loader" 
@@ -242,6 +242,7 @@ const Feedback = () =>{
                       <div className={`grid grid-cols-1 mb-3`}>
                       <Input
                       label="Name"
+                      mandatory={true}
                       placeholder=""
                       name="name" 
                       value={data.name} 
@@ -256,9 +257,10 @@ const Feedback = () =>{
                       </div>  
 
                       <div className={`grid grid-cols-1 mb-3`}>
-                      <label className="block text-sm font-medium text-[#181818]">
-                      Designation
-                      </label>
+                        <div className="flex">
+                        <label className="block text-sm font-medium text-[#181818]">Designation</label>
+                        <Asterisk size={12} color="#E33629" />
+                        </div>
                       <select   
                       className="w-full px-4 py-2 border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"                   
                       name="designation" 
@@ -278,10 +280,13 @@ const Feedback = () =>{
                       </div>  	
                   </div>
           
-                  <div className={`grid grid-cols-1 mb-3`}>                 
-                  <label className="block text-sm font-medium text-[#181818]">
-                  Rating
-                  </label>
+                  <div className={`grid grid-cols-1 mb-3`}>  
+                    <div className="flex">
+                      <label className="block text-sm font-medium text-[#181818]">
+                      Rating
+                      </label>
+                      <Asterisk size={12} color="#E33629" />
+                    </div>               
                   <Rating 
                   style={{ maxWidth: 150 }} 
                   items={5}
@@ -299,6 +304,7 @@ const Feedback = () =>{
                   <div className={`grid grid-cols-1 mb-3`}>
                   <Textarea
                     label="Comments"
+                    mandatory={true}
                     placeholder=""
                     type="address"
                     rows="4"

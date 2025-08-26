@@ -27,8 +27,7 @@ const Contact_us = () =>{
   }
   const __errors = {	
     name: '',
-    email: '',
-    phone: '',
+    email: '',    
     subject: '',
     message: '',    
   }
@@ -41,12 +40,18 @@ const Contact_us = () =>{
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
   const [errors,set_errors]     						  = useState(__errors)   
-  const [recaptchaToken, setRecaptchaToken]   = useState("");
+  const [recaptchaToken, setRecaptchaToken]   = useState("");   
+  const [setting, setSetting] = useState(null);
+  
+  useEffect(() => {
+    get_settings()       
+  },[]); 
 
-   
-  useEffect(()=>{
-   
-  },[])   
+  const get_settings = async () => {       
+      const res = await Api.settings(); 
+      const resData = res.data        
+      setSetting(resData.data) 
+  }
 
   const handleChange = (e)=>{	
     const field_name  = e.target.name;
@@ -86,19 +91,6 @@ const Contact_us = () =>{
     });	 
     return err;	
   }
-
-  const validate_phone = (value)=>{	
-    let err     = '';  
-    let phone  = value ?? data.phone
-    if(!phone){        
-      err  = 'Phone is required';         
-    }	 
-    set_errors({
-      ...errors,
-      phone:err
-    });	 
-    return err;	
-  } 
 
   const validate_subject = (value)=>{	
     let err     = '';  
@@ -140,13 +132,7 @@ const Contact_us = () =>{
       if( email !==''){
         errors.email  = email;
         isValid = false;
-      }
-
-      let phone = validate_phone()
-      if( phone !==''){
-        errors.phone  = phone;
-        isValid = false;
-      }
+      }      
 
       let subject = validate_subject()
       if( subject !==''){
@@ -215,31 +201,35 @@ const Contact_us = () =>{
     
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
         <div className="bg-white shadow-md rounded-md grid grid-cols-1 sm:grid-cols-2">
-          <div className="justify-between text-left bg-[#f8e9fb] p-8 py-12">            
-               <div className="flex gap-2 items-start mb-5">
-                <MapPin strokeWidth={1} size="24" />
-                <p>
-                  Flashy Cactus
-                  <br />
-                  Radley House, Suite 42
-                  <br />
-                  Richardshaw Road, Pudsey
-                  <br />
-                  LS28 6LE
-                </p>
-              </div>
-              <div className="flex gap-2 items-start mb-5">
+          <div className="justify-between text-left bg-[#f8e9fb] p-8 py-12">             
+             
+           {
+                setting ?
+                <>
+
+                <div className="flex gap-2 items-start mb-5">
+                <MapPin strokeWidth={1} size="24" />                
+                <p dangerouslySetInnerHTML={{ __html: setting.contact_address }}></p> 
+                </div>
+
+                <div className="flex gap-2 items-start mb-5">
                 <Mail strokeWidth={1} size="24" />
                 <p>
-                  <a href="mailto:sales@flashycactus.com">sales@flashycactus.com</a>
+                <a href={`mailto:${setting.contact_email}`}>{setting.contact_email}</a>
                 </p>
-              </div>
-              <div className="flex gap-2 items-start mb-5">
+                </div>
+
+                <div className="flex gap-2 items-start mb-5">
                 <Phone strokeWidth={1} size="24" />
-                <p>
-                  <a href="tel:01132 464 950">01132 464 950</a>
-                </p>
-              </div>             
+                  <p>
+                    <a href={`tel:${setting.contact_phone}`}>{setting.contact_phone}</a>
+                  </p>
+                </div>   
+                </>
+                :
+                <Loader />
+            }                             
+
            
           </div>
           <div className="p-8 py-8 flex flex-col items-center justify-center">
@@ -271,6 +261,7 @@ const Contact_us = () =>{
                       <Input
                       label="Name"
                       placeholder=""
+                      mandatory={true}
                       name="name" 
                       value={data.name} 
                       onChange={(e)=>{
@@ -290,8 +281,7 @@ const Contact_us = () =>{
                       name="phone" 
                       value={data.phone} 
                       onChange={(e)=>{
-                        handleChange(e)
-                        validate_phone(e.target.value)
+                        handleChange(e)                        
                       }}
                       />
                       {errors.phone && 
@@ -304,6 +294,7 @@ const Contact_us = () =>{
                   <Input
                     label="Email"
                     type="text"
+                    mandatory={true}
                     placeholder="you@example.com"
                     name="email" 
                     value={data.email} 
@@ -321,6 +312,7 @@ const Contact_us = () =>{
                   <Input
                     label="Subject"
                     type="text"
+                    mandatory={true}
                     placeholder=""
                     name="subject" 
                     value={data.subject} 
@@ -339,6 +331,7 @@ const Contact_us = () =>{
                   <Textarea
                     label="Message"
                     placeholder=""
+                    mandatory={true}
                     type="address"
                     rows="4"
                     name="message" 

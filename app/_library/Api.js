@@ -422,6 +422,13 @@ export default {
     .catch((err) => { console.log('err', err); });    
   },   
   
+  settings: async (obj) => { 
+    return await axiosInstance.get(
+      `/settings`,      
+      {headers:json_header}        
+    )
+    .catch((err) => { console.log('err', err); });    
+  }, 
   
   
 

@@ -1,14 +1,18 @@
 import clsx from "clsx"
 import React from "react"
+import { Asterisk } from "lucide-react"
 
-const Textarea = ({ label, error, rows, className, ...props }) => {
+const Textarea = ({ label, error, rows, className, mandatory, ...props }) => {
   return (
     <div className="space-y-1">
+      <div className="flex">
       {label && (
         <label className="block text-sm font-medium text-[#181818]">
           {label}
         </label>
       )}
+      {mandatory ? <Asterisk size={12} color="#E33629" /> : ""}
+      </div>
       <textarea
         rows={rows}
         className={clsx(

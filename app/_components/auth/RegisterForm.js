@@ -245,6 +245,7 @@ const RegisterForm = ({handleModalType}) => {
           <div className={`grid grid-cols-1 mb-3`}>
           <Input
           label="First Name"
+          mandatory={true}
           placeholder="First Name"
           name="first_name" 
           value={data.first_name} 
@@ -261,6 +262,7 @@ const RegisterForm = ({handleModalType}) => {
           <div className={`grid grid-cols-1 mb-3`}>
           <Input
           label="Last Name"
+          mandatory={true}
           placeholder="Last Name"
           name="last_name" 
           value={data.last_name} 
@@ -279,6 +281,7 @@ const RegisterForm = ({handleModalType}) => {
       <Input
         label="Email"
         type="text"
+        mandatory={true}
         placeholder="you@example.com"
         name="email" 
         value={data.email} 
@@ -297,6 +300,7 @@ const RegisterForm = ({handleModalType}) => {
         <Input
           label="Password"
           type="password"
+          mandatory={true}
           placeholder=""
           id="password"
           name="password" 
@@ -315,6 +319,7 @@ const RegisterForm = ({handleModalType}) => {
         <Input
           label="Confirm Password"
           type="password"
+          mandatory={true}
           placeholder=""
           name="confirm_password" 
           value={data.confirm_password} 

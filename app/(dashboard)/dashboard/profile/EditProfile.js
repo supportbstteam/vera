@@ -234,6 +234,7 @@ const EditProfile = ({call_activeTab}) => {
             <Input
             label="First Name"
             placeholder=""
+            mandatory={true}
             name="first_name" 
             value={data.first_name} 
             onChange={(e)=>{
@@ -250,6 +251,7 @@ const EditProfile = ({call_activeTab}) => {
             <Input
             label="Last Name"
             placeholder=""
+            mandatory={true}
             name="last_name" 
             value={data.last_name} 
             onChange={(e)=>{
@@ -266,6 +268,7 @@ const EditProfile = ({call_activeTab}) => {
           <Input
             label="Phone"
             type="text"
+            mandatory={true}
             placeholder="9876-54-3210"
             name="mobile" 
             value={data.mobile} 
@@ -283,6 +286,7 @@ const EditProfile = ({call_activeTab}) => {
           <Input
             label="Email"
             type="text"
+            mandatory={true}
             placeholder=""
             name="email" 
             value={data.email} 
@@ -300,7 +304,7 @@ const EditProfile = ({call_activeTab}) => {
         <div className={`grid grid-cols-1 mb-3`}>
         <Textarea
           label="Address"
-          type="address"
+          type="address"         
           rows="2"
           placeholder="123 Main St, City, Country"
           name="address" 

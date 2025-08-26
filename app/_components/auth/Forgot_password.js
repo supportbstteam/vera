@@ -128,6 +128,7 @@ const Forgot_password = ({handleModalType}) => {
       <Input
         label="Email"
         type="text"
+        mandatory={true}
         placeholder="you@example.com"
         name="email" 
         value={data.email} 

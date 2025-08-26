@@ -201,6 +201,7 @@ const EditPassword = () => {
               label="Current Password"             
               type="password"
               placeholder=""
+              mandatory={true}
               name="current_password" 
               value={data.current_password} 
               onChange={(e)=>{
@@ -218,6 +219,7 @@ const EditPassword = () => {
               label="New Password"
               type="password"
               placeholder=""
+              mandatory={true}
               name="new_password" 
               value={data.new_password} 
               onChange={(e)=>{
@@ -234,6 +236,7 @@ const EditPassword = () => {
             <Input
               label="Confirm Password"
               type="password"
+              mandatory={true}
               placeholder=""
               name="confirm_password" 
               value={data.confirm_password} 

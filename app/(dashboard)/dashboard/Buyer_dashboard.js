@@ -27,6 +27,7 @@ const Buyer_dashboard = () => {
         customer_id:id    
       }); 
       const resData = res.data  
+      //console.log(resData);
       set_datacount(resData.data) 
   }
   
@@ -41,23 +42,35 @@ const Buyer_dashboard = () => {
         </div>
 
         <div className="flex-1 flex flex-col pl-4 items-center">
-        <p className="font-bold text-lg">18</p>
+        <p className="font-bold text-lg">{ datacount?.offer_receive }</p>
         <p className="text-sm text-gray-600">Offer Receive</p>
         </div>
 
-        <div className="flex-1 flex flex-col pl-4 items-center">
+        {/* <div className="flex-1 flex flex-col pl-4 items-center">
         <p className="font-bold text-lg">02</p>
         <p className="text-sm text-gray-600">My Buy</p>
-        </div>
+        </div> */}
 
       </div>             
       <div className="text-center">
-        <p className="text-lg text-gray-700 mb-3">
-        You haven't posted any quotations yet.
-        </p>
-        <Button variant="outline" onClick={()=>{
-          dispatch(searchAction(true))      	
-        }}>Post Quotation</Button>
+        {
+            datacount?.quotation_post > 0 ?
+            ''
+            :
+            datacount?.quotation_post < 1 ?
+            <>
+            <p className="text-lg text-gray-700 mb-3">
+            You haven't posted any quotations yet.
+            </p>
+            <Button variant="outline" onClick={()=>{
+              dispatch(searchAction(true))      	
+            }}>Post Quotation</Button>
+            </>
+            :
+            <>
+            <Loader />
+            </>
+        }        
       </div>
       </div>
     </div>

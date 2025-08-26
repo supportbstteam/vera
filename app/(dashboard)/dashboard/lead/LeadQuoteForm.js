@@ -169,8 +169,9 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
         }  	       
       </div>                             
       <div className="grid grid-cols-1 mb-3">
-      <Input label="Quoted Price at" placeholder="Enter Price"
+      <Input label="Quoted Price" placeholder="Enter Price"
         name="price" 
+        mandatory={true}
         value={data.price} 
         onChange={(e)=>{
           handleChange(e)   

@@ -1,11 +1,26 @@
+"use client";
+import React, { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { LifeBuoy, Mail, MapPin, MoveRight, Phone, Smile } from "lucide-react";
 import Image from "next/image";
-import React from "react";
 import Link from "next/link";
-
+import Api from '@/_library/Api';
 import Newsletter from "@/_components/Newsletter";
+import Loader from "@/_components/ui/Loader" 
 
 const Footer = () => {
+
+  const [setting, setSetting] = useState(null);
+
+  useEffect(() => {
+    get_settings()       
+  },[]); 
+
+  const get_settings = async () => {       
+      const res = await Api.settings(); 
+      const resData = res.data        
+      setSetting(resData.data) 
+  }
+
   return (
     <footer className="bg-[#111111] text-white pb-6 text-sm py-8 md:py-16">
       {/* <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-[3fr_2fr_2fr_2fr_3fr] gap-8">        */}
@@ -21,27 +36,26 @@ const Footer = () => {
           </div>
           <>
             <div className="text-gray-400 space-y-2">
-              <div className="flex gap-2 items-start">
-                <MapPin strokeWidth={1} size="24" />
-                <p>
-                  Flashy Cactus
-                  <br />
-                  Radley House, Suite 42
-                  <br />
-                  Richardshaw Road, Pudsey
-                  <br />
-                  LS28 6LE
-                </p>
-              </div>
-              <div className="flex gap-2 items-start">
+              {
+                setting ?
+                <>
+                <div className="flex gap-2 items-start">
+                <MapPin strokeWidth={1} size="24" />                
+                <p dangerouslySetInnerHTML={{ __html: setting.contact_address }}></p> 
+                </div>
+                <div className="flex gap-2 items-start">
                 <Mail strokeWidth={1} size="24" />
                 <p>
-                  <a href="mailto:sales@flashycactus.com">sales@flashycactus.com</a>
+                <a href={`mailto:${setting.contact_email}`}>{setting.contact_email}</a>
                 </p>
-              </div>
-              <p className="text-2xl text-white font-bold mt-4">
-                <a href="tel:01132 464 950">01132 464 950</a>
-              </p>
+                </div>
+                <p className="text-2xl text-white font-bold mt-4">
+                <a href={`tel:${setting.contact_phone}`}>{setting.contact_phone}</a>
+                </p>
+                </>
+                :
+                <Loader />
+              }              
             </div>
           </>
         </div>
@@ -74,18 +88,28 @@ const Footer = () => {
            
           </ul>
           <div className="flex gap-4 space-x-2 text-lg text-gray-100 mt-4">
-            <Image
-              src="/social/facebook.png"
-              alt="facebook"
-              width={20}
-              height={25}
-            ></Image>
-            <Image
-              src="/social/x.png"
-              alt="facebook"
-              width={20}
-              height={25}
-            ></Image>
+            {
+              setting &&
+              <>
+              <Link href={setting.facebook_url} >
+              <Image
+                src="/social/facebook.png"
+                alt="facebook"
+                width={20}
+                height={25}
+              ></Image>
+              </Link>
+
+              <Link href={setting.twitter_url} >
+              <Image
+                src="/social/x.png"
+                alt="facebook"
+                width={20}
+                height={25}
+              ></Image>
+              </Link>
+              </>
+            }            
 
         </div>
         </div>
