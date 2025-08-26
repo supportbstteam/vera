@@ -72,15 +72,15 @@ const ProfileButton = () => {
   const buyer_items = [
     { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
     { image: "/icons/quotaion.png", label: "My Quotaion", href: "/dashboard/quotaion" },
-    { image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
-    { image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
+    //{ image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
+    //{ image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
   ];
 
   const seller_items = [
     { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
     { image: "/icons/quotaion.png", label: "My Leads", href: "/dashboard/lead" },
-    { image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
-    { image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
+    //{ image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
+    //{ image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
   ];
 
   return (   
