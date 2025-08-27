@@ -48,7 +48,40 @@ const validation = {
         else{
             return false; 
         }   
-    },    
+    }, 
+    validatePassword:(password)=>{
+
+        let uppercaseRegex = /[A-Z]/g;
+        let lowercaseRegex = /[a-z]/g;
+        let numbersRegex   = /[0-9]/g;       
+        
+        let error = ''
+        // if(!password.match(uppercaseRegex)){
+        //     error += 'one Uppercase Letter.'
+        // }
+        // if(!password.match(lowercaseRegex)){
+        //     error += 'one Lowercase Letter.'
+        // }
+        // if(!password.match(numbersRegex)){
+        //     error += 'one Number.'
+        // }
+        if(password.length < 6){
+            error += 'Minimum 6 characters required'
+        }
+
+        if(error){
+            return {
+                status:false,
+                error:error
+            }
+        }
+        else{
+            return {
+                status:true,
+                error:''
+            }
+        }
+    },   
 
 }
 export default validation;

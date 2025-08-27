@@ -54,7 +54,7 @@ const Seller_dashboard = () => {
     </div>
 
     <div className="mt-6">
-      <p>Category</p>
+      <p>Catagories</p>
       <div className="flex flex-wrap gap-2 mt-2">
         {
           categories ? 

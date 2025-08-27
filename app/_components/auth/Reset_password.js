@@ -45,9 +45,13 @@ const Reset_password = ({__filterData}) => {
   const validate_new_password = (value)=>{	
     let err     = '';  
     let new_password  = value ?? data.new_password
+    let response  = validation.validatePassword(new_password)
     if(!new_password){        
       err  = 'New Password is required';         
     }	 
+    else if(response.status===false){
+      err  = response.error;         
+    } 
     set_errors({
       ...errors,
       new_password:err
@@ -157,6 +161,7 @@ const Reset_password = ({__filterData}) => {
       <Input
         label="New Password"
         type="password"
+        view_password={true}
         mandatory={true}
         placeholder=""
         id="new_password"
@@ -176,6 +181,7 @@ const Reset_password = ({__filterData}) => {
       <Input
         label="Confirm Password"
         type="password"
+        view_password={true}
         mandatory={true}
         placeholder=""
         id="confirm_password"

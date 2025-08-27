@@ -216,6 +216,7 @@ const LoginForm = ({handleModalType}) => {
       <Input
         label="Password"
         type="password"
+        view_password={true}
         mandatory={true}
         placeholder=""
         id="password"

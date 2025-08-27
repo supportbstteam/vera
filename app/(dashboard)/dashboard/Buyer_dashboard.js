@@ -60,7 +60,7 @@ const Buyer_dashboard = () => {
             datacount?.quotation_post < 1 ?
             <>
             <p className="text-lg text-gray-700 mb-3">
-            You haven't posted any quotations yet.
+            Haven't posted any quotation yet?
             </p>
             <Button variant="outline" onClick={()=>{
               dispatch(searchAction(true))      	

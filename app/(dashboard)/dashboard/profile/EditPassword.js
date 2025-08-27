@@ -72,12 +72,13 @@ const EditPassword = () => {
   const validate_new_password = (value)=>{	
     let err     = '';  
     let new_password  = value ?? data.new_password
+    let response  = validation.validatePassword(new_password)
     if(!new_password){        
       err  = 'New password is required';         
     }	 
-    else if(new_password.length < 6 ){        
-      err  = 'Minimum 6 characters required';         
-    }	 
+    else if(response.status===false){
+      err  = response.error;         
+    } 
     set_errors({
       ...errors,
       new_password:err
@@ -179,9 +180,9 @@ const EditPassword = () => {
     <div className="border border-stock p-6 flex flex-col gap-4 py-6 rounded-md">
       <div className="flex justify-between items-center pb-6">
         <div>
-          <p className="text-xl font-bold">Password Reset</p>
+          <p className="text-xl font-bold">Change Password</p>
           <p>
-            Update contact information, and keep your preferences up to date.
+          Change it Regularly, Stay Secure.
           </p>
         </div>
         <Button
@@ -200,9 +201,11 @@ const EditPassword = () => {
             <Input
               label="Current Password"             
               type="password"
+              view_password={true}
               placeholder=""
               mandatory={true}
               name="current_password" 
+              id="current_password" 
               value={data.current_password} 
               onChange={(e)=>{
                 handleChange(e)
@@ -218,9 +221,11 @@ const EditPassword = () => {
             <Input
               label="New Password"
               type="password"
+              view_password={true}
               placeholder=""
               mandatory={true}
               name="new_password" 
+              id="new_password" 
               value={data.new_password} 
               onChange={(e)=>{
                 handleChange(e)
@@ -236,9 +241,11 @@ const EditPassword = () => {
             <Input
               label="Confirm Password"
               type="password"
+              view_password={true}
               mandatory={true}
               placeholder=""
               name="confirm_password" 
+              id="confirm_password" 
               value={data.confirm_password} 
               onChange={(e)=>{
                 handleChange(e)

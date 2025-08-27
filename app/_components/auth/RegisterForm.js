@@ -120,9 +120,13 @@ const RegisterForm = ({handleModalType}) => {
   const validate_password = (value)=>{	
     let err     = '';  
     let password  = value ?? data.password
+    let response  = validation.validatePassword(password)
     if(!password){        
       err  = 'Password is required';         
-    }	 
+    }	
+    else if(response.status===false){
+      err  = response.error;         
+    } 
     set_errors({
       ...errors,
       password:err
@@ -305,6 +309,7 @@ const RegisterForm = ({handleModalType}) => {
         <Input
           label="Password"
           type="password"
+          view_password={true}
           mandatory={true}
           placeholder=""
           id="password"
@@ -324,9 +329,11 @@ const RegisterForm = ({handleModalType}) => {
         <Input
           label="Confirm Password"
           type="password"
+          view_password={true}
           mandatory={true}
           placeholder=""
           name="confirm_password" 
+          id="confirm_password"
           value={data.confirm_password} 
           onChange={(e)=>{
             handleChange(e)
