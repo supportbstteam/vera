@@ -46,7 +46,7 @@ const Profile_card = () => {
             className="rounded-full"
           />
           <div>
-            <p className="text-gray-500">Contact No</p>
+            <p className="text-gray-500">Contact No.</p>
             <p className="text-base font-medium">{ user?.mobile }</p>
           </div>
         </div>
@@ -59,7 +59,7 @@ const Profile_card = () => {
             className="rounded-full"
           />
           <div>
-            <p className="text-gray-500">Email Id</p>
+            <p className="text-gray-500">Email ID</p>
             <p className="text-base font-medium break-words">
              { user?.email }
             </p>
