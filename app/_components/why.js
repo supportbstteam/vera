@@ -1,8 +1,16 @@
+"use client";
+import React, { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Button from "./ui/button"
 
-export default function Why() {
+import { useSelector, useDispatch } from 'react-redux'
+import { searchAction } from '@/_library/redux/actions/click'
+
+const Why = () => {
+
+  const dispatch  = useDispatch() 
+  
   const steps = [
     {
       number: "01",
@@ -41,7 +49,7 @@ export default function Why() {
     }
   ]
   return (
-    <section className="relative bg-black text-white ">
+    <section className="relative bg-black text-white">
       {/* Background Image with overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -82,8 +90,21 @@ export default function Why() {
 
         {/* CTA Button */}
 
-        <Button icon={<ArrowRight />} >Send Your First Quote</Button>
+        <Button icon={<ArrowRight />} 
+        
+        onClick={()=>{
+
+          window.scrollTo({
+            top: 0,
+            behavior: 'auto'
+          }); 
+
+          dispatch(searchAction(true))            
+          
+        }}
+        >Send Your First Quote</Button>
       </div>
     </section>
   )
 }
+export default Why

@@ -16,6 +16,7 @@ import RegisterModal from '@/_components/auth/RegisterModal'
 import ForgotPasswordModal from '@/_components/auth/ForgotPasswordModal'
 import WelcomeModal from '@/_components/auth/WelcomeModal'
 import ModalDialog from '@/_components/ui/ModalDialog'
+import TextModal from '@/_components/ui/TextModal'
 
 import QuotationRequestModal from '@/_components/QuotationRequestModal'
 import ThankYouModal from '@/_components/ThankYouModal'
@@ -124,6 +125,16 @@ const Header = ({loggedIn}) => {
         onClose={ () => setModalType(false) }
         >
         <ThankYouModal handleModalType={handleModalType} />
+      </ModalDialog>
+      :
+      modalType === "select_category" ?
+      <ModalDialog
+        isOpen={true}
+        onClose={ () => setModalType(false) }
+        >
+        <TextModal handleModalType={handleModalType} data={{
+          text:'Please select category'
+        }} />
       </ModalDialog>
       :
       ''

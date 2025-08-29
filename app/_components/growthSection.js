@@ -31,10 +31,9 @@ const GrowthSection = () => {
             size="md"
             icon={<ArrowRight size={16} />}
             iconPosition="right"
-            href="/join"
-           
+            href="/partner"           
           >
-            Partner with Us
+          Partner with Us
           </Button>
         </div>
 
@@ -51,10 +50,9 @@ const GrowthSection = () => {
             size="md"
             icon={<ArrowRight size={16} />}
             iconPosition="right"
-            href="/join"
-            
+            href="/seller"            
           >
-            Join as a Seller
+          Join as a Seller
           </Button>
         </div>
       </div>

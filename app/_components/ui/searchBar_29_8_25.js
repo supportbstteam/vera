@@ -30,14 +30,30 @@ const SearchBar = ({handleModalType, loggedIn}) => {
 
   const openQuoteModel = async () => { 
 
-    localStorage.setItem(process.env.APP_PREFIX + 'selected_category', JSON.stringify(selected_category));
-    localStorage.setItem(process.env.APP_PREFIX + 'search_text', search_text);  
-    if(loggedIn){
-      handleModalType('quotation_request')
+    if(!selected_category){
+        // MySwal.fire({
+        //   //icon: 'success',
+        //   width: '350px',
+        //   animation: false,
+        //   title: '',  
+        //   confirmButtonText: 'Close',          
+        //   text: 'Please select category',
+        // })	   
+        handleModalType('select_category')
+        
     }
-    else{
-      handleModalType('login')
-    }    
+    else{  
+      localStorage.setItem(process.env.APP_PREFIX + 'selected_category', JSON.stringify(selected_category));
+      localStorage.setItem(process.env.APP_PREFIX + 'search_text', search_text);  
+      if(loggedIn){
+        handleModalType('quotation_request')
+      }
+      else{
+        handleModalType('login')
+      }
+
+    }
+    
     dispatch(searchAction(false))      	
   }  
 

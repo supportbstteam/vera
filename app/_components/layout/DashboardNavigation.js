@@ -22,7 +22,7 @@ const DashboardNavigation = () => {
   }, []);
 
   const dashboard_menu   = [''];  
-  const quotation_menu   = ['quotaion'];
+  const quotation_menu   = ['quotation'];
   const lead_menu        = ['lead'];
   const profile_menu     = ['profile'];
 
@@ -45,8 +45,8 @@ const DashboardNavigation = () => {
         {
           role && role == 1 ?
           <Link className={`${quotation_menu.includes(current_path) ? active_class : inactive_class}`} 
-          href="/dashboard/quotaion"
-          ><span className="flex items-center gap-2">My Quotation</span></Link>
+          href="/dashboard/quotation"
+          ><span className="flex items-center gap-2">My Quotations</span></Link>
           :
           role && role == 2 ?
           <Link className={`${lead_menu.includes(current_path) ? active_class : inactive_class}`} 

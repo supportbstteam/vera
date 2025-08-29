@@ -1,9 +1,15 @@
+"use client";
+import React, { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import Image from "next/image"
-import React from "react"
 import Button from "./ui/button"
+import { useSelector, useDispatch } from 'react-redux'
+import { searchAction } from '@/_library/redux/actions/click'
 import { ArrowRight } from "lucide-react"
 
 const CTA = () => {
+
+  const dispatch  = useDispatch() 
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 md:py-16">
       <div className="grid grid-cols-1 md:grid-cols-[3fr_3fr_6fr] gap-8 items-center ">
@@ -15,8 +21,17 @@ const CTA = () => {
             variant="primary"
             size="md"
             icon={<ArrowRight size={16} />}
-            iconPosition="right"
-            href="/join"
+            iconPosition="right"   
+            onClick={()=>{
+            
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'auto'
+                }); 
+      
+                dispatch(searchAction(true))            
+                
+              }}        
           >
             Send your first quote
           </Button>

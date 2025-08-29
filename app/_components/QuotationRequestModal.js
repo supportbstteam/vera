@@ -6,7 +6,7 @@ import Textarea from "@/_components/ui/Textarea"
 import Loader from "@/_components/ui/Loader"
 import Button from "@/_components/ui/button"
 import QuantityStepper from "@/_components/ui/QuantityStepper"
-
+import { ChevronDown, ChevronUp, Search } from "lucide-react"
 import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
 
@@ -14,7 +14,8 @@ import Api from '@/_library/Api'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const QuotationRequestModal = ({handleModalType}) => {
+const QuotationRequestModal = ({handleModalType}) => { 
+  
 
   const __data = {		
     category_id: '',
@@ -30,21 +31,43 @@ const QuotationRequestModal = ({handleModalType}) => {
 
   }
   const __errors = {	
+    category_id:'',
     first_name: '',
     email: '',
     mobile: '',
     quantity: ''          
   }
 
+  const dropdownRef = useRef(null)
+
   const [data,set_data]   	  						    = useState(__data) 
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
-  const [errors,set_errors]     						  = useState(__errors)   
+  const [errors,set_errors]     						  = useState(__errors)  
+  
+  const [categories, set_categories] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [selected_category, set_selected_category] = useState(null)
 
   useEffect(()=>{
     fetch_data()
-  },[])     
+  },[])   
+
+  useEffect(() => {       
+    fetchCategoryData()  
+  },[]); 
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []); 
+
   const fetch_data = async () => {
       try {
           const res = await Api.me(); 
@@ -61,14 +84,22 @@ const QuotationRequestModal = ({handleModalType}) => {
             email: (resData.email === null) ? '' : resData.email,  
             mobile: (resData.mobile === null) ? '' : resData.mobile,  
             search_text:search_text,   
-            category_id: selected_category.id,      
-            category_name: selected_category.name,     
-            category_image: selected_category.image,     
+            category_id: selected_category?.id ?? '',      
+            category_name: selected_category?.name ?? '',     
+            category_image: selected_category?.image ?? '',     
           })
+          set_selected_category(selected_category)
           
       } catch (error) {
           console.log(error.message)            
       }
+  }  
+
+  const fetchCategoryData = async () => {     
+    const res = await Api.categories({       
+    }); 
+    const resData = res.data.data 
+    set_categories(resData) 
   }  
 
   const handleChange = (e)=>{	
@@ -77,11 +108,48 @@ const QuotationRequestModal = ({handleModalType}) => {
     set_data({...data, [field_name]: field_value})
   }	 
 
+  const handleSelect = option => {
+    if(option){
+      set_data({
+        ...data, 
+        category_id: option.id,      
+        category_name: option.name,     
+        category_image: option.image, 
+      })
+      validate_category_id(option.id)
+      set_selected_category(option)
+    }
+    else{
+      set_data({
+        ...data, 
+        category_id: '',      
+        category_name: '',     
+        category_image: '', 
+      })
+      validate_category_id('')
+      set_selected_category(null)
+    }    
+    setIsOpen(false)    
+  }
+
   const handleQuantity = (value) => {
     set_data({
       ...data, 
       quantity:value
     })
+  }
+
+  const validate_category_id = (value)=>{	
+    let err      = '';  
+    let category_id = value ?? data.category_id
+    if(!category_id){        
+      err  = 'Category is required';         
+    }	
+    set_errors({
+      ...errors,
+      category_id:err
+    });	 
+    return err;	
   }
 
   const validate_first_name = (value)=>{	
@@ -141,7 +209,13 @@ const QuotationRequestModal = ({handleModalType}) => {
 
   const validateForm = ()=>{		
       let errors          = {};  
-      let isValid         = true;   
+      let isValid         = true;  
+
+      let category_id = validate_category_id()
+      if( category_id !==''){
+        errors.category_id  = category_id;
+        isValid = false;
+      }           
       
       let first_name = validate_first_name()
       if( first_name !==''){
@@ -246,31 +320,49 @@ const QuotationRequestModal = ({handleModalType}) => {
         <span className="inline-flex justify-center items-center gap-2 text-primary bg-primaryLight px-6 py-3 rounded-[8px]">
 
           {
-            data?.category_image ?
-              <Image
-                src={`${process.env.FILE_UPLOAD_URL}/${data.category_image}`}
-                alt=""
-                width={30}
-                height={30}
-                unoptimized
-              />
+            categories ?             
+              <>              
+              <div className="relative inline-block" ref={dropdownRef} >       
+                <button
+                  type='button'
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="w-48 rounded-md bg-transparent px-4 text-left text-sm focus:outline-none focus:ring-0 flex items-center justify-between"
+                  >
+                  <p className="truncate">{selected_category ? selected_category.name : 'All Categories'}</p>
+                  <span className="float-right">
+                  {" "}
+                  { isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}{" "}
+                  </span>
+                </button>  
+              
+                { isOpen && (
+                  <ul className="absolute mt-3 w-full grid rounded-md border border-gray-200 bg-white shadow-lg z-3 divide-y divide-gray">
+                    <li
+                      onClick={() => handleSelect('')}
+                      className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer text-black"
+                    >
+                    Select an option
+                    </li>
+                    {categories.map((option, i) => (
+                      <li
+                        key={i}
+                        onClick={() => handleSelect(option)}
+                        className=" text-sm px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+                      >
+                      {option.name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>              
+              </>   
               :
               <Loader />
-          }
-          
-          {/* <Image
-            src="/icons/laptop.png"
-            alt=""
-            width={30}
-            height={30}
-            unoptimized
-          /> */}
-        {" "}
-        { data?.category_name}
+          } 
         </span>
-        {/* <span className="inline-flex justify-center items-center gap-2 text-black px-6 py-3 rounded-[8px] border border-gray focus:outline-none focus:ring-2 focus:ring-primary">
-          Laptop Asus Vivobook I5 1355U, 8GB RAM, 512GB SSD
-        </span> */}     
+        {errors.category_id && 
+            <div className="error-msg">{errors.category_id}</div>    
+        }  	
         </div>   
         
         <div className={`grid grid-cols-1 mb-3`}>

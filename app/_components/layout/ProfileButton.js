@@ -71,7 +71,7 @@ const ProfileButton = () => {
 
   const buyer_items = [
     { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
-    { image: "/icons/quotaion.png", label: "My Quotaion", href: "/dashboard/quotaion" },
+    { image: "/icons/quotaion.png", label: "My Quotations", href: "/dashboard/quotation" },
     //{ image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
     //{ image: "/icons/settings.png", label: "Settings", href: "/dashboard/settings" },
   ];
