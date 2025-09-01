@@ -64,13 +64,13 @@ const Header = ({ loggedIn }) => {
                   className="w-auto h-12"
                 />
               </Link>
-              <div className="w-6/12 hidden md:flex justify-center ">
+              <div className="w-6/12 hidden md:flex justify-center">
                 <SearchBar
                   handleModalType={handleModalType}
                   loggedIn={loggedIn}
                 />
               </div>
-              <div className=" 6/12 md:w-4/12 flex justify-end ">
+              <div className="6/12 md:w-4/12 flex justify-end ">
                 {loggedIn ? (
                   <ProfileButton />
                 ) : (
@@ -103,24 +103,22 @@ const Header = ({ loggedIn }) => {
                 loggedIn={loggedIn}
               />
             </div>
-            <div className={`${isOpen === true ? "block" : "hidden"} w-8/12  absolute z-1 right-0 p-4 bg-black h-full`}>
-         
-              <div className="flex flex-col items-end gap-4">
-                
+            <div className={`${isOpen === true && loggedIn === false ? "block" : "hidden"} w-8/12  absolute z-1 right-0 p-4 bg-black h-full`}>         
+              <div className="flex flex-col items-end gap-4">                
                 <X color="white" onClick={()=>setIsOpen(!isOpen)}/>
                 <Button
-                      variant="outline"
-                      color="white"
-                      type="submit"
-                      size="full"
-                      onClick={() => setModalType("login")}
-                      className="py-1"
-                    >
-                      Login
-                    </Button>
-                    <Button size="full" onClick={() => setModalType("register")}>
-                      Create Account
-                    </Button>
+                  variant="outline"
+                  color="white"
+                  type="submit"
+                  size="full"
+                  onClick={() => setModalType("login")}
+                  className="py-1"
+                >
+                Login
+                </Button>
+                <Button size="full" onClick={() => setModalType("register")}>
+                Create Account
+                </Button>
               </div>
             </div>
           </div>
