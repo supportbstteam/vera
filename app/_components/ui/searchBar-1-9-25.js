@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
-import { ChevronDown, ChevronUp, Search, Tally1 } from "lucide-react"
+import { ChevronDown, ChevronUp, Search } from "lucide-react"
 import Button from '@/_components/ui/button'
 import Api from '@/_library/Api'
 
@@ -38,7 +38,7 @@ const SearchBar = ({handleModalType, loggedIn}) => {
     else{
       handleModalType('login')
     }    
-    dispatch(searchAction(false))       
+    dispatch(searchAction(false))      	
   }  
 
   useEffect((e) => {     
@@ -76,12 +76,12 @@ const SearchBar = ({handleModalType, loggedIn}) => {
   }  
 
   return (
-    <div className="relative w-full border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_1fr_10fr] items-center justify-start">
+    <div className="relative w-full md:w-3/6 border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_10fr] items-center justify-start">
 
       <div className="relative inline-block" ref={dropdownRef} >       
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-15 sm:w-28 md:w-28 lg:w-48 rounded-md  bg-transparent text-white pr-2 md:px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
+          className="w-48 rounded-md  bg-transparent text-white px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
           >
           <p className="truncate">{selected_category ? selected_category.name : 'All Categories'}</p>
           <span className="float-right">
@@ -91,7 +91,7 @@ const SearchBar = ({handleModalType, loggedIn}) => {
         </button>  
        
         { isOpen && (
-          <ul className="absolute mt-3 w-48 grid rounded-md border border-gray-200 bg-white shadow-lg z-3 divide-y divide-gray">
+          <ul className="absolute mt-3 w-full grid rounded-md border border-gray-200 bg-white shadow-lg z-3 divide-y divide-gray">
             <li
               onClick={() => handleSelect("")}
               className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer text-black"
@@ -110,8 +110,8 @@ const SearchBar = ({handleModalType, loggedIn}) => {
           </ul>
         )}
       </div>
-      <Tally1 color="white" strokeWidth="0.75" />
-      <form method="post" onSubmit={handleSubmit} className="">   
+      
+      <form method="post" onSubmit={handleSubmit}>   
       <div className="flex justify-around gap-2">
         
         <input
