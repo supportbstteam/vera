@@ -198,7 +198,27 @@ const Lead = ({__filterData}) => {
           data ?
           <>
           {
-            data.map((item, i) => {  
+            data.map((item, i) => { 
+              
+              let status = ''
+              let background = ''
+              if(item.status === 0){
+                status = 'Open'
+                background = '#eeeecbff'
+              }
+              else if(item.status === 1){
+                status = 'Accept Quotation'
+                background = '#a9f8e0ff'
+              }
+              else if(item.status === 2){
+                status = 'Reject Quotation'
+                background = '#fcc7a9ff'
+              }
+              else{
+                status = 'Closed'
+                background = '#fcc7a9ff'
+              }
+              
               return(
               <div key={i} className="border border-stock rounded-xl p-4 space-y-4">        
                 <div className="flex items-center justify-between">
@@ -298,11 +318,13 @@ const Lead = ({__filterData}) => {
                 {
                   item.price > 0 ?
                   <>
-                  <div className="grid grid-1 p-3 inline-block" style={{background:"#eeeecbff", width:"100%"}}>
+                  <div className="grid grid-1 p-3 inline-block" style={{background:background, width:"100%"}}> 
                   <b>My Quotation : </b>
+                  Quotation Number : <b>{ item.quote_number }</b> &nbsp;&nbsp;&nbsp;
                   No of Item : <b>{ item.quantity }</b> &nbsp;&nbsp;&nbsp;
                   Warranty in Year: <b>{ (item.warranty > 0) ? item.warranty + ' Year' : 'None' }</b> &nbsp;&nbsp;&nbsp;
                   Quoted Price: <b>{ AllFunctionClient.currency(item.price)}</b> &nbsp;&nbsp;&nbsp;
+                  Status: <b>{ status }</b> &nbsp;&nbsp;&nbsp;
                   Comments : <b>{ item.comments }</b>
                   </div>
                   </>

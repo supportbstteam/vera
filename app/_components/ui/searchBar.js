@@ -28,10 +28,13 @@ const SearchBar = ({handleModalType, loggedIn}) => {
     fetchCategoryData()  
   },[]);  
 
-  const openQuoteModel = async () => { 
-
+  const openQuoteModel = async () => {    
+    
+    const currentTime = Date.now(); 
+    localStorage.setItem(process.env.APP_PREFIX + 'selected_category_time', currentTime);
     localStorage.setItem(process.env.APP_PREFIX + 'selected_category', JSON.stringify(selected_category));
     localStorage.setItem(process.env.APP_PREFIX + 'search_text', search_text);  
+
     if(loggedIn){
       handleModalType('quotation_request')
     }

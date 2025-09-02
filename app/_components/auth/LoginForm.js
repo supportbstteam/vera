@@ -148,16 +148,26 @@ const LoginForm = ({handleModalType}) => {
             dispatch(fetchUser()) 
 
             const selected_category = localStorage.getItem(process.env.APP_PREFIX + 'selected_category') ?? ''
+            const selected_category_time = localStorage.getItem(process.env.APP_PREFIX + 'selected_category_time') ?? 0           
+            const currentTime = Date.now();
+            const sub = currentTime - selected_category_time
+            const minutes = Math.round(sub / 1000 / 60);
 
-            if(selected_category){
+            console.log(currentTime)
+            console.log(minutes)
+
+
+            if( selected_category && minutes < 5 ){
               handleModalType('quotation_request')
             }
             else{
+              
+              localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');              
+              localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
+              localStorage.removeItem(process.env.APP_PREFIX + 'search_text'); 
+
               router.push("/dashboard");
-            }     
-            
-            //set_data(__data)           
-            //set_disablebutton(false)
+            }   
 
           } 
           else {          

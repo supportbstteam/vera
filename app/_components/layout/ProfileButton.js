@@ -56,6 +56,7 @@ const ProfileButton = () => {
         localStorage.removeItem(process.env.APP_PREFIX + 'role');   
         localStorage.removeItem(process.env.APP_PREFIX + 'id');        
         
+        localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');        
         localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
         localStorage.removeItem(process.env.APP_PREFIX + 'search_text');   
 
@@ -70,6 +71,7 @@ const ProfileButton = () => {
   }   
 
   const buyer_items = [
+    { image: "/icons/dashboard.png", label: "Dashboard", href: "/dashboard" },
     { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
     { image: "/icons/quotaion.png", label: "My Quotations", href: "/dashboard/quotation" },
     //{ image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },
@@ -77,6 +79,7 @@ const ProfileButton = () => {
   ];
 
   const seller_items = [
+    { image: "/icons/dashboard.png", label: "Dashboard", href: "/dashboard" },
     { image: "/icons/shoppingBag.png", label: "My Profile", href: "/dashboard/profile" },
     { image: "/icons/quotaion.png", label: "My Leads", href: "/dashboard/lead" },
     //{ image: "/icons/baggageClaim.png", label: "Recent Activity", href: "/dashboard/activity" },

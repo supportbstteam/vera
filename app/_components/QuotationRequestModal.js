@@ -268,6 +268,7 @@ const QuotationRequestModal = ({handleModalType}) => {
               const resData = res.data;              
               handleModalType('thank_you')
 
+              localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');        
               localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
               localStorage.removeItem(process.env.APP_PREFIX + 'search_text');   
 

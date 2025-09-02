@@ -16,6 +16,7 @@ const ModalDialog = ({ isOpen, onClose, title, children, className }) => {
           `bg-white rounded-lg shadow-lg w-fit h-fit relative`,
           className
         )}
+        style={{border:"1px solid #ccc"}}
         // Prevent close on content click
         onClick={e => e.stopPropagation()}
       >
