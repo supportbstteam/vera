@@ -248,16 +248,20 @@ const Lead = ({__filterData}) => {
                     <div className="space-y-4 px-6">
                       <h4 className="font-bold text-base">Buyer Details</h4>
                       <div className="text-sm flex flex-row justify-start">
-                        <p>Buyer Name:</p>
-                        <span className="text-gray-900 font-bold">{item.first_name}</span>
+                        <p><b>Quotation Number:</b></p>
+                        <span className="text-gray-900">{item.quote_number}</span>
                       </div>
                       <div className="text-sm flex flex-row justify-start">
-                        <p>Requested Unit:</p>
-                        <span className="text-gray-900 font-bold">{item.quote_quantity}</span>
+                        <p><b>Buyer Name:</b></p>
+                        <span className="text-gray-900">{item.first_name}</span>
                       </div>
                       <div className="text-sm flex flex-row justify-start">
-                        <p>Special requirement:</p>
-                        <span className="text-gray-900 font-bold">{item.special_requirement}</span>
+                        <p><b>Requested Unit:</b></p>
+                        <span className="text-gray-900">{item.quote_quantity}</span>
+                      </div>
+                      <div className="text-sm flex flex-row justify-start">
+                        <p><b>Special requirement:</b></p>
+                        <span className="text-gray-900">{item.special_requirement}</span>
                       </div>
                     </div>
                   </div>
