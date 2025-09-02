@@ -207,11 +207,11 @@ const Lead = ({__filterData}) => {
                 background = '#eeeecbff'
               }
               else if(item.status === 1){
-                status = 'Accept Quotation'
+                status = 'Accepted'
                 background = '#a9f8e0ff'
               }
               else if(item.status === 2){
-                status = 'Reject Quotation'
+                status = 'Rejected'
                 background = '#fcc7a9ff'
               }
               else{
