@@ -19,6 +19,11 @@ const nextConfig = {
     FILE_UPLOAD_URL: process.env.FILE_UPLOAD_URL,    
     RECAPTCHAV2_SITEKEY: process.env.RECAPTCHAV2_SITEKEY,
     RECAPTCHAV2_SECRET: process.env.RECAPTCHAV2_SECRET,
+    //NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
+    //NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    NEXT_PUBLIC_PUSHER_APP_KEY:'ade421a5c86397d37467',
+    NEXT_PUBLIC_PUSHER_CLUSTER: 'ap2',
+    
   },
   devIndicators: false && {
     position : 'bottom-left',  // 'bottom-right', 'bottom-left', 'top-right', 'top-left'

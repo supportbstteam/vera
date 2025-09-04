@@ -11,7 +11,7 @@ export const metadata = {
 const HomeLayout = async ({ children }) => {
   const loggedIn = await getToken() 
   return (
-    <>    
+    <>      
     {/* <HeaderMobile /> */}
     <Header loggedIn={loggedIn} />
     {children}

@@ -151,11 +151,7 @@ const LoginForm = ({handleModalType}) => {
             const selected_category_time = localStorage.getItem(process.env.APP_PREFIX + 'selected_category_time') ?? 0           
             const currentTime = Date.now();
             const sub = currentTime - selected_category_time
-            const minutes = Math.round(sub / 1000 / 60);
-
-            console.log(currentTime)
-            console.log(minutes)
-
+            const minutes = Math.round(sub / 1000 / 60);           
 
             if( selected_category && minutes < 5 ){
               handleModalType('quotation_request')

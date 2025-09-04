@@ -33,8 +33,7 @@ axiosInstance.interceptors.response.use(
       } catch (err) {
           console.error('Api err:',err);
       }
-      if(error){
-        console.error('Api error:',error);
+      if(error){        
         let code = error.code ?? '' // ERR_NETWORK
         let name = error.name ?? '' // AxiosError
         let message = error.message ?? '' // Network Error  
