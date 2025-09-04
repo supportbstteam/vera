@@ -38,21 +38,48 @@ const AuthWrapper = () => {
   }, []);
 
   const deleteToken = async ()=>{    
-    localStorage.removeItem(process.env.APP_PREFIX + 'token');
-    localStorage.removeItem(process.env.APP_PREFIX + 'token_id');
-    localStorage.removeItem(process.env.APP_PREFIX + 'role');   
-    localStorage.removeItem(process.env.APP_PREFIX + 'id'); 
-    localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');        
-    localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
-    localStorage.removeItem(process.env.APP_PREFIX + 'search_text');  
-    await deleteTokenFromCookie('token')  
-    dispatch(fetchUser())    
+
+    const promise = new Promise( async (resolve, reject)=>{
+
+      localStorage.removeItem(process.env.APP_PREFIX + 'token');
+      localStorage.removeItem(process.env.APP_PREFIX + 'token_id');
+      localStorage.removeItem(process.env.APP_PREFIX + 'role');   
+      localStorage.removeItem(process.env.APP_PREFIX + 'id'); 
+      localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');        
+      localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
+      localStorage.removeItem(process.env.APP_PREFIX + 'search_text');  
+      await deleteTokenFromCookie('token') 
+      resolve(true) 
+
+    }).then( async(response)=>{ 
+
+      if(response){
+        dispatch(fetchUser()) 
+        router.push('/')    
+      }       
+       
+    })  
+
+
+
+
+
+
+    // localStorage.removeItem(process.env.APP_PREFIX + 'token');
+    // localStorage.removeItem(process.env.APP_PREFIX + 'token_id');
+    // localStorage.removeItem(process.env.APP_PREFIX + 'role');   
+    // localStorage.removeItem(process.env.APP_PREFIX + 'id'); 
+    // localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');        
+    // localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
+    // localStorage.removeItem(process.env.APP_PREFIX + 'search_text');  
+    // await deleteTokenFromCookie('token')  
+    // dispatch(fetchUser())    
   }
 
   if(status==0){    
-    //router.push('/') 
-    //router.reload();  
-    window.location.href = 'https://vera-alpha-rosy.vercel.app'
+    // //router.push('/') 
+    // //router.reload();    
+    // window.location.href = 'https://vera-alpha-rosy.vercel.app'
   }
 
   return (
