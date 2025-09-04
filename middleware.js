@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-
+import { deleteTokenFromCookie } from '@/actions'
 import axios from "axios";
 
 export async function middleware(request){  
@@ -32,20 +32,22 @@ export async function middleware(request){
         return NextResponse.redirect(new URL('/', request.url));
       }
 
-      // try {
-      //     const response = await axiosInstance.get(
-      //       "/private/me/",
-      //       {headers:json_header}        
-      //     )         
-      //     if(response.status === 200){  
-      //         return NextResponse.next();
-      //     }
-      //     else{
-      //         return NextResponse.redirect(new URL('/', request.url));
-      //     }
-      // } catch (error) {        
-      //     return NextResponse.redirect(new URL('/', request.url));
-      // }
+      try {
+          const response = await axiosInstance.get(
+            "/private/me/",
+            {headers:json_header}        
+          )  
+          if(response.status === 200){  
+              return NextResponse.next();
+          }
+          else{
+              await deleteTokenFromCookie('token')         
+              return NextResponse.redirect(new URL('/', request.url));
+          }
+      } catch (error) {  
+          await deleteTokenFromCookie('token')               
+          return NextResponse.redirect(new URL('/', request.url));
+      }
      
   }    
 

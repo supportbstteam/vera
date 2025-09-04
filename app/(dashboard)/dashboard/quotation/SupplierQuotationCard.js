@@ -117,7 +117,12 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                 <div key={i} className="grid grid-cols-[1fr_1fr_2fr_1fr] items-center justify-between py-4">
                   <div>
                     <p className="font-medium text-sm">
-                    Quotation Number: {item.quote_number} <br />
+                    { item.quote_number &&
+                      <>
+                      <b>{item.quote_number}</b> <br />
+                      </>
+                    }
+                    
                     {item.supplier_first_name} {item.supplier_last_name}
                     </p>
                     <div className="flex items-center text-sm text-gray-900">

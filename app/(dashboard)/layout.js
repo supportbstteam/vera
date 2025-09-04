@@ -12,7 +12,7 @@ export const metadata = {
 const DashboardLayout = async ({ children }) => {
   const loggedIn = await getToken() 
   return (
-    <>  
+    <> 
     <Header loggedIn={loggedIn} />
     {children}
     <Footer />

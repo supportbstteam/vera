@@ -138,7 +138,18 @@ const Lead = ({__filterData}) => {
       }
   }  
   const delete_lead = async (id) => {  
-      try {          
+
+    MySwal.fire({
+      title: 'Are you sure?',  
+      text: 'You want to delete this Quotation',           
+      showCancelButton: true,                 
+      cancelButtonText: 'No',
+      cancelButtonColor: '#3085d6',  
+      confirmButtonText: 'Yes', 
+      confirmButtonColor: '#d33'
+    }).then( async (result) => {  
+
+      if(result.isConfirmed){ 
           const res = await Api.delete_lead({
             id:id,
             deleted:1,          
@@ -153,38 +164,46 @@ const Lead = ({__filterData}) => {
               title: '',  
               confirmButtonText: 'Close',          
               text: "Quotation request is deleted successfully!",
-            })	
-            
+            })	              
           }      
-          
-      } catch (error) {
-          console.log(error.message)            
       }
+
+    })
+      
   } 
   
   const reject_lead = async (id) => {  
-      try {          
-          const res = await Api.reject_lead({
-            id:id,
-            status:2,          
-          });           
-          
-          if( res && (res.status === 200) ){   
-            fetch_data(1)      	
-            MySwal.fire({
-              //icon: 'success',
-              width: '350px',
-              animation: true,
-              title: '',  
-              confirmButtonText: 'Close',          
-              text: "Quotation request is rejected successfully!",
-            })	
+
+    MySwal.fire({
+      title: 'Are you sure?',  
+      text: 'You want to reject this Quotation',           
+      showCancelButton: true,                 
+      cancelButtonText: 'No',
+      cancelButtonColor: '#3085d6',  
+      confirmButtonText: 'Yes', 
+      confirmButtonColor: '#d33'
+    }).then( async (result) => {  
+
+        if(result.isConfirmed){ 
+            const res = await Api.reject_lead({
+              id:id,
+              status:2,          
+            });           
             
-          }      
-          
-      } catch (error) {
-          console.log(error.message)            
-      }
+            if( res && (res.status === 200) ){   
+              fetch_data(1)      	
+              MySwal.fire({
+                //icon: 'success',
+                width: '350px',
+                animation: true,
+                title: '',  
+                confirmButtonText: 'Close',          
+                text: "Quotation request is rejected successfully!",
+              })	            
+            }      
+        }
+    })
+      
   }  
 
   let page_number  = __filterData.page 

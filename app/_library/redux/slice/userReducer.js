@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Api from '@/_library/Api';
+import { deleteTokenFromCookie } from '@/actions'
+import {useRouter} from "next/navigation";
 
-// action ( from api )
 export const fetchUser = createAsyncThunk("fetchUser", async ()=>{  
     const promise = new Promise( async (resolve, reject)=>{
         const res = await Api.me();  
@@ -10,9 +11,21 @@ export const fetchUser = createAsyncThunk("fetchUser", async ()=>{
             resolve(resData.data) 
         }
         else{
-            resolve({}) 
+            resolve('') 
         }        
-    }).then( async(response)=>{          
+    }).then( async(response)=>{ 
+
+        if(!response){            
+            await deleteTokenFromCookie('token')
+            localStorage.removeItem(process.env.APP_PREFIX + 'token');
+            localStorage.removeItem(process.env.APP_PREFIX + 'token_id');
+            localStorage.removeItem(process.env.APP_PREFIX + 'role');   
+            localStorage.removeItem(process.env.APP_PREFIX + 'id'); 
+            localStorage.removeItem(process.env.APP_PREFIX + 'selected_category_time');        
+            localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
+            localStorage.removeItem(process.env.APP_PREFIX + 'search_text');   
+            router.push('/')
+        }  
         return response     
     })  
     return promise  

@@ -16,8 +16,10 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
       try {
-          const { response } = error; 
-          if(typeof response !== "undefined" && response.status === 401){  
+          const { response } = error;           
+
+          if(typeof response !== "undefined" && response.status === 401){ 
+
             localStorage.removeItem(process.env.APP_PREFIX + 'token');	            
             localStorage.removeItem(process.env.APP_PREFIX + 'token_id');       
             localStorage.removeItem(process.env.APP_PREFIX + 'role');  
@@ -29,14 +31,13 @@ axiosInstance.interceptors.response.use(
           }
           return response
       } catch (err) {
-          console.error('err:',err);
+          console.error('Api err:',err);
       }
       if(error){
-
+        console.error('Api error:',error);
         let code = error.code ?? '' // ERR_NETWORK
         let name = error.name ?? '' // AxiosError
-        let message = error.message ?? '' // Network Error    
-        
+        let message = error.message ?? '' // Network Error  
       }      
   }
 );
