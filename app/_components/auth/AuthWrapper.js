@@ -21,7 +21,7 @@ const AuthWrapper = () => {
     channel.bind("my-event", (data) => {
 
       console.log("Received notification: ", data);
-      
+
       const userStatus = data?.message ?? ''
       if(userStatus==0){
         deleteToken()
@@ -52,7 +52,7 @@ const AuthWrapper = () => {
   if(status==0){    
     //router.push('/') 
     //router.reload();  
-    window.location.href = process.env.APP_URL
+    window.location.href = 'https://vera-alpha-rosy.vercel.app'
   }
 
   return (
