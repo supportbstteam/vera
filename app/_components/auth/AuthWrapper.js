@@ -24,8 +24,17 @@ const AuthWrapper = () => {
 
       const userStatus = data?.message ?? ''
       if(userStatus==0){
+        
         deleteToken()
-        set_status(userStatus)
+
+        const timerId = setTimeout(() => {
+         set_status(userStatus)
+        }, 3000); 
+
+        return () => {
+          clearTimeout(timerId);
+        };
+        
       }
       
     });
