@@ -466,6 +466,7 @@ const RegisterForm = ({handleModalType}) => {
           type='button'
           onClick={() => setIsOpen(!isOpen)}
           className="w-100 rounded-md bg-transparent pr-2 md:px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
+          style={{border:"1px solid #ccc", padding:"10px 10px"}}
           >
           <p className="truncate">All Categories</p>
           <span className="float-right">
