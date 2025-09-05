@@ -2,23 +2,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Button from "../ui/button";
 import Input from "../ui/Input";
-
 import Api from '@/_library/Api';
 import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
-
 import {useRouter} from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
+import { ChevronDown, ChevronUp, Search, Tally1 } from "lucide-react"
 
 const RegisterForm = ({handleModalType}) => {
 
   const __data = {		
-    role: '',
+    role: 1,
     first_name: '',
     last_name: '',
     email: '',
     password: '',
-    confirm_password: ''          
+    confirm_password: '',
+    categories:[]          
   }
   const __errors = {	
     role: '',
@@ -26,24 +26,42 @@ const RegisterForm = ({handleModalType}) => {
     last_name: '',
     email: '',
     password: '',
-    confirm_password: ''          
+    confirm_password: '',
+    categories:''         
   }
 
   const router = useRouter();
   const recaptchaRef = useRef(null);
+  const dropdownRef = useRef(null)
 
   const [data,set_data]   	  						    = useState(__data) 
+  const [categories, set_categories]          = useState([])  
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
   const [errors,set_errors]     						  = useState(__errors)   
   const [recaptchaToken, setRecaptchaToken]   = useState("");
   const [google_auth_url, set_google_auth_url] = useState(null);
-
+  const [isOpen, setIsOpen]                   = useState(false)
 
   useEffect(()=>{
     get_google_auth_url()
   },[])     
+
+  useEffect(() => {       
+    fetchCategoryData()  
+  },[]);  
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);  
+
 
   const get_google_auth_url = async ()=>{	
 
@@ -61,6 +79,13 @@ const RegisterForm = ({handleModalType}) => {
 
   }
 
+  const fetchCategoryData = async () => {     
+    const res = await Api.categories({       
+    }); 
+    const resData = res.data.data 
+    set_categories(resData) 
+  }  
+
   const handleChange = (e)=>{	
     const field_name  = e.target.name;
     const field_value = e.target.value;
@@ -70,6 +95,39 @@ const RegisterForm = ({handleModalType}) => {
   const handleCaptchaChange = (token) => {
       setRecaptchaToken(token)
   };
+
+  const handleRadio = (value) => {
+     set_data({
+      ...data, 
+      role: value
+     })
+  }  
+  
+  const handleSelect = (e, id) => {
+
+    const isChecked = e.target.checked;
+
+    if(isChecked){
+      
+      if(!data.categories.includes(id)){
+        set_data({
+          ...data, 
+          categories: [...data.categories, id]
+        })
+      }     
+
+    }
+    else{
+      set_data({
+        ...data, 
+        categories: data.categories.filter((index) => index !== id)
+      })
+      
+    }		
+    
+  }  
+  
+
   const resetCaptcha = () => {
     recaptchaRef.current?.reset();
     setRecaptchaToken(null); 
@@ -151,6 +209,19 @@ const RegisterForm = ({handleModalType}) => {
     return err;	
   } 
 
+  const validate_categories = (id)=>{	
+    let err     = ''; 
+    let categories  = id ? [...data.categories, id] : data.categories
+    if(categories.length < 1){        
+      err  = 'Categories is required';         
+    }	 
+    set_errors({
+      ...errors,
+      categories:err
+    });	 
+    return err;	
+  } 
+
 
   const validateForm = ()=>{		
       let errors          = {};  
@@ -184,7 +255,13 @@ const RegisterForm = ({handleModalType}) => {
       if( confirm_password !==''){
         errors.confirm_password  = confirm_password;
         isValid = false;
-      }      
+      }    
+
+      let categories = validate_categories()
+      if( data.role === 2 && categories !==''){
+        errors.categories  = categories;
+        isValid = false;
+      }       
 
       set_errors(errors);	
       return isValid;	
@@ -197,14 +274,18 @@ const RegisterForm = ({handleModalType}) => {
         set_disablebutton(true)
 
         try {
-          const res = await Api.register({
-            role:(data.role=='') ? 1 : data.role, 
+          
+          const obj = {
+            role:data.role, 
             first_name:data.first_name, 
             last_name:data.last_name, 
             email:data.email, 
             password:data.password,
-            recaptchaToken:recaptchaToken,           
-          });
+            recaptchaToken:recaptchaToken,   
+            categories:data.categories        
+          }         
+
+          const res = await Api.register(obj);
           
           if( res && (res.status === 200) ){
             const resData = res.data; 
@@ -229,8 +310,8 @@ const RegisterForm = ({handleModalType}) => {
 
       }			
     }	
-
-
+  
+    
   return (
     <div className="grid gap-4">   
 
@@ -249,6 +330,36 @@ const RegisterForm = ({handleModalType}) => {
       }  
 
       <form method="post" onSubmit={handleSubmit}>  
+
+      <div className={`grid grid-cols-1 mb-3`}>
+        <div className="flex gap-5">
+          <div className="flex items-center me-4">
+              <input type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
+              name="role"
+              value={data.role} 
+              onChange={(e)=>{
+                handleRadio(1)            
+              }}          
+              checked={ data.role == 1 ? true : false } 
+              />
+              <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Customer</label>
+          </div>
+          <div className="flex items-center me-4">
+              <input type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
+              name="role"
+              value={data.role} 
+              onChange={(e)=>{
+                handleRadio(2)            
+              }}          
+              checked={ data.role == 2 ? true : false } 
+              />
+              <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Supplier</label>
+          </div>        
+      </div>     
+      {errors.role && 
+        <div className="error-msg">{errors.role}</div>    
+      }  	
+      </div>
 
       <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2`}>
           <div className={`grid grid-cols-1 mb-3`}>
@@ -345,6 +456,59 @@ const RegisterForm = ({handleModalType}) => {
         }  
         </div>
       </div>
+
+      {
+        data.role === 2 &&
+        <>
+        <div className={`grid grid-cols-1 mb-3`}>
+      <div className="relative inline-block" ref={dropdownRef} >       
+        <button
+          type='button'
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-100 rounded-md bg-transparent pr-2 md:px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
+          >
+          <p className="truncate">All Categories</p>
+          <span className="float-right">
+          {" "}
+          { isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}{" "}
+          </span>
+        </button>  
+       
+        { isOpen && (
+          <ul className="absolute mt-3 w-100 grid rounded-md border border-gray-200 bg-white shadow-lg z-3 divide-y divide-gray" style={{maxHeight:"200px",overflowY:"scroll"}}>           
+            {categories.map((option, i) => (
+              <li
+                key={i}                
+                className=" text-sm px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
+              >
+              <div className="form-check">
+                <input className="form-check-input" type="checkbox" 
+                name="categories"                 
+                value={option.id} 
+                onChange={(e)=>{
+                  handleSelect(e,option.id)
+                  validate_categories( e.target.checked ? option.id : '')                  
+                }}
+                checked={ data.categories.includes(option.id) ? true : false } 
+                />
+                <label className="form-check-label">
+                {" "}{option.name}
+                </label>
+              </div>  
+              
+              </li>
+            ))}
+          </ul>
+        )}
+        {errors.categories && 
+            <div className="error-msg">{errors.categories}</div>    
+          }  	        
+      </div>
+      </div>
+        </>
+      }
+
+      
 
       <div className={`grid grid-cols-1 text-end mb-3`}>
       <ReCAPTCHA

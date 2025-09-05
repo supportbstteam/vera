@@ -61,7 +61,6 @@ const SearchBar = ({handleModalType, loggedIn}) => {
     set_selected_category(option)
     setIsOpen(false)    
   }
-
   
   useEffect(() => {
     const handleClickOutside = (event) => {

@@ -34,7 +34,7 @@ const LoginModal = ({handleModalType}) => {
               <div className="border-1 border-stock my-4 mb-8"></div>              
               <LoginForm handleModalType={handleModalType} />
               <p className="mt-4 text-center">
-                Don't have an account?  
+                Don't have an account? {" "}
                 <button type="button" className="cursor-pointer" onClick={() => handleModalType("register")}>
                     <span className="text-primary">Create Account</span>
                 </button> 

@@ -63,6 +63,7 @@ export default {
           'email':obj.email,
           'password':obj.password,
           'recaptchaToken':obj.recaptchaToken,
+          'categories':obj.categories,
         },
         {headers:json_header}                
       )

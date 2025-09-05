@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-
 import TestimonialCard from "@/_components/TestimonialCard";
 import RegisterForm from "@/_components/auth/RegisterForm";
 
@@ -36,7 +35,7 @@ const RegisterModal = ({handleModalType}) => {
               <div className="border-1 border-stock my-4 mb-8"></div>
               <RegisterForm handleModalType={handleModalType} />
               <p className="mt-4 text-center">
-                Already have account?  
+                Already have account?  {" "}
                 <button type="button" className="cursor-pointer" onClick={() => handleModalType("login")}>
                     <span className="text-primary">Login</span>
                 </button> 

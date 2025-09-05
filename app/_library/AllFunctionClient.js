@@ -56,7 +56,7 @@ const AllFunctionClient = {
     return dayjs(myDateTime).format('MMMM D, YYYY h:mm A');
   },  
   currency: (amount)=>{
-    return '€'+amount;
+    return '£'+amount;
   },
   get_localTime : (obj)=> {
     let localTime = new Date(new Date().toLocaleString("en-US", {timeZone: "CAT"}));
