@@ -115,11 +115,11 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
             data.map((item, i) => {
               return(
                 <div key={i} className="grid grid-cols-[1fr_1fr_2fr_1fr] items-center justify-between py-4">
-                  <div>
+                  <div style={{minWidth:"260px"}}>
                     <p className="font-medium text-sm">
                     { item.quote_number &&
                       <>
-                      <b>{item.quote_number}</b> <br />
+                      <b>Quotation Number : {item.quote_number}</b> <br />
                       </>
                     }
                     
