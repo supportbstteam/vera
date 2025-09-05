@@ -29,7 +29,7 @@ const AuthWrapper = () => {
 
         const timerId = setTimeout(() => {
          set_status(userStatus)
-        }, 3000); 
+        }, 2000); 
 
         return () => {
           clearTimeout(timerId);
