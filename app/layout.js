@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Manrope } from "next/font/google"
 import "./globals.css"
+import AuthWrapper from "@/_components/auth/AuthWrapper"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={` ${manrope.variable} antialiased font-sans`} suppressHydrationWarning={true}>        
-        <ReduxProvider>{children}</ReduxProvider>       
+        <ReduxProvider>
+          <AuthWrapper />
+          {children}
+        </ReduxProvider>       
       </body>
     </html>
   )
