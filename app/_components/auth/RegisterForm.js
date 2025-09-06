@@ -289,8 +289,14 @@ const RegisterForm = ({handleModalType}) => {
           
           if( res && (res.status === 200) ){
             const resData = res.data; 
-            //router.push("/welcome");  
-            handleModalType('welcome')
+            
+            if(resData.role == 2){
+              handleModalType('welcome_supplier')
+            }
+            else{
+              handleModalType('welcome')
+            }
+            
             set_data(__data)           
             set_disablebutton(false)
 
@@ -334,7 +340,7 @@ const RegisterForm = ({handleModalType}) => {
       <div className={`grid grid-cols-1 mb-3`}>
         <div className="flex gap-5">
           <div className="flex items-center me-4">
-              <input type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
+              <input type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" 
               name="role"
               value={data.role} 
               onChange={(e)=>{
@@ -345,7 +351,7 @@ const RegisterForm = ({handleModalType}) => {
               <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Customer</label>
           </div>
           <div className="flex items-center me-4">
-              <input type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
+              <input type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" 
               name="role"
               value={data.role} 
               onChange={(e)=>{

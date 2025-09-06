@@ -14,7 +14,8 @@ import SearchBar from "@/_components/ui/searchBar";
 import LoginModal from "@/_components/auth/LoginModal";
 import RegisterModal from "@/_components/auth/RegisterModal";
 import ForgotPasswordModal from "@/_components/auth/ForgotPasswordModal";
-import WelcomeModal from "@/_components/auth/WelcomeModal";
+import WelcomeModal from "@/_components/auth/WelcomeModal"; 
+import WelcomeSupplierModal from "@/_components/auth/WelcomeSupplierModal";
 import ModalDialog from "@/_components/ui/ModalDialog";
 import TextModal from "@/_components/ui/TextModal";
 
@@ -139,6 +140,10 @@ const Header = ({ loggedIn }) => {
       ) : modalType === "welcome" ? (
         <ModalDialog isOpen={true} onClose={() => setModalType(false)}>
           <WelcomeModal handleModalType={handleModalType} />
+        </ModalDialog>
+      ) : modalType === "welcome_supplier" ? (
+        <ModalDialog isOpen={true} onClose={() => setModalType(false)}>
+          <WelcomeSupplierModal handleModalType={handleModalType} />
         </ModalDialog>
       ) : modalType === "quotation_request" ? (
         <ModalDialog isOpen={true} onClose={() => setModalType(false)}>
