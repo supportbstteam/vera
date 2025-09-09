@@ -30,9 +30,21 @@ const validation = {
         }   
     },
     ImageUpload:()=>{
-        let size = 2 // 5 MB
+        let size = 2 // 2 MB
         let extensions = 'jpeg, png, gif, webp'
         let mimeType = 'image/jpeg, image/png, image/gif, image/webp'
+        return {
+            'maxFileSize':size,
+            'maxFileSizeInBytes':parseInt(size*1048576),
+            'allowedExtensions':extensions,
+            'allowedExtensionsArr':mimeType.split(",").map(item => item.trim()),
+        }
+    },
+    FileUpload:()=>{
+        let size = 2 // 2 MB
+        let extensions = 'jpeg, png, webp, txt, pdf, doc, docx, xls, xlsx'        
+       
+        let mimeType = 'image/jpeg, image/png, image/webp, text/plain, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         return {
             'maxFileSize':size,
             'maxFileSizeInBytes':parseInt(size*1048576),

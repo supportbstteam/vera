@@ -168,6 +168,15 @@ export default {
     )
     .catch((err) => { console.log('err', err); });    
   },
+  customer_settings: async (obj) => {     
+    return await axiosInstance.post(
+      "/private/customer-settings/"+obj.id,
+      obj.formData,       
+      {headers:form_header}           
+    )
+    .catch((err) => { console.log('err', err); });    
+  },
+  
   //=== pages ===
   pages: async (obj) => { 
     return await axiosInstance.get(
@@ -228,17 +237,8 @@ export default {
   submit_quotation: async (obj) => { 
       return await axiosInstance.post(
         "/private/submit-quotation",
-        {
-          category_id:obj.category_id,
-          search_text:obj.search_text,
-          customer_id:obj.customer_id,
-          first_name:obj.first_name,
-          email:obj.email,
-          mobile:obj.mobile,
-          special_requirement:obj.special_requirement,
-          quantity:obj.quantity,
-        },
-        {headers:json_header}                
+        obj.formData,     
+        {headers:form_header}                
       )
       .catch((err) => { console.log('err', err); });    
   }, 
@@ -352,14 +352,8 @@ export default {
   submit_lead_quotation: async (obj) => { 
       return await axiosInstance.post(
         "/private/submit-lead-quotation",
-        {
-          quote_suppliers_id:obj.quote_suppliers_id,
-          price:obj.price,
-          quantity:obj.quantity,
-          comments:obj.comments,
-          warranty:obj.warranty,            
-        },
-        {headers:json_header}                
+        obj.formData,       
+        {headers:form_header}        
       )
       .catch((err) => { console.log('err', err); });    
   }, 

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
-import { Clock, MapPinned, Star } from "lucide-react"
+import { Clock, ConstructionIcon, MapPinned, Star, Asterisk } from "lucide-react"
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
 import Input from "@/_components/ui/Input"  
@@ -8,7 +8,7 @@ import Textarea from "@/_components/ui/Textarea"
 import QuantityStepper from "@/_components/ui/QuantityStepper" 
 import WarrantyStepper from "@/_components/ui/WarrantyStepper" 
 import DashboardNavigation from "@/_components/layout/DashboardNavigation"
-
+import validation from '@/_library/validation';
 import Api from '@/_library/Api';
 import AllFunctionClient from "@/_library/AllFunctionClient" 
 import Loader from "@/_components/ui/Loader" 
@@ -24,14 +24,23 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
     quantity: 1,
     warranty:0,
     comments: '',
+    product_code: '',
+    lead_time: '',
+    carriage: '',
   }
   const __errors = {	
     price: '',
-    quantity: '',       
+    quantity: '',  
+    product_code: '',
+    lead_time: '',
+    carriage: '',   
+    attached_file:''                  
   }
   const MySwal = withReactContent(Swal)  
+  const formRef = useRef(null);
 
   const [data,set_data]   	  						    = useState(__data) 
+  const [file, setFile]                       = useState(""); 
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
@@ -57,6 +66,33 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
     })
   }
 
+  const handleFileChange  = async (e) => {       
+      let file           = e.target.files[0];
+      let file_size      = file.size
+      let file_type      = file.type           
+      let validateObj    = validation.FileUpload()
+      let maxFileSize    = validateObj.maxFileSize
+      let maxFileSizeInBytes = validateObj.maxFileSizeInBytes
+      let allowedExtensions = validateObj.allowedExtensions
+      let allowedExtensionsArr = validateObj.allowedExtensionsArr     
+
+      setFile(file);
+
+      if( file_size > maxFileSizeInBytes || allowedExtensionsArr.indexOf(file_type) < 0){
+          let error_txt = 'Please Upload only '+allowedExtensions+' file of maximum '+maxFileSize+' MB file limit'	
+          set_errors({
+              ...errors,
+              attached_file:error_txt
+          });	       
+      }
+      else{            
+          set_errors({
+              ...errors,
+              attached_file:""
+          });	       
+      }
+  } 		
+
   const validate_price = (value)=>{	
     let err     = '';  
     let price  = value ?? data.price
@@ -69,6 +105,19 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
     });	 
     return err;	
   } 
+
+  const validate_carriage = (value)=>{	
+    let err     = '';  
+    let carriage  = value ?? data.carriage
+    if(!carriage){        
+      err  = 'Carriage is required';         
+    }	 
+    set_errors({
+      ...errors,
+      carriage:err
+    });	 
+    return err;	
+  }   
 
   const validate_quantity = (value)=>{	
     let err     = '';  
@@ -83,6 +132,67 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
     return err;	
   } 
 
+  const validate_product_code = (value)=>{	
+    let err     = '';  
+    let product_code  = value ?? data.product_code
+    if(!product_code){        
+      err  = 'Product Code is required';         
+    }	 
+    set_errors({
+      ...errors,
+      product_code:err
+    });	 
+    return err;	
+  }  
+  
+  const validate_lead_time = (value)=>{	
+    let err     = '';  
+    let lead_time  = value ?? data.lead_time
+    if(!lead_time){        
+      err  = 'Lead Time is required';         
+    }	 
+    set_errors({
+      ...errors,
+      lead_time:err
+    });	 
+    return err;	
+  }   
+
+   const validate_attached_file = ()=>{	
+      let err  = '';  
+      // if(!file && !data.attached_file){ 
+      //   err  = 'File Attachments is required';  
+      // } 
+      if(file){
+          let file_size = file.size
+          let file_type = file.type
+          let validateObj = validation.FileUpload()
+          let maxFileSize = validateObj.maxFileSize
+          let maxFileSizeInBytes = validateObj.maxFileSizeInBytes
+          let allowedExtensions = validateObj.allowedExtensions
+          let allowedExtensionsArr = validateObj.allowedExtensionsArr
+
+          if( file_size > maxFileSizeInBytes || allowedExtensionsArr.indexOf(file_type) < 0){
+              err = 'Please Upload only '+allowedExtensions+' file of maximum '+maxFileSize+' MB file limit'	
+          }        
+      }	
+      set_errors({
+        ...errors,
+        attached_file:err
+      });	  
+      return err;	
+  } 
+
+   const lead_time_data = [
+    'Within 24 hours',
+    '2 days',
+    '3 days',
+    '4 days',
+    '5 days',
+    '6 days',
+    '7 days',
+   ]
+
    const validateForm = ()=>{		
 
       let errors          = {};  
@@ -92,12 +202,36 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
       if( price !==''){
         errors.price  = price;
         isValid = false;
-      }     
+      }    
+      
+      let carriage = validate_carriage()
+      if( carriage !==''){
+        errors.carriage  = carriage;
+        isValid = false;
+      }           
       
       let quantity = validate_quantity()
       if( quantity !==''){
         errors.quantity  = quantity;
         isValid = false;
+      }
+
+      let product_code = validate_product_code()
+      if( product_code !==''){
+        errors.product_code  = product_code;
+        isValid = false;
+      }   
+
+      let lead_time = validate_lead_time()
+      if( lead_time !==''){
+        errors.lead_time  = lead_time;
+        isValid = false;
+      }      
+      
+      let attached_file = validate_attached_file()
+      if( attached_file !==''){
+          errors.attached_file  = attached_file;
+          isValid = false;
       }
       
       set_errors(errors);	
@@ -111,16 +245,22 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
         if(validateForm()){	
           set_disablebutton(true)
 
-          let obj = {
-            quote_suppliers_id:quote_suppliers_id,
-            price:data.price,
-            quantity:data.quantity,
-            comments:data.comments,
-            warranty:data.warranty,                
-          }    
+          // let obj = {
+          //   quote_suppliers_id:quote_suppliers_id,
+          //   price:data.price,
+          //   quantity:data.quantity,
+          //   comments:data.comments,
+          //   warranty:data.warranty,                
+          // }   
+          
+          const formData = new FormData(formRef.current);     
+          formData.append("attached_file", file);
+          formData.append("quote_suppliers_id", quote_suppliers_id);          
               
           try {
-            const res = await Api.submit_lead_quotation(obj);           
+            const res = await Api.submit_lead_quotation({
+                formData: formData, 
+            });           
             
             if( res && (res.status === 200) ){
               const resData = res.data; 
@@ -154,20 +294,23 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
 
   
   return (
-    <form method="post" onSubmit={handleSubmit}>  
-    <div className="grid grid-cols-3 gap-4 items-end">                     
+    <form method="post" encType="multipart/form-data" onSubmit={handleSubmit} ref={formRef}>  
+    <div className="grid grid-cols-4 gap-4 items-end">                     
+      
       <div className="grid grid-cols-1 mb-3">
         <QuantityStepper handleQuantity={handleQuantity} /> 
         {errors.quantity && 
           <div className="error-msg">{errors.quantity}</div>    
         }  	       
       </div>  
+
       <div className="grid grid-cols-1 mb-3">
         <WarrantyStepper handleWarranty={handleWarranty} />
         {errors.warranty && 
           <div className="error-msg">{errors.warranty}</div>    
         }  	       
-      </div>                             
+      </div>   
+
       <div className="grid grid-cols-1 mb-3">
       <Input label="Quoted Price" placeholder="Enter Price"
         name="price" 
@@ -182,7 +325,87 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
         <div className="error-msg">{errors.price}</div>    
       } 
       </div> 
+
+      <div className="grid grid-cols-1 mb-3">
+      <Input label="Carriage" placeholder="Carriage Price"
+        name="carriage" 
+        mandatory={true}
+        value={data.carriage} 
+        onChange={(e)=>{
+          handleChange(e)   
+          validate_carriage(e.target.value)         
+        }}
+      />
+      {errors.carriage && 
+        <div className="error-msg">{errors.carriage}</div>    
+      } 
+      </div> 
+
+
     </div>
+
+    <div className="grid grid-cols-3 gap-4 items-end">   
+
+      <div className="grid grid-cols-1 mb-3">
+      <Input label="Product Code" placeholder=""
+        name="product_code" 
+        mandatory={true}
+        value={data.product_code} 
+        onChange={(e)=>{
+          handleChange(e)   
+          validate_product_code(e.target.value)         
+        }}
+      />
+      {errors.product_code && 
+        <div className="error-msg">{errors.product_code}</div>    
+      } 
+      </div> 
+
+      <div className="grid grid-cols-1 mb-3">
+      <div className="flex">
+        <label className="block text-sm font-medium text-[#181818]">Lead Time</label>
+        <Asterisk size={12} color="#E33629" />
+      </div>
+      <select   
+      className="w-full px-4 py-2 border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"                   
+      name="lead_time" 
+      value={data.lead_time} 
+      onChange={(e)=>{
+        handleChange(e)
+        validate_lead_time(e.target.value)
+      }}
+      >
+      <option value=""></option>
+      {
+        lead_time_data.map((item,i)=>{
+          return(
+            <option key={i} value={ item }>{ item }</option>           
+          )
+        })
+      }                 
+      </select>
+      {errors.lead_time && 
+        <div className="error-msg">{errors.lead_time}</div>    
+      } 
+      </div> 
+
+      <div className={`grid grid-cols-1 mb-3`}>
+        <Input
+          label="File Attachments"
+          type="file"
+          placeholder=""          
+          onChange={(e)=>{
+            handleFileChange(e)           
+          }}
+        />   
+        {errors.attached_file && 
+          <div className="error-msg">{errors.attached_file}</div>    
+        }  	
+      </div>
+
+
+    </div>
+
     <div className="grid grid-cols-2 gap-4 items-end">                     
       <div className={`grid grid-cols-1 mb-3`}>
       <Textarea

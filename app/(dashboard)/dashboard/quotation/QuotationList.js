@@ -10,6 +10,7 @@ import Api from '@/_library/Api';
 import AllFunctionClient from "@/_library/AllFunctionClient" 
 import Loader from "@/_components/ui/Loader" 
 import Pagination from '@/_components/ui/pagination/Pagination';
+import { Download } from "lucide-react"
 
 const QuotationList = ({__filterData}) =>{   
 
@@ -111,10 +112,23 @@ const QuotationList = ({__filterData}) =>{
                       <div>
                         <h3 className="font-medium text-base">{item.search_text}</h3>
                         <p className="text-sm text-gray-500">
-                        Posted on : {AllFunctionClient.getDate(item.created_at)}
+                        Posted on : {AllFunctionClient.getDateTime(item.created_at)}
                         </p>
                       </div>
+                      <div>
+                        {
+                          item.attached_file &&
+                          <>
+                          <p className="text-sm text-gray-900 flex">
+                            Attached file	:&nbsp;
+                            <a href={process.env.FILE_UPLOAD_URL+'/'+item.attached_file} target="_blank"><Download /></a>
+                          </p>             
+                          </>
+                        }
+                      </div>
                     </div>
+
+                    
                   
                     <div className="w-6/12 flex items-center justify-between gap-4 ">
                       <span className="text-sm bg-purple-100 text-purple-600 px-3 py-2 rounded-full">

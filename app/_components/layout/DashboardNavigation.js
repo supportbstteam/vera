@@ -25,6 +25,7 @@ const DashboardNavigation = () => {
   const quotation_menu   = ['quotation'];
   const lead_menu        = ['lead'];
   const profile_menu     = ['profile'];
+  const settings_menu    = ['settings'];
 
   const active_class = 'inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer px-4 py-2 text-base border border-primary text-white bg-primary hover:bg-primary/80 hover:text-white'
 
@@ -55,6 +56,10 @@ const DashboardNavigation = () => {
           :
           ''
         }
+
+        <Link className={`${settings_menu.includes(current_path) ? active_class : inactive_class}`} 
+        href="/dashboard/settings"
+        ><span className="flex items-center gap-2">Settings</span></Link>
         
     </div>
     </>    

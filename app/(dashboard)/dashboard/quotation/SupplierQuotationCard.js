@@ -5,7 +5,7 @@ import Toggle from "@/_components/ui/Toggle"
 import Api from '@/_library/Api';
 import AllFunctionClient from "@/_library/AllFunctionClient" 
 import Loader from "@/_components/ui/Loader" 
-
+import { Download } from "lucide-react"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -81,6 +81,25 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
       }
   }  
   
+  const handleDownload = (url, fileName) => {
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName || "downloaded-file";
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error fetching the file:", error);
+      });
+  };
 
   return (
     <div className="max-w-5xl min-w-3xl p-4 rounded-lg shadow-sm"> 
@@ -102,7 +121,7 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
             <p className="font-medium">
             {quote?.search_text}
             </p>
-            <p className="text-sm text-gray-500">Posted on : {AllFunctionClient.getDate(quote?.created_at)}</p>
+            <p className="text-sm text-gray-500">Posted on : {AllFunctionClient.getDateTime(quote?.created_at)}</p>
           </div>
         </div>       
       </div>      
@@ -119,11 +138,11 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                     <p className="font-medium text-sm">
                     { item.quote_number &&
                       <>
-                      <b>Quotation Number : {item.quote_number}</b> <br />
+                      <b>Quotation Number :</b> {item.quote_number} <br />
                       </>
                     }
                     
-                    {item.supplier_first_name} {item.supplier_last_name}
+                    <b>Vendor :</b> {item.supplier_first_name} {item.supplier_last_name}
                     </p>
                     <div className="flex items-center text-sm text-gray-900">
                       <span>⭐ {item.avg_rating}/5</span>
@@ -132,13 +151,27 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                   </div>
 
                   <div className="">
-                    <p className="text-sm text-gray-900">{ item.price_with_margin > 0 ? AllFunctionClient.currency(item.price_with_margin) : '' }</p>
-                    <p className="text-sm text-gray-900">{ item.warranty > 0 ? item.warranty + ' Year Warranty' : ''}</p>
+                    <p className="text-sm text-gray-900"><b>Price :</b>{ item.price_with_margin > 0 ? AllFunctionClient.currency(item.price_with_margin) : '' }</p>
+                    <p className="text-sm text-gray-900"><b>Carriage :</b>{ item.carriage > 0 ? AllFunctionClient.currency(item.carriage) : '' }</p>
+                    <p className="text-sm text-gray-900"><b>Warranty:</b>{ item.warranty > 0 ? item.warranty + ' Year Warranty' : ''}</p>
                   </div>
 
-                  <p className="text-sm text-gray-900 flex-1 ml-4">
-                  {item.comments}
-                  </p>
+                  <div className="flex-1 ml-4">
+                  <p className="text-sm text-gray-900"><b>Product Code:</b>{ item.product_code ? item.product_code : ''}</p>
+                  <p className="text-sm text-gray-900"><b>Lead Time	:</b>{ item.lead_time	? item.lead_time : ''}</p> 
+                  <p className="text-sm text-gray-900"><b>Comments	:</b>{ item.comments	? item.comments : ''}</p>     
+                  {
+                    item.attached_file &&
+                    <>
+                    <p className="text-sm text-gray-900 flex">
+                      <b>Download Attached file	:</b>&nbsp;
+                      <a href={process.env.FILE_UPLOAD_URL+'/'+item.attached_file} target="_blank"><Download /></a>
+                    </p>             
+                    </>
+                  }
+                  
+                  </div>
+
                   <div className="flex items-center justify-end gap-2">
                     {
                       item.status == 1 ?

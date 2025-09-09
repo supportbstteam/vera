@@ -14,8 +14,7 @@ import Api from '@/_library/Api'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const QuotationRequestModal = ({handleModalType}) => { 
-  
+const QuotationRequestModal = ({handleModalType}) => {   
 
   const __data = {		
     category_id: '',
@@ -27,7 +26,8 @@ const QuotationRequestModal = ({handleModalType}) => {
     email: '',
     mobile: '',
     special_requirement: '',
-    quantity: 1         
+    quantity: 1,
+    attached_file:''       
 
   }
   const __errors = {	
@@ -35,19 +35,21 @@ const QuotationRequestModal = ({handleModalType}) => {
     first_name: '',
     email: '',
     mobile: '',
-    quantity: ''          
+    quantity: '',
+    attached_file:''                
   }
 
   const dropdownRef = useRef(null)
+  const formRef = useRef(null);
 
   const [data,set_data]   	  						    = useState(__data) 
   const [disablebutton, set_disablebutton] 		= useState(false); 
   const [success_message,set_success_message] = useState("")  
   const [common_error,set_common_error] 		  = useState("")  
   const [errors,set_errors]     						  = useState(__errors)  
-  
-  const [categories, set_categories] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
+  const [file, setFile]                       = useState(""); 
+  const [categories, set_categories]          = useState(null)
+  const [isOpen, setIsOpen]                   = useState(false)
   const [selected_category, set_selected_category] = useState(null)
 
   useEffect(()=>{
@@ -107,6 +109,33 @@ const QuotationRequestModal = ({handleModalType}) => {
     const field_value = e.target.value;
     set_data({...data, [field_name]: field_value})
   }	 
+
+  const handleFileChange  = async (e) => {       
+      let file           = e.target.files[0];
+      let file_size      = file.size
+      let file_type      = file.type           
+      let validateObj    = validation.FileUpload()
+      let maxFileSize    = validateObj.maxFileSize
+      let maxFileSizeInBytes = validateObj.maxFileSizeInBytes
+      let allowedExtensions = validateObj.allowedExtensions
+      let allowedExtensionsArr = validateObj.allowedExtensionsArr     
+
+      setFile(file);
+
+      if( file_size > maxFileSizeInBytes || allowedExtensionsArr.indexOf(file_type) < 0){
+          let error_txt = 'Please Upload only '+allowedExtensions+' file of maximum '+maxFileSize+' MB file limit'	
+          set_errors({
+              ...errors,
+              attached_file:error_txt
+          });	       
+      }
+      else{            
+          set_errors({
+              ...errors,
+              attached_file:""
+          });	       
+      }
+  } 		
 
   const handleSelect = option => {
     if(option){
@@ -207,6 +236,31 @@ const QuotationRequestModal = ({handleModalType}) => {
     return err;	
   } 
 
+  const validate_attached_file = ()=>{	
+      let err  = '';  
+      // if(!file && !data.attached_file){ 
+      //   err  = 'File Attachments is required';  
+      // } 
+      if(file){
+          let file_size = file.size
+          let file_type = file.type
+          let validateObj = validation.FileUpload()
+          let maxFileSize = validateObj.maxFileSize
+          let maxFileSizeInBytes = validateObj.maxFileSizeInBytes
+          let allowedExtensions = validateObj.allowedExtensions
+          let allowedExtensionsArr = validateObj.allowedExtensionsArr
+
+          if( file_size > maxFileSizeInBytes || allowedExtensionsArr.indexOf(file_type) < 0){
+              err = 'Please Upload only '+allowedExtensions+' file of maximum '+maxFileSize+' MB file limit'	
+          }        
+      }	
+      set_errors({
+        ...errors,
+        attached_file:err
+      });	  
+      return err;	
+  } 
+
   const validateForm = ()=>{		
       let errors          = {};  
       let isValid         = true;  
@@ -239,7 +293,13 @@ const QuotationRequestModal = ({handleModalType}) => {
       if( quantity !==''){
         errors.quantity  = quantity;
         isValid = false;
-      }      
+      }     
+      
+      let attached_file = validate_attached_file()
+      if( attached_file !==''){
+          errors.attached_file  = attached_file;
+          isValid = false;
+      }
 
       set_errors(errors);	
       return isValid;	
@@ -250,19 +310,27 @@ const QuotationRequestModal = ({handleModalType}) => {
         if(validateForm()){	
           set_disablebutton(true)
 
-          let obj = {
-              category_id:data.category_id,
-              search_text:data.search_text,
-              customer_id:data.customer_id,
-              first_name:data.first_name,
-              email:data.email,
-              mobile:data.mobile,
-              special_requirement:data.special_requirement,
-              quantity:data.quantity,
-          }         
+          // let obj = {
+          //     category_id:data.category_id,
+          //     search_text:data.search_text,
+          //     customer_id:data.customer_id,
+          //     first_name:data.first_name,
+          //     email:data.email,
+          //     mobile:data.mobile,
+          //     special_requirement:data.special_requirement,
+          //     quantity:data.quantity,
+          // }   
+          
+          const formData = new FormData(formRef.current);     
+          formData.append("attached_file", file);
+          formData.append("category_id", data.category_id);
+          formData.append("customer_id", data.customer_id);
+          formData.append("quantity", data.quantity);
   
           try {
-            const res = await Api.submit_quotation(obj);
+            const res = await Api.submit_quotation({
+                formData: formData, 
+            });
             
             if( res && (res.status === 200) ){
               const resData = res.data;              
@@ -313,12 +381,12 @@ const QuotationRequestModal = ({handleModalType}) => {
             </span>               
           </div> 
       }  
-      <form method="post" onSubmit={handleSubmit}>  
+      <form method="post" encType="multipart/form-data" onSubmit={handleSubmit} ref={formRef}>  
      
       <div className="grid grid-cols-[2fr_3fr] justify-start  items-center gap-6 mt-8">
 
         <div className={`grid grid-cols-1 mb-3`}>
-        <span className="inline-flex justify-center items-center gap-2 text-primary bg-primaryLight px-6 py-3 rounded-[8px]">
+        <span className="inline-flex justify-center items-center gap-2 text-primary bg-primaryLight px-6 py-4 rounded-[8px]">
 
           {
             categories ?             
@@ -436,6 +504,21 @@ const QuotationRequestModal = ({handleModalType}) => {
           }  	
         </div>
 
+      </div>
+
+      <div className={`grid grid-cols-1 mb-3`}>
+        <Input
+          label="File Attachments"
+          type="file"
+          placeholder=""          
+          onChange={(e)=>{
+            handleFileChange(e)
+            //validate_attached_file(e.target.value)
+          }}
+        />   
+        {errors.attached_file && 
+          <div className="error-msg">{errors.attached_file}</div>    
+        }  	
       </div>
 
       <div className={`grid grid-cols-1 mb-3`}>
