@@ -253,9 +253,11 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
           //   warranty:data.warranty,                
           // }   
           
-          const formData = new FormData(formRef.current);     
+          const formData = new FormData(formRef.current); 
           formData.append("attached_file", file);
-          formData.append("quote_suppliers_id", quote_suppliers_id);          
+          formData.append("quote_suppliers_id", quote_suppliers_id);   
+          formData.append("quantity", data.quantity);
+          formData.append("warranty", data.warranty);       
               
           try {
             const res = await Api.submit_lead_quotation({
