@@ -141,6 +141,9 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                       <b>Quotation Number :</b> {item.quote_number} <br />
                       </>
                     }
+                    { item.product_code &&
+                      <p className="text-sm text-gray-900"><b>Product Code:</b>{ item.product_code }</p>
+                    }
                     
                     <b>Vendor :</b> {item.supplier_first_name} {item.supplier_last_name}
                     </p>
@@ -150,16 +153,38 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                     </div>
                   </div>
 
-                  <div className="">
-                    <p className="text-sm text-gray-900"><b>Price :</b>{ item.price_with_margin > 0 ? AllFunctionClient.currency(item.price_with_margin) : '' }</p>
-                    <p className="text-sm text-gray-900"><b>Carriage :</b>{ item.carriage > 0 ? AllFunctionClient.currency(item.carriage) : '' }</p>
-                    <p className="text-sm text-gray-900"><b>Warranty:</b>{ item.warranty > 0 ? item.warranty + ' Year Warranty' : ''}</p>
+                  <div>
+                    { item.quantity > 0 &&
+                      <p className="text-sm text-gray-900"><b>Quantity :</b>{ item.quantity }</p>
+                    }
+                    { item.price_with_margin > 0 &&
+                      <p className="text-sm text-gray-900"><b>Price :</b>{ AllFunctionClient.currency(item.price_with_margin) }</p>
+                    }
+
+                    { item.discount > 0 &&
+                      <p className="text-sm text-gray-900"><b>Discount :</b>- { AllFunctionClient.currency(item.discount) }</p>
+                    }
+
+                    { item.carriage > 0 &&
+                      <p className="text-sm text-gray-900"><b>Carriage :</b>{ AllFunctionClient.currency(item.carriage) }</p>
+                    }
+
+                    { item.total > 0 &&
+                      <p className="text-sm text-gray-900"><b>Total :</b>{ AllFunctionClient.currency(item.total) }</p>
+                    }
+                    
                   </div>
 
-                  <div className="flex-1 ml-4">
-                  <p className="text-sm text-gray-900"><b>Product Code:</b>{ item.product_code ? item.product_code : ''}</p>
-                  <p className="text-sm text-gray-900"><b>Lead Time	:</b>{ item.lead_time	? item.lead_time : ''}</p> 
-                  <p className="text-sm text-gray-900"><b>Comments	:</b>{ item.comments	? item.comments : ''}</p>     
+                  <div className="flex-1 ml-4">                             
+
+                  { item.lead_time &&
+                    <p className="text-sm text-gray-900"><b>Lead Time	:</b>{ item.lead_time }</p> 
+                  }
+
+                  { item.comments &&
+                    <p className="text-sm text-gray-900"><b>Comments	:</b>{ 	item.comments }</p>     
+                  }
+                  
                   {
                     item.attached_file &&
                     <>

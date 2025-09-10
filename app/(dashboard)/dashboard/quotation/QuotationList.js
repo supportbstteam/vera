@@ -112,20 +112,19 @@ const QuotationList = ({__filterData}) =>{
                       <div>
                         <h3 className="font-medium text-base">{item.search_text}</h3>
                         <p className="text-sm text-gray-500">
-                        Posted on : {AllFunctionClient.getDateTime(item.created_at)}
+                        <b>Posted on :</b> {AllFunctionClient.getDateTime(item.created_at)}
                         </p>
-                      </div>
-                      <div>
                         {
                           item.attached_file &&
                           <>
                           <p className="text-sm text-gray-900 flex">
-                            Attached file	:&nbsp;
+                            <b>Attached file	:</b> &nbsp;
                             <a href={process.env.FILE_UPLOAD_URL+'/'+item.attached_file} target="_blank"><Download /></a>
                           </p>             
                           </>
                         }
                       </div>
+                      
                     </div>
 
                     

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
 import { useRouter, usePathname } from 'next/navigation'
-import { Clock, MapPinned, Star, Trash2 } from "lucide-react"
+import { Clock, MapPinned, Star, Trash2, Download } from "lucide-react"
 import Image from "next/image"
 import Button from "@/_components/ui/button"  
 import Input from "@/_components/ui/Input"  
@@ -282,6 +282,13 @@ const Lead = ({__filterData}) => {
                         <p><b>Special requirement:</b></p>
                         <span className="text-gray-900">{item.special_requirement}</span>
                       </div>
+                      {
+                          item.attached_file &&
+                          <div className="text-sm flex flex-row justify-start">
+                            <p><b>Download Attached file:</b></p>
+                            <a href={process.env.FILE_UPLOAD_URL+'/'+item.attached_file} target="_blank"><Download /></a>
+                          </div>
+                      }                      
                     </div>
                   </div>
                   
@@ -341,14 +348,27 @@ const Lead = ({__filterData}) => {
                 {
                   item.price > 0 ?
                   <>
-                  <div className="grid grid-1 p-3 inline-block" style={{background:background, width:"100%"}}> 
+                  <div className="grid grid-1 p-3 inline-block flex" style={{background:background, width:"100%"}}> 
                   <b>My Quotation : </b>
                   Quotation Number : <b>{ item.quote_number }</b> &nbsp;&nbsp;&nbsp;
+                  Product Code : <b>{ item.product_code }</b> &nbsp;&nbsp;&nbsp;
                   No of Item : <b>{ item.quantity }</b> &nbsp;&nbsp;&nbsp;
                   Warranty in Year: <b>{ (item.warranty > 0) ? item.warranty + ' Year' : 'None' }</b> &nbsp;&nbsp;&nbsp;
                   Quoted Price: <b>{ AllFunctionClient.currency(item.price)}</b> &nbsp;&nbsp;&nbsp;
+                  Carriage: <b>{ AllFunctionClient.currency(item.carriage)}</b> &nbsp;&nbsp;&nbsp;
+                  Lead Time : <b>{ item.lead_time }</b> &nbsp;&nbsp;&nbsp;
                   Status: <b>{ status }</b> &nbsp;&nbsp;&nbsp;
-                  Comments : <b>{ item.comments }</b>
+                  Comments: <b>{ item.comments }</b> &nbsp;&nbsp;&nbsp;
+                  {
+                    item.attached_file &&
+                    <>
+                    <div className="flex gap-4">
+                    <div>Attached file:</div>
+                    <a href={process.env.FILE_UPLOAD_URL+'/'+item.attached_file} target="_blank"><Download /></a>   
+                    </div>                
+                    </>
+                  }                 
+                  
                   </div>
                   </>
                   :
