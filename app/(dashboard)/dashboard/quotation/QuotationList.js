@@ -112,7 +112,7 @@ const QuotationList = ({__filterData}) =>{
                       <div>
                         <h3 className="font-medium text-base">{item.search_text}</h3>
                         <p className="text-sm text-gray-500">
-                        <b>Quotation Number :</b> {item.id}
+                        <b>Request No. :</b> {item.id}
                         </p>
                         <p className="text-sm text-gray-500">
                         <b>Posted on :</b> {AllFunctionClient.getDateTime(item.created_at)}

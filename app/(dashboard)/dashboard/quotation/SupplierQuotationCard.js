@@ -115,13 +115,22 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
               src={`${process.env.FILE_UPLOAD_URL}/${quote.category_image}`}
               alt=""
               className="w-12 h-12 rounded object-cover"
+              style={{height:"90px", width:"auto"}}
             />           
           }          
           <div>
-            <p className="font-medium">
-            {quote?.search_text}
-            </p>
+            <p className="font-medium">{quote?.search_text}</p>
+            <p className="text-sm text-gray-500"><b>Request No. :</b> {quote.id}</p>
             <p className="text-sm text-gray-500">Posted on : {AllFunctionClient.getDateTime(quote?.created_at)}</p>
+            {
+                quote.attached_file &&
+                <>
+                <p className="text-sm text-gray-900 flex">
+                  <b>Attached file	:</b> &nbsp;
+                  <a href={process.env.FILE_UPLOAD_URL+'/'+quote.attached_file} target="_blank"><Download /></a>
+                </p>             
+                </>
+              }
           </div>
         </div>       
       </div>      

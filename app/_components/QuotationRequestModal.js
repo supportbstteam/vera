@@ -9,7 +9,7 @@ import QuantityStepper from "@/_components/ui/QuantityStepper"
 import { ChevronDown, ChevronUp, Search } from "lucide-react"
 import validation from '@/_library/validation';
 import SbButton from "@/_components/ui/SbButton";
-
+import {useRouter} from "next/navigation";
 import Api from '@/_library/Api'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -41,6 +41,7 @@ const QuotationRequestModal = ({handleModalType}) => {
 
   const dropdownRef = useRef(null)
   const formRef = useRef(null);
+  const router = useRouter();
 
   const [data,set_data]   	  						    = useState(__data) 
   const [disablebutton, set_disablebutton] 		= useState(false); 
@@ -340,8 +341,16 @@ const QuotationRequestModal = ({handleModalType}) => {
               localStorage.removeItem(process.env.APP_PREFIX + 'selected_category');                   
               localStorage.removeItem(process.env.APP_PREFIX + 'search_text');   
 
-              //set_data(__data)           
-              //set_disablebutton(false)  
+              //router.push("/dashboard/quotation"); 
+              const timerId = setTimeout(() => {
+                window.location.href = process.env.APP_URL + '/dashboard/quotation'
+              }, 3000); 
+
+              return () => {
+                clearTimeout(timerId);
+              };
+              
+              
             } 
             else {          
               const { status, message, error } = res.data;   
@@ -458,6 +467,7 @@ const QuotationRequestModal = ({handleModalType}) => {
           label="First Name"
           autoComplete="off"
           placeholder="First Name"
+          mandatory={true}
           name="first_name" 
           value={data.first_name} 
           onChange={(e)=>{
@@ -475,6 +485,7 @@ const QuotationRequestModal = ({handleModalType}) => {
           label="Email"         
           placeholder=""
           autoComplete="off"
+          mandatory={true}
           name="email" 
           value={data.email} 
           onChange={(e)=>{
@@ -492,6 +503,7 @@ const QuotationRequestModal = ({handleModalType}) => {
           label="Phone"
           type="text"
           placeholder=""
+          mandatory={true}
           name="mobile" 
           value={data.mobile} 
           onChange={(e)=>{

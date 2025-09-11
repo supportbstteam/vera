@@ -266,8 +266,8 @@ const Lead = ({__filterData}) => {
                     <div className="space-y-4 px-6">
                       <h4 className="font-bold text-base">Buyer Details</h4>
                       <div className="text-sm flex flex-row justify-start">
-                        <p><b>Quotation Number:</b></p>
-                        <span className="text-gray-900">{item.customer_quote_number}</span>
+                        <p><b>Request No. :</b></p>
+                        <span className="text-gray-900">{item.request_number}</span>
                       </div>
                       <div className="text-sm flex flex-row justify-start">
                         <p><b>Buyer Name:</b></p>

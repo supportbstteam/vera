@@ -363,22 +363,35 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
       } 
       </div> 
 
+      
+
       <div className="grid grid-cols-1 mb-3">
-      <Input 
-        label="Lead Time" 
-        placeholder=""
-        name="lead_time" 
-        mandatory={true}
-        value={data.lead_time} 
-        onChange={(e)=>{
-          handleChange(e)   
-          validate_lead_time(e.target.value)         
-        }}
-      />
+      <div className="flex">
+        <label className="block text-sm font-medium text-[#181818]">Lead Time</label>
+        <Asterisk size={12} color="#E33629" />
+      </div>
+      <select   
+      className="w-full px-4 py-2 border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"                   
+      name="lead_time" 
+      value={data.lead_time} 
+      onChange={(e)=>{
+        handleChange(e)
+        validate_lead_time(e.target.value)
+      }}
+      >
+      <option value=""></option>
+      {
+        lead_time_data.map((item,i)=>{
+          return(
+            <option key={i} value={ item }>{ item }</option>           
+          )
+        })
+      }                 
+      </select>
       {errors.lead_time && 
         <div className="error-msg">{errors.lead_time}</div>    
       } 
-      </div>       
+      </div> 
 
       <div className={`grid grid-cols-1 mb-3`}>
         <Input
