@@ -59,8 +59,7 @@ const Lead = ({__filterData}) => {
         });          
         
         if( res && (res.status === 200) ){   
-          const resData = res.data   
-          console.log(resData)
+          const resData = res.data  
           set_total(resData.total)        
           set_data(resData.data) 
           updateBrowserUrl(pageNo)  
@@ -268,7 +267,7 @@ const Lead = ({__filterData}) => {
                       <h4 className="font-bold text-base">Buyer Details</h4>
                       <div className="text-sm flex flex-row justify-start">
                         <p><b>Quotation Number:</b></p>
-                        <span className="text-gray-900">{item.quote_number}</span>
+                        <span className="text-gray-900">{item.customer_quote_number}</span>
                       </div>
                       <div className="text-sm flex flex-row justify-start">
                         <p><b>Buyer Name:</b></p>
@@ -283,10 +282,10 @@ const Lead = ({__filterData}) => {
                         <span className="text-gray-900">{item.special_requirement}</span>
                       </div>
                       {
-                          item.attached_file &&
+                          item.customer_attached_file &&
                           <div className="text-sm flex flex-row justify-start">
                             <p><b>Download Attached file:</b></p>
-                            <a href={process.env.FILE_UPLOAD_URL+'/'+item.attached_file} target="_blank"><Download /></a>
+                            <a href={process.env.FILE_UPLOAD_URL+'/'+item.customer_attached_file} target="_blank"><Download /></a>
                           </div>
                       }                      
                     </div>

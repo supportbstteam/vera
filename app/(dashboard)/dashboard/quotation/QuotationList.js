@@ -106,11 +106,14 @@ const QuotationList = ({__filterData}) =>{
                         src={`${process.env.FILE_UPLOAD_URL}/${item.category_image}`}
                         alt=""
                         width={80}
-                        height={50}
+                        height={80}
                         className="rounded-md"
                       />
                       <div>
                         <h3 className="font-medium text-base">{item.search_text}</h3>
+                        <p className="text-sm text-gray-500">
+                        <b>Quotation Number :</b> {item.id}
+                        </p>
                         <p className="text-sm text-gray-500">
                         <b>Posted on :</b> {AllFunctionClient.getDateTime(item.created_at)}
                         </p>
