@@ -343,7 +343,7 @@ const QuotationRequestModal = ({handleModalType}) => {
 
               //router.push("/dashboard/quotation"); 
               const timerId = setTimeout(() => {
-                window.location.href = process.env.APP_URL + '/dashboard/quotation'
+                window.location.href = 'https://vera-alpha-rosy.vercel.app/dashboard/quotation'
               }, 3000); 
 
               return () => {
