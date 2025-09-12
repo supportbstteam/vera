@@ -19,7 +19,7 @@ const Profile_card = () => {
   
     return (
     <>
-    <div className="my-6 grid  grid-cols-3 gap-6 pb-6">
+    <div className="my-6 grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-6">
         <div className="flex items-center  gap-4 ">
           <Image
             src="/icons/user.png"
@@ -31,13 +31,13 @@ const Profile_card = () => {
           <div>
             <p className="text-gray-500">Full Name</p>
 
-            <p className="">{ user?.first_name } { user?.last_name }</p>
+            <p className="text-sm md:text-base">{ user?.first_name } { user?.last_name }</p>
             <p className="text-sm text-gray-500">
               Member since { AllFunctionClient.getDate( user?.created_at) }
             </p>
           </div>
         </div>
-        <div className="flex items-center  gap-4 ">
+        <div className="flex items-center  gap-2 md:gap-4 ">
           <Image
             src="/icons/phone.png"
             alt="Profile"
@@ -47,10 +47,10 @@ const Profile_card = () => {
           />
           <div>
             <p className="text-gray-500">Contact No.</p>
-            <p className="text-base font-medium">{ user?.mobile }</p>
+            <p className="text-sm md:text-base font-medium">{ user?.mobile }</p>
           </div>
         </div>
-        <div className="flex items-center  gap-4 ">
+        <div className="flex items-center gap-2 md:gap-4 ">
           <Image
             src="/icons/email.png"
             alt="Profile"
@@ -60,7 +60,7 @@ const Profile_card = () => {
           />
           <div>
             <p className="text-gray-500">Email ID</p>
-            <p className="text-base font-medium break-words">
+            <p className="text-sm md:text-base font-medium break-words">
              { user?.email }
             </p>
           </div>
@@ -75,7 +75,7 @@ const Profile_card = () => {
           />
           <div>
             <p className="text-gray-500">Address</p>
-            <p className="font-medium">
+            <p className="text-sm md:text-base font-medium">
             { user?.address }   
             </p>
           </div>
@@ -90,7 +90,7 @@ const Profile_card = () => {
           />
           <div>
             <p className="text-gray-500">Contact Person</p>
-            <p className="font-medium">{ user?.contact_person }</p>
+            <p className="text-sm md:text-base font-medium">{ user?.contact_person }</p>
           </div>
         </div>
       </div>

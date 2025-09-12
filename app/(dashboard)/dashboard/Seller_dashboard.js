@@ -42,7 +42,7 @@ const Seller_dashboard = () => {
   
   return (
     <>
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 px-4">
     {
       datacount && datacount?.info ? 
       datacount.info.map((item, i) => (
@@ -53,7 +53,7 @@ const Seller_dashboard = () => {
     }
     </div>
 
-    <div className="mt-6">
+    <div className="mt-6 px-4">
       <p>Catagories</p>
       <div className="flex flex-wrap gap-2 mt-2">
         {

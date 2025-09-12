@@ -177,19 +177,24 @@ const EditPassword = () => {
     }	 
 
   return (
-    <div className="border border-stock p-6 flex flex-col gap-4 py-6 rounded-md">
-      <div className="flex justify-between items-center pb-6">
+    <div className="border border-stock p-4 md:p-6 flex flex-col gap-4 py-6 rounded-md">
+      <div className="relative flex justify-between items-center pb-6">
         <div>
           <p className="text-xl font-bold">Change Password</p>
-          <p>
+         <p className="text-base mt-2">
           Change it Regularly, Stay Secure.
           </p>
         </div>
+          <div className="absolute top-2 right-1 md:right-1 md:top-1">
+
         <Button
           variant="icon"
+          size='none'
           onClick={() => setIsOpen(!isOpen)}
           icon={isOpen ? <ChevronUp /> : <ChevronDown />}
         />
+          </div>
+
       </div>
       {isOpen && (
         <form method='post' encType="mmultipart/form-data" ref={formRef} onSubmit={handleSubmit}>   

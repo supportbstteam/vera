@@ -33,7 +33,7 @@ const DashboardNavigation = () => {
 
   return (   
     <>    
-    <div className="flex items-center gap-4">      
+    <div className="flex flex-col sm:flex-row  justify-start items-start gap-4 px-4">      
 
         <Link className={`${dashboard_menu.includes(current_path) ? active_class : inactive_class}`} 
         href="/dashboard"

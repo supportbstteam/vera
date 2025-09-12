@@ -260,7 +260,7 @@ const Lead = ({__filterData}) => {
                     </div> */}
                   </div>
                 </div>
-                <div className="grid grid-cols-[2fr_3fr] gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6">
                 
                   <div className="grid grid-cols-1 justify-between items-start flex-wrap border border-stock rounded-lg py-6 divide-x divide-stock">               
                     <div className="space-y-4 px-6">
@@ -278,8 +278,8 @@ const Lead = ({__filterData}) => {
                         <span className="text-gray-900">{item.quote_quantity}</span>
                       </div>
                       <div className="text-sm flex flex-row justify-start">
-                        <p><b>Special requirement:</b></p>
-                        <span className="text-gray-900">{item.special_requirement}</span>
+                        <p><b>Special Requirement: </b></p>
+                        <span className="text-gray-900"> {item.special_requirement}</span>
                       </div>
                       {
                           item.customer_attached_file &&
