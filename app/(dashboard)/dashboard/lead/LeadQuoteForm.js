@@ -297,7 +297,7 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
   
   return (
     <form method="post" encType="multipart/form-data" onSubmit={handleSubmit} ref={formRef}>  
-    <div className="grid grid-cols-4 gap-4 items-end">                     
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">                     
       
       <div className="grid grid-cols-1 mb-3">
         <QuantityStepper handleQuantity={handleQuantity} /> 
@@ -346,7 +346,7 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
 
     </div>
 
-    <div className="grid grid-cols-3 gap-4 items-end">   
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">   
 
       <div className="grid grid-cols-1 mb-3">
       <Input label="Product Code" placeholder=""
@@ -397,8 +397,7 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
 
     </div>
 
-    <div className="grid grid-cols-2 gap-4 items-end">                     
-      <div className={`grid grid-cols-1 mb-3`}>
+    <div className="md:grid md:grid-cols-[6fr_2fr] gap-4 items-end">                     
       <Textarea
         label="Comments"
         placeholder="Add any details or specifications for your Quote"
@@ -413,15 +412,14 @@ const LeadQuoteForm = ({quote_suppliers_id, handleFetchLeads}) => {
         {errors.comments && 
           <div className="error-msg">{errors.comments}</div>    
         }  	
-      </div>
-      <div className="grid-cols-1 mb-3">
-      <SbButton data={{
+      
+        <SbButton data={{
           type:"submit",
           text:"Submit",
-          class:"inline-flex items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
+          class:"mb-2 inline-flex items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-primary text-white hover:text-gray-800 hover:bg-primary/80 hover:text-white",
           disabled:disablebutton,
        }} />  
-      </div>                    
+                        
     </div>
     </form>
   )

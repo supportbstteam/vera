@@ -91,7 +91,7 @@ const SearchBar = ({handleModalType, loggedIn}) => {
           { isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}{" "}
           </span>
         </button>  
-       
+      
         { isOpen && (
           <ul className="absolute mt-3 w-48 grid rounded-md border border-gray-200 bg-white shadow-lg z-3 divide-y divide-gray">
             <li

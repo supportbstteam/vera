@@ -128,17 +128,23 @@ const EditSettings = () => {
     }	 
 
   return (
-    <div className="border border-stock p-6 flex flex-col gap-4 py-6 rounded-md">
-      <div className="flex justify-between items-center pb-6">
+    <div className="px-4 flex flex-col gap-4 ">
+      <div className='border border-gray-300 p-6 rounded-md'>
+
+      <div className="relative flex justify-between items-center pb-6">
         <div>
           <p className="text-xl font-bold">My Settings</p>
           <p> Manage your notifications and other stuff</p>
         </div>
+        <div className="absolute top-0 right-0 md:right-1 md:top-1 ">
+
         <Button
           variant="icon"
+          size='none'
           onClick={() => setIsOpen(!isOpen)}
           icon={isOpen ? <ChevronUp /> : <ChevronDown />}
-        />
+          />
+          </div>
       </div>
       {isOpen && (
         <form method='post' encType="mmultipart/form-data" ref={formRef} onSubmit={handleSubmit}>   
@@ -159,7 +165,7 @@ const EditSettings = () => {
                   }}
                   checked={ data.email_notifications == 1 ? true : false } 
                   />
-                  <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                  <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
                   {
                     data.email_notifications == 1 ? 
                     <span className="ml-3 text-sm font-bold text-green-500">ON</span>
@@ -189,6 +195,7 @@ const EditSettings = () => {
         </div>
         </form>
       )}
+      </div>
     </div>
   )
 }

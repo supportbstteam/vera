@@ -17,8 +17,11 @@ const Dashboard = () => {
   }, []);
  
   return (
-    <div className="max-w-7xl m-auto py-8 md:py-16 flex flex-col gap-6">
+    <div className="max-w-7xl m-auto py-8 md:py-16 flex flex-col gap-6 ">
+      <div className="px-4">
+
       <DashboardNavigation />
+      </div>
       {
           role && role == 1 ?
           <Buyer_dashboard />

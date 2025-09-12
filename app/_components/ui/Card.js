@@ -12,11 +12,11 @@ const Card = ({ item }) => {
   }
   return (
     <Link href={ulr}>
-      <div className="relative p-4 md:p-6 rounded-lg  grid grid-cols-[6fr_1fr] gap-2 border border-stock">
+      <div className="relative p-4 md:p-6 rounded-lg   border border-stock">
         <div className="flex flex-col gap-0">
           <h4>{item.title}</h4>
           <p className="text-3xl font-semibold my-4">{item.value}</p>
-          <div className="flex flex-col lg:flex-row items-start gap-2">
+          <div className="flex flex-col sm:flex-row items-start gap-2">
             <div className="flex gap-2">
               <Image
                 src={trendImage[item.trend]}
