@@ -71,7 +71,12 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
               animation: true,
               title: '',  
               confirmButtonText: 'Close',          
-              text: "Vender selected successfully!",
+              html: `Vender selected successfully!
+
+                     Please place your purchase order with Flashy Cactus.
+
+                     <a href="mailto:Sales@flashycactus.com">Sales@flashycactus.com</a>
+                `,
             })	
             
           }      
