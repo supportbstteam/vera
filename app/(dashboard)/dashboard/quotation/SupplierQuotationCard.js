@@ -154,18 +154,19 @@ const SupplierQuotationCard = ({handleModalType, quote_id}) =>{
                       <p className="text-sm text-gray-900"><b>Product Code:</b>{ item.product_code }</p>
                     }
                     
-                    <b>Vendor :</b> {item.supplier_first_name} {item.supplier_last_name}
+                    {/* <b>Vendor :</b> {item.supplier_first_name} {item.supplier_last_name} */}
                     </p>
-                    <div className="flex items-center text-sm text-gray-900">
+                    {/* <div className="flex items-center text-sm text-gray-900">
                       <span>⭐ {item.avg_rating}/5</span>
                       <span className="ml-1">({item.total_reviews} reviews)</span>
-                    </div>
-                  </div>
-
-                  <div>
+                    </div> */}
                     { item.quantity > 0 &&
                       <p className="text-sm text-gray-900"><b>Quantity :</b>{ item.quantity }</p>
                     }
+                  </div>
+
+                  <div>
+                    
                     { item.price_with_margin > 0 &&
                       <p className="text-sm text-gray-900"><b>Price :</b>{ AllFunctionClient.currency(item.price_with_margin) }</p>
                     }
