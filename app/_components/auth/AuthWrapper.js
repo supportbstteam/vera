@@ -61,7 +61,7 @@ const AuthWrapper = () => {
   if(status==0){    
     //router.push('/') 
     //router.reload();    
-    window.location.href = 'https://vera-alpha-rosy.vercel.app'
+    window.location.href = 'https://hellovera.co.uk/'
   }
 
   return (

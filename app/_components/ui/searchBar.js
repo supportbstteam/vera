@@ -78,10 +78,10 @@ const SearchBar = ({handleModalType, loggedIn}) => {
   }  
 
   return (
-    <div className="relative w-full border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[2fr_1fr_10fr] items-center justify-start">
+    <div className="relative w-full border-1 border-stock  text-sm rounded-full px-4 py-2 grid grid-cols-[1fr_1fr_10fr] items-center justify-start">
 
-      <div className="relative inline-block" ref={dropdownRef} >       
-        <button
+      <div className="relative w-fit inline-block text-[#a4a4a4]" ref={dropdownRef} >       
+        {/* <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-15 sm:w-28 md:w-28 lg:w-48 rounded-md  bg-transparent text-white pr-2 md:px-4 text-left text-sm shadow-sm focus:outline-none focus:ring-0 flex items-center justify-between"
           >
@@ -110,15 +110,17 @@ const SearchBar = ({handleModalType, loggedIn}) => {
               </li>
             ))}
           </ul>
-        )}
+        )} */}
+
+        search
       </div>
-      <Tally1 color="white" strokeWidth="0.75" />
+      <Tally1 className="ml-2" color="gray" strokeWidth="0.75" />
       <form method="post" onSubmit={handleSubmit} className="">   
       <div className="flex justify-around gap-2">
         
         <input
           type="text"
-          placeholder="What are you looking for ?"
+          placeholder=""
           className="w-full text-white placeholder-gray-100 focus:outline-none focus:ring-0 transition"
           name="search_text" 
           value={search_text} 
@@ -133,7 +135,7 @@ const SearchBar = ({handleModalType, loggedIn}) => {
           handleSearch()
         }}
         />  */}
-        <Button type="submit" size="none" variant="none" icon={<Search size={20} color="#fff"  className="cursor-pointer" />} />        
+        {/* <Button type="submit" size="none" variant="none" icon={<Search size={20} color="#fff"  className="cursor-pointer" />} />         */}
       </div>     
       </form>
     </div>

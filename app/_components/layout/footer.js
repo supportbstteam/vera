@@ -63,14 +63,20 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-4">View More</h3>
+          {/* <p className="font-semibold mb-4">View More</p> */}
           <ul className="space-y-4 text-white text-sm">
+            <li>
+              <Link href="/contact-us">Browse Categories</Link>
+            </li>
+            <li>
+              <Link href="/contact-us">Request a Quote</Link>
+            </li>
             <li>
               <Link href="/contact-us">Contact Us</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/about-us">About Us</Link>
-            </li>
+            </li> */}
             <li>
               <Link href="/terms-and-condition">Terms & Condition</Link>
             </li>
@@ -78,7 +84,7 @@ const Footer = () => {
               <Link href="/privacy-policy">Privacy Policy</Link>
             </li>
           </ul>
-          <div className="flex gap-4 space-x-2 text-lg text-gray-100 mt-4">
+          {/* <div className="flex gap-4 space-x-2 text-lg text-gray-100 mt-4">
             {setting && (
               <>
                 <Link href={setting.facebook_url}>
@@ -100,17 +106,17 @@ const Footer = () => {
                 </Link>
               </>
             )}
-          </div>
+          </div> */}
         </div>
 
-        <div className="border border-gray-600 px-4 py-4 md:py-8 md:px-8 grid gap-4  text-gray-300 rounded-md text-center">
+        <div className="border-[1px] border-[#252525] px-4 py-4 md:py-8 md:px-8 grid gap-4 md:gap-[30px]  text-gray-300 rounded-md text-center">
           <div className="flex gap-4 items-center">
             <Phone size={32} />
             <div className="flex justify-center flex-col items-start">
               <p className="text-base md:text-lg font-bold text-left">
                 Didn't find what you were looking for?
               </p>
-              <p className="underline cursor-pointer">
+              <p className="underline cursor-pointer mt-2">
                 <Link href="/contact-us">Contact Us</Link>
               </p>
             </div>
@@ -120,20 +126,20 @@ const Footer = () => {
             <Smile size={32} />
             <div className="flex justify-center flex-col items-start">
               <p className="text-base md:text-lg font-bold text-left">How can we help you today?</p>
-              <p className="underline cursor-pointer">
-                <Link href="/help">Help Center</Link>
+              <p className="underline cursor-pointer mt-2">
+                <Link href="/help">Find out more</Link>
               </p>
             </div>
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center md:mb-[40px]">
             <LifeBuoy size={32} />
             <div className="flex justify-center flex-col items-start">
               <p className="text-base md:text-lg font-bold text-left">
                 {" "}
                 We'd love to hear what you think!
               </p>
-              <p className="underline cursor-pointer">
-                <Link href="/feedback">Give Feedback</Link>
+              <p className="underline cursor-pointer mt-2 ">
+                <Link href="/feedback">Leave Us A Review</Link>
               </p>
             </div>
           </div>

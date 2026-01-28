@@ -14,10 +14,11 @@ const Button = ({
   className,
   onClick,
   color,
-  type
+  type,
+  link_attributes,
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-md font-medium transition-colors cursor-pointer h-fit"
+    "inline-flex items-center justify-center rounded-[4px] font-medium transition-colors cursor-pointer h-fit"
 
   const sizeStyles = {
     sm: "px-3 py-2 text-sm",
@@ -70,7 +71,7 @@ const Button = ({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} {...link_attributes}>
         {content}
       </Link>
     )

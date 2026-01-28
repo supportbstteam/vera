@@ -1,110 +1,113 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback, Suspense } from "react";
-import { ArrowRight } from "lucide-react"
-import Image from "next/image"
+import React from "react";
+import Image from "next/image";
+import { Clock, UserCheck, LayoutDashboard, Users, Tag, ShieldOff } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { searchAction } from "@/_library/redux/actions/click";
+
 import Button from "./ui/button"
 
-import { useSelector, useDispatch } from 'react-redux'
-import { searchAction } from '@/_library/redux/actions/click'
-
 const Why = () => {
+  const dispatch = useDispatch();
 
-  const dispatch  = useDispatch() 
-  
-  const steps = [
+  const features = [
     {
-      number: "01",
+      icon: "/icons/mingcute_time-fill.png",
       title: "Save Time",
-      desc:
-        "No more back and forth emails"
+      desc: "No more back and forth emails",
     },
     {
-      number: "02",
-      title: "Fully Automated",
-      desc:
-        "From request to quote"
-    },
-    {
-      number: "03",
-      title: "Competitive Pricing",
-      desc:"Suppliers blind bid on your requests"
-    },
-    {
-      number: "04",
+      icon: "/icons/fa6-solid_child-reaching.png",
       title: "Wide Supplier Reach",
-      desc:
-        "Connect to 100s of pre-vetted vendors"
+      desc: "Connect to 100s of pre-vetted vendors",
     },
     {
-      number: "05",
+     icon: "/icons/material-symbols_person.png",
+      title: "Fully Automated",
+      desc: "From request to quote, we do it for you",
+    },
+    {
+     icon: "/icons/icomoon-free_price-tags.png",
+      title: "Competitive Pricing",
+      desc: "Suppliers blind bid on your requests",
+    },
+    {
+      icon: "/icons/ic_baseline-laptop.png",
       title: "All-in-One Dashboard",
-      desc:
-        "Search, compare and choose all in one place"
+      desc: "Search, compare and choose all in one place",
     },
     {
-      number: "06",
+     icon: "/icons/bitcoin-icons_hidden-filled.png",
       title: "No Hidden Fees",
-      desc:
-        "No buyer charges, no surprises"
-    }
-  ]
+      desc: "No buyer charges, no surprises",
+    },
+  ];
+
   return (
     <section className="relative bg-black text-white">
-      {/* Background Image with overlay */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image + Overlay */}
+      <div className="absolute inset-0">
         <Image
-          // Replace with your actual image
           src="/assets/ThreeStepSection-Bg.jpg"
-          alt="Steps background"
+          alt="background"
           fill
-          className="object-cover opacity-70"
+          className="object-cover"
         />
+        <div className="absolute inset-0 bg-black opacity-80" />
       </div>
-      <div className="absolute inset-0 bg-[#000000] opacity-70 z-0"></div>
 
-      <div className="max-w-7xl relative z-10 px-4 py-8 md:py-16 mx-auto text-center flex flex-col items-center">
-        {/* Headings */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-12 uppercase">
-          Why Choose <span className="text-primary">Vera?</span>
-        </h2>
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-15 flex flex-col lg:flex-row items-center md:items-start justify-between gap-12">
+        {/* Left Section */}
+        <div className="text-left flex flex-col w-full lg:w-1/2">
+          <h2 className="text-3xl md:text-[48px] uppercase font-light  md:mt-0 mb-0 md:mb-6 leading-normal md:leading-[50px]  !flex items-center max-lg:justify-center lg:items-start max-md:gap-2 flex-row lg:!flex-col">
+            <span className=" !m-0"> WHY CHOOSE</span> <span className="text-primary  !m-0">VERA?</span>
+          </h2>
+           <Button className="mt-6 w-[227px] !py-2 !hidden lg:!block" 
+                  
+                  onClick={()=>{
+          
+                    window.scrollTo({
+                      top: 0,
+                      behavior: 'auto'
+                    }); 
+          
+                    dispatch(searchAction(true))            
+                    
+                  }}
+                  >Request product specials</Button>
+        </div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-10">
-          {steps.map((step, i) => (
-            <div key={i} className="flex flex-col items-center text-center">
-              {/* Circle number */}
-              <div className="w-32 h-32 p-1 rounded-full border-3 border-[#DF9CEB] bg-white flex items-center justify-center mb-4">
-                <div className="w-28 h-28 border-10 border-[#DF9CEB] rounded-full bg-white flex items-center justify-center">
-                  <span className="text-4xl font-semibold text-black">{step.number}</span>
-                </div>
+        {/* Right Section - Features */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8 w-full lg:w-1/2">
+          {features.map((f, i) => (
+            <div key={i} className="flex items-center space-x-4">
+              <div className=" flex items-center justify-center">
+                <img src={f.icon} />
               </div>
-
-              {/* Title + Desc */}
-              <h3 className="text-lg font-semibold text-white mb-1">
-                {step.title}
-              </h3>
-              <p className="text-sm text-gray-300">{step.desc}</p>
+              <div>
+                <p className="text-lg font-semibold mb-1">{f.title}</p>
+                <p className="text-sm text-gray-300 leading-snug">{f.desc}</p>
+              </div>
             </div>
           ))}
         </div>
-
-        {/* CTA Button */}
-
-        <Button icon={<ArrowRight />} 
-        
-        onClick={()=>{
-
-          window.scrollTo({
-            top: 0,
-            behavior: 'auto'
-          }); 
-
-          dispatch(searchAction(true))            
+         <Button className="mt-6 w-[227px] !py-2 block lg:hidden  mx-auto lg:mx-0" 
+                  
+                  onClick={()=>{
           
-        }}
-        >Send Your First Quote</Button>
+                    window.scrollTo({
+                      top: 0,
+                      behavior: 'auto'
+                    }); 
+          
+                    dispatch(searchAction(true))            
+                    
+                  }}
+                  >Request product specials</Button>
       </div>
     </section>
-  )
-}
-export default Why
+  );
+};
+
+export default Why;

@@ -542,7 +542,7 @@ const RegisterForm = ({handleModalType}) => {
       <div className={`grid grid-cols-1 mb-3`}>  
         {
           google_auth_url &&
-          <Button type="button" href={google_auth_url} variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" >Register with Google</Button>
+          <Button type="button" href={google_auth_url} variant="gray" className="cursor-pointer" icon={<img src="/icons/google.png" alt="Google" width={20} height={20} />} iconPosition="left" link_attributes={{ target: "_blank", rel: "noopener" }}>Register with Google</Button>
         } 
       </div>
 

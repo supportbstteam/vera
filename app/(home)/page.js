@@ -7,12 +7,16 @@ import Usps from "@/_components/usps"
 import Why from "@/_components/why"
 import TextMedia from "@/_components/TextMedia"
 import CTA from "@/_components/CTA"
-
-export default function Home(){
+import HowItWorks from "@/_components/layout/HowItWorks"
+import { getToken } from "@/actions";
+export default async function  Home(){
+   const loggedIn = await getToken()
   return (
+    
     <>
-      <Banner bgImage={"url('/assets/bg.jpg')"} />
-      <Usps />
+      <Banner loggedIn={loggedIn}  bgImage={"url('/assets/bg.jpg')"} />
+      <HowItWorks />
+      {/* <Usps /> */}
       <TextMedia />
       <Why />
       {/* <CategoryGrid /> */}
@@ -21,9 +25,9 @@ export default function Home(){
       {/* <Discover /> */}
       {/* <BestCategorySection /> */}
       {/* <Countries /> */}
-      <GrowthSection />
+      {/* <GrowthSection /> */}
       <CTA />
-      <Testimonial />
+      {/* <Testimonial /> */}
     </>
   )
 }
