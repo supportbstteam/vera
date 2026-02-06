@@ -21,19 +21,19 @@ import TextModal from "@/_components/ui/TextModal";
 
 import QuotationRequestModal from "@/_components/QuotationRequestModal";
 import ThankYouModal from "@/_components/ThankYouModal";
-import { Tally1 ,Search, ChevronDown, CrossIcon, Menu, X } from "lucide-react";
+import { Tally1, Search, ChevronDown, CrossIcon, Menu, X } from "lucide-react";
 import { IoIosSearch } from "react-icons/io";
+import HowToModal from "../auth/HowToModal";
 
 const Header = ({ loggedIn }) => {
-
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
   const user = userState.data ? userState.data : {};
 
   const [openIndex, setOpenIndex] = useState(null);
   const [modalType, setModalType] = useState(null);
- const [search_text, set_search_text] = useState("");
+  const [search_text, set_search_text] = useState("");
   const [openSubmenus, setOpenSubmenus] = useState({});
   useEffect(() => {
     dispatch(fetchUser());
@@ -93,7 +93,6 @@ const Header = ({ loggedIn }) => {
       ],
     },
   ];
-  
 
   const toggleSubmenu = (idx) => {
     setOpenSubmenus((prev) => ({
@@ -101,6 +100,8 @@ const Header = ({ loggedIn }) => {
       [idx]: !prev[idx],
     }));
   };
+
+  // console.log("loggedIn in header:", loggedIn);
   return (
     <>
       <header className="md:block bg-black">
@@ -108,11 +109,9 @@ const Header = ({ loggedIn }) => {
           <div className="max-w-7xl mx-auto  flex flex-col items-center justify-between gap-4">
             <div className=" flex items-center gap-4 justify-between w-full">
               <div className="flex gap-20 items-center w-[80%] sm:w-2/12 lg:w-4/12">
-
-
                 <Link href="/" className="">
                   <Image
-                    src="/logomain.svg" 
+                    src="/logomain.svg"
                     alt="Logo"
                     width={162}
                     height={86}
@@ -127,21 +126,77 @@ const Header = ({ loggedIn }) => {
                   loggedIn={loggedIn}
                 />
               </div> */}
-              <div className="6/12 md:w-4/12 flex justify-end ">
-                
+              <div className="6/12 md:w-9/12 flex justify-end ">
                 {loggedIn ? (
                   <div className="flex items-center gap-2">
-                  <Link href="/about-us" className="text-white text-sm  items-center font-[500] hidden lg:flex">About Us</Link>
-              
-                  <ProfileButton />
+                    <Link
+                      href="/about-us"
+                      className="text-white text-sm  items-center font-[500] hidden lg:flex"
+                    >
+                      About Us
+                    </Link>
+
+                    <div className="flex items-center ml-5 group">
+                      <div
+                        onClick={() => setModalType("customer")}
+                        className="block cursor-pointer px-4 py-2 text-sm text-white hover:underline"
+                      >
+                        Customer How to
+                      </div>
+
+                      <div
+                        onClick={() => setModalType("supplier")}
+                        className="block cursor-pointer px-4 py-2 text-sm text-white hover:underline"
+                      >
+                        Supplier How to
+                      </div>
+                    </div>
+
+                    <ProfileButton />
+
+                    {/* <div className="relative hidden lg:flex items-center ml-5 group">
+                     
+                      <span
+                        className="relative pr-3 text-white text-sm font-[500] cursor-pointer
+      after:absolute after:h-[50%]  after:right-[-2px] after:content-['']"
+                      >
+                        How to
+                      </span>
+                      
+                    </div> */}
                   </div>
                 ) : (
-                  <>
-                    <Menu color="white" className="block md:hidden" onClick={() => setIsOpen(!isOpen)} />
+                  <div className="flex items-center w-6 md:w-full justify-end ">
+                    <Menu
+                      color="white"
+                      className="block md:hidden"
+                      onClick={() => setIsOpen(!isOpen)}
+                    />
                     {/* <ProfileButton /> */}
-                    <Link href="/about-us" className="relative pr-3 text-white text-sm items-center font-[500] hidden lg:flex
-         after:absolute after:h-[50%] after:w-px after:bg-white after:right-[-2px] after:content-['']">About Us</Link>
-              
+                    <Link
+                      href="/about-us"
+                      className="relative pr-3 text-white text-sm items-center font-[500] hidden lg:flex
+         after:absolute after:h-[50%] after:w-px after:bg-white after:right-[-2px] after:content-['']"
+                    >
+                      About Us
+                    </Link>
+
+                    <div className="flex items-center ml-5 group">
+                      <div
+                        onClick={() => setModalType("customer")}
+                        className="block cursor-pointer px-4 py-2 text-sm text-white hover:underline"
+                      >
+                        Customer How to
+                      </div>
+
+                      <div
+                        onClick={() => setModalType("supplier")}
+                        className="block cursor-pointer px-4 py-2 text-sm text-white hover:underline"
+                      >
+                        Supplier How to
+                      </div>
+                    </div>
+
                     <div className="hidden md:flex items-center justify-end gap-6 ">
                       <Button
                         variant=""
@@ -156,8 +211,36 @@ const Header = ({ loggedIn }) => {
                         Create Account
                       </Button>
                     </div>
-                  </>
 
+                    {/* <div className="relative hidden lg:flex items-center ml-5 group">
+                      <span
+                        className="relative pr-3 text-white text-sm font-[500] cursor-pointer
+      after:absolute after:h-[50%]  after:right-[-2px] after:content-['']"
+                      >
+                        How to
+                      </span>
+                      <div
+                        className="absolute left-full top-1/2 -translate-y-1/2 ml-4
+      w-44 rounded-md shadow-lg
+      opacity-0 invisible group-hover:opacity-100 group-hover:visible
+      transition-all duration-200 border-l-red-500 "
+                      >
+                        <Link
+                          href="/how-to/customer"
+                          className="block px-4 py-2 text-sm text-white hover:underline"
+                        >
+                          For Customer
+                        </Link>
+
+                        <Link
+                          href="/how-to/supplier"
+                          className="block px-4 py-2 text-sm text-white hover:underline"
+                        >
+                          For Supplier
+                        </Link>
+                      </div>
+                    </div> */}
+                  </div>
                 )}
               </div>
             </div>
@@ -167,15 +250,24 @@ const Header = ({ loggedIn }) => {
                 loggedIn={loggedIn}
               />
             </div> */}
-            <div className={`${isOpen === true && loggedIn === false ? "block" : "hidden"} w-8/12 top-0  fixed z-1 right-0 p-4 bg-black h-full`}>
+
+            <div
+              className={`${
+                isOpen === true && loggedIn === false ? "block" : "hidden"
+              } w-8/12 top-0  fixed z-1 right-0 p-4 bg-black h-full`}
+            >
               <div className="flex flex-col items-end gap-4">
-        <X color="white" onClick={() => setIsOpen(false)} className="cursor-pointer" />
+                <X
+                  color="white"
+                  onClick={() => setIsOpen(false)}
+                  className="cursor-pointer"
+                />
 
-        <Link href="/about-us" className="text-white font-semibold">
-          About Us
-        </Link>
+                <Link href="/about-us" className="text-white font-semibold">
+                  About Us
+                </Link>
 
-        {/* <ul className="flex flex-col gap-4 w-full items-end">
+                {/* <ul className="flex flex-col gap-4 w-full items-end">
           {menu.map((item, idx) => (
             <li key={idx} className="w-full text-right">
               <div
@@ -201,30 +293,30 @@ const Header = ({ loggedIn }) => {
           ))}
         </ul> */}
 
-        <Button
-          variant="outline"
-          color="white"
-          type="submit"
-          size="full"
-          onClick={() => {
-            setModalType("login");
-            setIsOpen(false);
-          }}
-          className="py-1"
-        >
-          Login
-        </Button>
+                <Button
+                  variant="outline"
+                  color="white"
+                  type="submit"
+                  size="full"
+                  onClick={() => {
+                    setModalType("login");
+                    setIsOpen(false);
+                  }}
+                  className="py-1"
+                >
+                  Login
+                </Button>
 
-        <Button
-          size="full"
-          onClick={() => {
-            setModalType("register");
-            setIsOpen(false);
-          }}
-        >
-          Create Account
-        </Button>
-      </div>
+                <Button
+                  size="full"
+                  onClick={() => {
+                    setModalType("register");
+                    setIsOpen(false);
+                  }}
+                >
+                  Create Account
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -313,9 +405,15 @@ const Header = ({ loggedIn }) => {
             }}
           />
         </ModalDialog>
-      ) : (
-        ""
-      )}
+      ) : modalType === "customer" ? (
+        <ModalDialog isOpen={true} onClose={() => setModalType(false)}>
+          <HowToModal isCustomer={true} />
+        </ModalDialog>
+      ) : modalType === "supplier" ? (
+        <ModalDialog isOpen={true} onClose={() => setModalType(false)}>
+          <HowToModal isCustomer={false} />
+        </ModalDialog>
+      ) : null}
     </>
   );
 };
