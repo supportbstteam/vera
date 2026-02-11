@@ -51,6 +51,7 @@ const Lead = ({ __filterData }) => {
   const fetch_data = async (pageNo) => {
     try {
       let id = localStorage.getItem(process.env.APP_PREFIX + "id") ?? "";
+      console.log("pageid",id)
       const res = await Api.leads({
         supplier_id: id,
         page_number: pageNo,

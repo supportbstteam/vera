@@ -51,6 +51,7 @@ const Lead = ({ __filterData }) => {
   const fetch_data = async (pageNo) => {
     try {
       let id = localStorage.getItem(process.env.APP_PREFIX + "id") ?? "";
+      console.log(id, pageNo);
       const res = await Api.leads({
         supplier_id: id,
         page_number: pageNo,
@@ -84,10 +85,13 @@ const Lead = ({ __filterData }) => {
     router.push(pathname + string ? "?" + string : "");
   };
 
-  const shortlist_lead = async (id) => {
+  const shortlist_lead = async (id, quote_id) => {
     try {
+      let supplier_id = localStorage.getItem(process.env.APP_PREFIX + "id") ?? "";
       const res = await Api.shortlist_lead({
         id: id,
+        quote_id: quote_id,
+        supplier_id: supplier_id,
         shortlist: 1,
       });
 
@@ -106,10 +110,13 @@ const Lead = ({ __filterData }) => {
       console.log(error.message);
     }
   };
-  const remove_shortlist_lead = async (id) => {
+  const remove_shortlist_lead = async (id, quote_id) => {
     try {
+      let supplier_id = localStorage.getItem(process.env.APP_PREFIX + "id") ?? "";
       const res = await Api.remove_shortlist_lead({
         id: id,
+        quote_id: quote_id,
+        supplier_id: supplier_id,
         shortlist: 0,
       });
 
@@ -128,7 +135,7 @@ const Lead = ({ __filterData }) => {
       console.log(error.message);
     }
   };
-  const delete_lead = async (id) => {
+  const delete_lead = async (id, quote_id) => {
     MySwal.fire({
       title: "Are you sure?",
       text: "You want to delete this Quotation",
@@ -139,8 +146,11 @@ const Lead = ({ __filterData }) => {
       confirmButtonColor: "#d33",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        let supplier_id = localStorage.getItem(process.env.APP_PREFIX + "id") ?? "";
         const res = await Api.delete_lead({
           id: id,
+          quote_id: quote_id,
+          supplier_id: supplier_id,
           deleted: 1,
         });
 
@@ -159,7 +169,7 @@ const Lead = ({ __filterData }) => {
     });
   };
 
-  const reject_lead = async (id) => {
+  const reject_lead = async (id, quote_id) => {
     MySwal.fire({
       title: "Are you sure?",
       text: "You want to reject this Quotation",
@@ -170,8 +180,11 @@ const Lead = ({ __filterData }) => {
       confirmButtonColor: "#d33",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        let supplier_id = localStorage.getItem(process.env.APP_PREFIX + "id") ?? "";
         const res = await Api.reject_lead({
           id: id,
+          quote_id: quote_id,
+          supplier_id: supplier_id,
           status: 2,
         });
 
@@ -219,7 +232,7 @@ const Lead = ({ __filterData }) => {
             return (
               <div
                 key={i}
-                className="md:border md:border-gray-200 rounded-xl md:p-4 space-y-4"
+                className={`md:border md:border-gray-200 rounded-xl md:p-4 space-y-4 ${item.status === 2 ? 'opacity-60 grayscale' : ''}`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex gap-3 items-center">
@@ -257,7 +270,7 @@ const Lead = ({ __filterData }) => {
                       <h4 className="font-bold text-base">Buyer Details</h4>
                       <div className="text-sm flex flex-row justify-start">
                         <p>
-                          <b>Request No. :  </b> 
+                          <b>Request No. :  </b>
                         </p>
                         <span className="text-gray-900">
                           {item.request_number}
@@ -299,7 +312,7 @@ const Lead = ({ __filterData }) => {
                             }
                             target="_blank"
                           >
-                            <Download size={16}/>
+                            <Download size={16} />
                           </a>
                         </div>
                       )}
@@ -309,6 +322,7 @@ const Lead = ({ __filterData }) => {
                   <div className=" items-center gap-3">
                     <LeadQuoteForm
                       quote_suppliers_id={item.id}
+                      quote_id={item.quote_id}
                       handleFetchLeads={handleFetchLeads}
                     />
                     <div className="md:flex items-center justify-between gap-4 text-sm text-gray-600  w-full">
@@ -319,7 +333,7 @@ const Lead = ({ __filterData }) => {
                           icon={<Star size={18} color="#D148FF" />}
                           iconPosition="left"
                           onClick={() => {
-                            remove_shortlist_lead(item.id);
+                            remove_shortlist_lead(item.id, item.quote_id);
                           }}
                         >
                           Shortlisted
@@ -331,7 +345,7 @@ const Lead = ({ __filterData }) => {
                           icon={<Star size={16} />}
                           iconPosition="left"
                           onClick={() => {
-                            shortlist_lead(item.id);
+                            shortlist_lead(item.id, item.quote_id);
                           }}
                         >
                           Shortlist
@@ -344,26 +358,11 @@ const Lead = ({ __filterData }) => {
                         icon={<Trash2 size={16} />}
                         iconPosition="left"
                         onClick={() => {
-                          delete_lead(item.id);
+                          delete_lead(item.id, item.quote_id);
                         }}
                       >
                         Not Relevant
                       </Button>
-
-                      {/* <span
-                        className="flex items-start gap-2 cursor-pointer"
-                        onClick={() => {
-                          reject_lead(item.id);
-                        }}
-                      >
-                        <Image
-                          src="/icons/reject.png"
-                          alt=""
-                          width={18}
-                          height={18}
-                        />{" "}
-                        Reject Quotation
-                      </span> */}
 
                       <Button
                         variant="ghost"
@@ -378,7 +377,7 @@ const Lead = ({ __filterData }) => {
                         }
                         iconPosition="left"
                         onClick={() => {
-                          reject_lead(item.id);
+                          reject_lead(item.id, item.quote_id);
                         }}
                       >
                         Reject Quotation
@@ -390,37 +389,40 @@ const Lead = ({ __filterData }) => {
                   <>
                     <div
                       className="grid p-4 rounded-lg "
-                      style={{ background: background, width: "100%" }}
+                      style={{ background: item.status === 2 ? '#fee2e2' : background, width: "100%" }}
                     >
-                      <b>My Quotation </b>
+                      <div className="flex justify-between items-center">
+                        <b className={item.status === 2 ? 'text-red-600 line-through' : ''}>My Quotation </b>
+                        {item.status === 2 && <span className="bg-red-600 text-white px-2 py-0.5 rounded text-xs font-bold uppercase">Rejected</span>}
+                      </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-                      <p className="text-sm"> Quotation Number : <b>{item.quote_number}</b>{" "}</p>
-                      <p className="text-sm"> Product Code :{" "}<b>{item.product_code}</b></p>
-                      <p className="text-sm"> No of Item :{" "} <b>{item.quantity}</b></p>
-                      <p className="text-sm"> Warranty in Year:{" "} <b>{item.warranty > 0 ? item.warranty + " Year" : "None"}</b>{" "}</p>
-                      <p className="text-sm"> Quoted Price:{" "} <b>{AllFunctionClient.currency(item.price)}</b>{" "}</p>
-                      <p className="text-sm"> Carriage:{" "} <b>{AllFunctionClient.currency(item.carriage)}</b>{" "}</p>
-                      <p className="text-sm"> Lead Time : <b>{item.lead_time}</b>{" "}</p>
-                      <p className="text-sm"> Status: <b>{status}</b>{" "}</p>
-                      <p className="text-sm"> Comments: <b>{item.comments}</b>{" "}</p>
-                      {item.attached_file && (
-                        <>
-                          <div className="flex gap-4">
-                            <div>Attached file:</div>
-                            <a
-                              href={
-                                process.env.FILE_UPLOAD_URL +
-                                "/" +
-                                item.attached_file
-                              }
-                              target="_blank"
-                            >
-                              <Download />
-                            </a>
-                          </div>
-                        </>
-                      )}
+                        <p className="text-sm"> Quotation Number : <b>{item.quote_number}</b>{" "}</p>
+                        <p className="text-sm"> Product Code :{" "}<b>{item.product_code}</b></p>
+                        <p className="text-sm"> No of Item :{" "} <b>{item.quantity}</b></p>
+                        <p className="text-sm"> Warranty in Year:{" "} <b>{item.warranty > 0 ? item.warranty + " Year" : "None"}</b>{" "}</p>
+                        <p className="text-sm"> Quoted Price:{" "} <b>{AllFunctionClient.currency(item.price)}</b>{" "}</p>
+                        <p className="text-sm"> Carriage:{" "} <b>{AllFunctionClient.currency(item.carriage)}</b>{" "}</p>
+                        <p className="text-sm"> Lead Time : <b>{item.lead_time}</b>{" "}</p>
+                        <p className="text-sm"> Status: <b>{status}</b>{" "}</p>
+                        <p className="text-sm"> Comments: <b>{item.comments}</b>{" "}</p>
+                        {item.attached_file && (
+                          <>
+                            <div className="flex gap-4">
+                              <div>Attached file:</div>
+                              <a
+                                href={
+                                  process.env.FILE_UPLOAD_URL +
+                                  "/" +
+                                  item.attached_file
+                                }
+                                target="_blank"
+                              >
+                                <Download />
+                              </a>
+                            </div>
+                          </>
+                        )}
                       </div>
 
                     </div>

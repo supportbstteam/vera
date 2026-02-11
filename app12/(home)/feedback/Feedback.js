@@ -327,7 +327,7 @@ const Feedback = () =>{
 
                   <div className={`grid grid-cols-1 text-end mb-3`}>
                   <ReCAPTCHA
-                    sitekey={process.env.RECAPTCHAV2_SITEKEY}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHAV2_SITEKEY}
                     ref={recaptchaRef}
                     onChange={handleCaptchaChange}
                     size="normal"        
