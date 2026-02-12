@@ -148,7 +148,7 @@ const EditPassword = () => {
             if( res && (res.status === 200) ){ 
              
               MySwal.fire({
-                //icon: 'success',
+               
                 width: '350px',
                 animation: true,
                 title: '',  
