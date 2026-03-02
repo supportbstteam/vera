@@ -236,11 +236,14 @@ const Lead = ({ __filterData }) => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex gap-3 items-center">
-                    <Image
+
+                    <img
                       src={`${process.env.FILE_UPLOAD_URL}/${item.category_image}`}
+
                       alt=""
                       width={70}
                       height={70}
+                      className="rounded-md"
                     />
                     <div>
                       <h2 className="font-semibold text-sm">
